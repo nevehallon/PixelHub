@@ -11,7 +11,14 @@ import { Helmet } from "react-helmet";
 import { graphql, useStaticQuery } from "gatsby";
 import PropTypes from "prop-types";
 
-function SEO({ description, lang, meta, title }) {
+import { GenericObjectProps } from "../port/interfaces/genericObjectProps";
+
+function SEO({
+  description,
+  lang,
+  meta,
+  title,
+}: GenericObjectProps): JSX.Element {
   const { site } = useStaticQuery(
     graphql`
       query {
@@ -69,7 +76,7 @@ function SEO({ description, lang, meta, title }) {
         },
       ].concat(meta)}
       title={title}
-      titleTemplate={defaultTitle ? `%s | ${defaultTitle}` : null}
+      titleTemplate={(defaultTitle ? `%s | ${defaultTitle}` : null) as string}
     />
   );
 }

@@ -8,10 +8,11 @@
 import { graphql, useStaticQuery } from "gatsby";
 import PropTypes from "prop-types";
 
+import { GenericObjectProps } from "../port/interfaces/genericObjectProps";
 import Header from "./header";
 import "./layout.css";
 
-const Layout = ({ children }): JSX.Element => {
+const Layout = ({ children }: GenericObjectProps): JSX.Element => {
   const data = useStaticQuery(graphql`
     query SiteTitleQuery {
       site {
