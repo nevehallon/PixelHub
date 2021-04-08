@@ -5,22 +5,84 @@
   "version": "0.1.0",
   "author": "Kyle Mathews <mathews.kyle@gmail.com>",
   "dependencies": {
+    "@fortawesome/fontawesome-free": "^5.15.3",
+    "@loadable/component": "^5.14.1",
+    "@material-ui/core": "^4.11.3",
+    "@material-ui/icons": "^4.11.2",
+    "@material-ui/lab": "^4.0.0-alpha.57",
+    "@popmotion/popcorn": "^0.4.4",
+    "@primer/octicons-react": "^12.1.0",
+    "@testing-library/jest-dom": "^5.11.10",
+    "@testing-library/react": "^11.2.6",
+    "@testing-library/user-event": "^12.8.3",
+    "@types/jest": "^26.0.22",
+    "@types/react": "^17.0.3",
+    "@types/react-dom": "^17.0.3",
+    "@typescript-eslint/eslint-plugin": "^4.21.0",
+    "@typescript-eslint/parser": "^4.21.0",
+    "axios": "^0.21.1",
+    "bootstrap": "^4.6.0",
+    "classnames": "^2.3.1",
+    "eslint": "^7.23.0",
+    "eslint-config-airbnb-typescript": "^12.0.0",
+    "eslint-config-prettier": "^7.2.0",
+    "eslint-plugin-import": "^2.22.1",
+    "eslint-plugin-import-helpers": "^1.1.0",
+    "eslint-plugin-jsx-a11y": "^6.4.1",
+    "eslint-plugin-prettier": "^3.3.1",
+    "eslint-plugin-react": "^7.23.1",
+    "eslint-plugin-react-hooks": "^4.2.0",
+    "fontsource-roboto": "^4.0.0",
+    "framer-motion": "^3.10.6",
     "gatsby": "^3.2.1",
     "gatsby-plugin-gatsby-cloud": "^2.2.0",
     "gatsby-plugin-image": "^1.2.0",
     "gatsby-plugin-manifest": "^3.2.0",
     "gatsby-plugin-offline": "^4.2.0",
     "gatsby-plugin-react-helmet": "^4.2.0",
+    "gatsby-plugin-sass": "^4.2.0",
     "gatsby-plugin-sharp": "^3.2.0",
     "gatsby-source-filesystem": "^3.2.0",
     "gatsby-transformer-sharp": "^3.2.0",
+    "html-to-image": "^1.6.0",
+    "joi": "^17.4.0",
+    "jquery": "^3.6.0",
+    "jwt-decode": "^3.1.2",
+    "lodash-es": "^4.17.21",
+    "node-sass": "^4.14.1",
+    "popmotion": "^9.3.5",
+    "popper.js": "^1.16.1",
+    "prettier": "^2.2.1",
+    "primeicons": "^4.1.0",
+    "primereact": "^6.2.1",
     "prop-types": "^15.7.2",
     "react": "^17.0.1",
+    "react-color": "^2.19.3",
     "react-dom": "^17.0.1",
-    "react-helmet": "^6.1.0"
+    "react-helmet": "^6.1.0",
+    "react-router-dom": "^5.2.0",
+    "react-scripts": "^4.0.3",
+    "react-share": "^4.4.0",
+    "react-toastify": "^7.0.3",
+    "react-transition-group": "^4.4.1",
+    "react-use-clipboard": "^1.0.7",
+    "reactcss": "^1.2.3",
+    "rxjs": "^6.6.7",
+    "sass": "^1.32.8",
+    "typescript": "4.1.3",
+    "web-vitals": "^1.1.1"
   },
   "devDependencies": {
-    "prettier": "2.2.1"
+    "prettier": "2.2.1",
+    "@types/classnames": "^2.2.11",
+    "@types/lodash-es": "^4.17.4",
+    "@types/react-color": "^3.0.4",
+    "@types/react-helmet": "^6.1.0",
+    "@types/react-router-dom": "^5.1.7",
+    "@types/reactcss": "^1.2.3",
+    "better-docs": "^2.3.2",
+    "gh-pages": "^3.1.0",
+    "immer": "^8.0.4"
   },
   "keywords": [
     "gatsby"
@@ -41,5 +103,20 @@
   },
   "bugs": {
     "url": "https://github.com/gatsbyjs/gatsby/issues"
+  },
+  "eslintConfig": {
+    "extends": "react-app"
+  },
+  "browserslist": {
+    "production": [
+      ">0.2%",
+      "not dead",
+      "not op_mini all"
+    ],
+    "development": [
+      "last 1 chrome version",
+      "last 1 firefox version",
+      "last 1 safari version"
+    ]
   }
 }
