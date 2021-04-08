@@ -26,11 +26,17 @@ function PublicImages(): JSX.Element {
         <title>title</title>
         <meta content="description" name="description" />
         <meta content="title" property="og:site_name" />
-        <meta content={metaImageUrl} property="og:image" />
+        <meta
+          content={metaImageUrl + encodeURIComponent(data as string)}
+          property="og:image"
+        />
         <meta content="summary_large_image" name="twitter:card" />
         <meta content="title" name="twitter:title" />
         <meta content="description" name="twitter:description" />
-        <meta content={metaImageUrl} name="twitter:image" />
+        <meta
+          content={metaImageUrl + encodeURIComponent(data as string)}
+          name="twitter:image"
+        />
       </Helmet>
       <img
         alt="drawing"

@@ -1,15 +1,15 @@
-import { forwardRef, ReactElement, Ref, useState } from 'react';
+import { forwardRef, ReactElement, Ref, useState } from "react";
 
-import Dialog from '@material-ui/core/Dialog';
-import DialogActions from '@material-ui/core/DialogActions';
-import DialogContent from '@material-ui/core/DialogContent';
-import DialogContentText from '@material-ui/core/DialogContentText';
-import DialogTitle from '@material-ui/core/DialogTitle';
-import Slide from '@material-ui/core/Slide';
-import { TransitionProps } from '@material-ui/core/transitions';
+import Dialog from "@material-ui/core/Dialog";
+import DialogActions from "@material-ui/core/DialogActions";
+import DialogContent from "@material-ui/core/DialogContent";
+import DialogContentText from "@material-ui/core/DialogContentText";
+import DialogTitle from "@material-ui/core/DialogTitle";
+import Slide from "@material-ui/core/Slide";
+import { TransitionProps } from "@material-ui/core/transitions";
 
 // eslint-disable-next-line import/no-named-as-default
-import Demo from './Share';
+import Demo from "./Share";
 
 const Transition = forwardRef((
   // eslint-disable-next-line react/require-default-props
@@ -27,6 +27,10 @@ const AlertDialogSlide = ({
   dataUrl: string;
 }): JSX.Element => {
   const [open, setOpen] = useState(true);
+  const shareUrl = `https://pixel-hub.vercel.app/publicImages/?data=${encodeURIComponent(
+    dataUrl
+  )}`;
+  console.log(shareUrl);
 
   const handleClose = () => {
     setOpen(false);
@@ -47,11 +51,7 @@ const AlertDialogSlide = ({
       >
         <DialogTitle id="alert-dialog-slide-title">{title}</DialogTitle>
         <DialogContent>
-          <Demo
-            shareUrl={`https://pixel-image-server.vercel.app/serveImage?data=${encodeURIComponent(
-              dataUrl
-            )}`}
-          />
+          <Demo shareUrl={shareUrl} />
           {/* <DialogContentText id="alert-dialog-slide-description">
             Let Google help apps determine location. This means sending
             anonymous location data to Google, even when no apps are running.
