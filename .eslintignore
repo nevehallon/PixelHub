@@ -2,3 +2,4 @@ public/pleaserotate.js
 webpack.config.js
 gatsby-config.js
 gatsby-ssr.js
+gatsby-node.js
