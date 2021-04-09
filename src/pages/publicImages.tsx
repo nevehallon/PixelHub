@@ -8,13 +8,14 @@ import src from "../images/gatsby-astronaut.png";
 const metaImageUrl =
   "https://og-image-navy-iota.vercel.app/%20?heights=1000&images=";
 
-function PublicImages(): JSX.Element {
+function PublicImages(): JSX.Element | null {
   const [data, setData] = useQueryParam("data", StringParam);
 
   useEffect(() => {
     // eslint-disable-next-line no-restricted-globals
     setData(new URLSearchParams(location.search).get("data"));
-  }, [setData]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   return (
     <div
