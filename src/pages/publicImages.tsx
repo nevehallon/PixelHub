@@ -1,16 +1,20 @@
+import { useEffect } from "react";
 import { Helmet } from "react-helmet";
 
 import { StringParam, useQueryParam } from "use-query-params";
 
 import src from "../images/gatsby-astronaut.png";
 
+const metaImageUrl =
+  "https://og-image-navy-iota.vercel.app/%20?heights=1000&images=";
+
 function PublicImages(): JSX.Element {
   const [data, setData] = useQueryParam("data", StringParam);
-  // const query = useQuery();
 
-  // const src = query.get('data');
-  const metaImageUrl =
-    "https://og-image-navy-iota.vercel.app/%20?heights=1000&images=";
+  useEffect(() => {
+    // eslint-disable-next-line no-restricted-globals
+    setData(new URLSearchParams(location.search).get("data"));
+  }, [setData]);
 
   return (
     <div
@@ -38,13 +42,15 @@ function PublicImages(): JSX.Element {
           name="twitter:image"
         />
       </Helmet>
-      <img
-        alt="drawing"
-        src={metaImageUrl + encodeURIComponent(data as string)}
-        style={{
-          background: "#fff",
-        }}
-      />
+      {data && (
+        <img
+          alt="drawing"
+          src={metaImageUrl + encodeURIComponent(data as string)}
+          style={{
+            background: "#fff",
+          }}
+        />
+      )}
     </div>
   );
 }
