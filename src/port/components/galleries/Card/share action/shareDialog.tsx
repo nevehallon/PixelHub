@@ -30,6 +30,9 @@ const AlertDialogSlide = ({
   const shareUrl = `https://pixel-hub.vercel.app/publicImages/?data=${encodeURIComponent(
     dataUrl
   )}`;
+  // const shareUrl = `https://og-image-navy-iota.vercel.app/%20?heights=1000&images=${encodeURIComponent(
+  //   dataUrl
+  // )}`;
   console.log(shareUrl);
 
   const handleClose = () => {

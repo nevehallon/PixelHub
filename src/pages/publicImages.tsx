@@ -8,6 +8,8 @@ import src from "../images/gatsby-astronaut.png";
 const metaImageUrl =
   "https://og-image-navy-iota.vercel.app/%20?heights=1000&images=";
 
+const shareUrl = `https://pixel-hub.vercel.app/publicImages/?data=`;
+
 function PublicImages(): JSX.Element | null {
   const [data, setData] = useQueryParam("data", StringParam);
 
@@ -48,6 +50,7 @@ function PublicImages(): JSX.Element | null {
           alt="drawing"
           src={metaImageUrl + encodeURIComponent(data as string)}
           style={{
+            width: "100%",
             background: "#fff",
           }}
         />
