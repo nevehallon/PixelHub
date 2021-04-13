@@ -27,9 +27,7 @@ const IndexPortPage = (): JSX.Element => (
     <HashRouter>
       <Switch>
         {/* <Route component={PublicImages} path="/public-images" /> */}
-        <Route path="*">
-          <App />
-        </Route>
+        <Route path="*" render={({ location }) => <App {...{ location }} />} />
       </Switch>
     </HashRouter>
   </StrictMode>

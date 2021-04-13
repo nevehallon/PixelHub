@@ -4,8 +4,9 @@ import { StringParam, useQueryParam } from "use-query-params";
 
 import src from "../images/gatsby-astronaut.png";
 
-const metaImageUrl =
-  "https://og-image-navy-iota.vercel.app/%20?heights=1000&images=";
+const metaImageUrl = "https://og-image-navy-iota.vercel.app/%20?images=";
+
+const encodedUri = (x: any) => encodeURIComponent(x as string);
 
 function PublicImages(): JSX.Element | null {
   const [data, setData] = useQueryParam("data", StringParam);

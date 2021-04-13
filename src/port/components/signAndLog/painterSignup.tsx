@@ -1,13 +1,13 @@
-import React from 'react';
-import { Redirect } from 'react-router-dom';
-import { toast } from 'react-toastify';
+import React from "react";
+import { Redirect } from "react-router-dom";
+import { toast } from "react-toastify";
 
-import Joi from 'joi';
+import Joi from "joi";
 
-import { Form, PageHeader } from '../../common';
-import { apiUrl } from '../../config.json';
-import httpService from '../../services/httpService';
-import { getCurrentUser, login } from '../../services/userService';
+import { Form, PageHeader } from "../../common";
+import { apiUrl } from "../../config.json";
+import httpService from "../../services/httpService";
+import { getCurrentUser, login } from "../../services/userService";
 
 interface PainterSignupState {
   formData: {
@@ -21,9 +21,9 @@ interface PainterSignupState {
 class PainterSignup extends Form {
   state: PainterSignupState = {
     formData: {
-      name: '',
-      password: '',
-      email: '',
+      name: "",
+      password: "",
+      email: "",
     },
     errors: {},
   };
@@ -48,21 +48,21 @@ class PainterSignup extends Form {
       const { email, password } = body;
       await login({ email, password });
 
-      toast.success('You have successfully registered painter account!!', {
-        position: 'top-center',
+      toast.success("You have successfully registered painter account!!", {
+        position: "top-center",
         autoClose: 2500,
       });
 
       setTimeout(() => {
-        window.location.href = '/create-drawing';
+        this.props.history.push("/create-drawing");
       }, 2500);
     } catch (error) {
       if (error.response && error.response.status === 400) {
         toast.error(error.response.data, {
-          position: 'top-center',
+          position: "top-center",
           autoClose: error.response.data.length * 65,
         });
-        errors = { name: '', password: '', email: '' };
+        errors = { name: "", password: "", email: "" };
         errors[error.response.data.split('"')[1]] = error.response.data;
 
         this.setState({ errors, formData });
@@ -90,12 +90,12 @@ class PainterSignup extends Form {
               noValidate
               onSubmit={this.handleSubmit}
             >
-              {this.renderInput('email', 'Email', 'email')}
-              {this.renderInput('name', 'Name')}
-              {this.renderInput('password', 'Password', 'password', {
+              {this.renderInput("email", "Email", "email")}
+              {this.renderInput("name", "Name")}
+              {this.renderInput("password", "Password", "password", {
                 feedback: true,
               })}
-              {this.renderButton('Next')}
+              {this.renderButton("Next")}
             </form>
           </div>
         </div>

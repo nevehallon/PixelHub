@@ -1,10 +1,10 @@
-import { Redirect } from 'react-router-dom';
-import { toast } from 'react-toastify';
+import { Redirect } from "react-router-dom";
+import { toast } from "react-toastify";
 
-import Joi from 'joi';
+import Joi from "joi";
 
-import { Form, PageHeader } from '../../common';
-import { getCurrentUser, login } from '../../services/userService';
+import { Form, PageHeader } from "../../common";
+import { getCurrentUser, login } from "../../services/userService";
 
 interface SigninState {
   formData: {
@@ -17,8 +17,8 @@ interface SigninState {
 class Signin extends Form {
   state: SigninState = {
     formData: {
-      password: '',
-      email: '',
+      password: "",
+      email: "",
     },
     errors: {},
   };
@@ -28,8 +28,8 @@ class Signin extends Form {
       .required()
       .email({ tlds: { allow: false } })
       .min(5)
-      .label('Email'),
-    password: Joi.string().required().min(6).label('Password'),
+      .label("Email"),
+    password: Joi.string().required().min(6).label("Password"),
   };
 
   componentDidMount(): void {
@@ -44,15 +44,15 @@ class Signin extends Form {
     try {
       await login(formData);
       setTimeout(() => {
-        window.location.href = '/';
+        window.location.href = "/";
       }, 2200);
     } catch (error) {
       if (error.response && error.response.status === 400) {
         toast.error(error.response.data, {
-          position: 'top-center',
+          position: "top-center",
           autoClose: error.response.data.length * 65,
         });
-        errors = { name: '', password: '', email: '' };
+        errors = { name: "", password: "", email: "" };
 
         (errors as any)[error.response.data.split('"')[1]] =
           error.response.data;
@@ -82,11 +82,11 @@ class Signin extends Form {
               noValidate
               onSubmit={this.handleSubmit}
             >
-              {this.renderInput('email', 'Email', 'email')}
-              {this.renderInput('password', 'Password', 'password', {
+              {this.renderInput("email", "Email", "email")}
+              {this.renderInput("password", "Password", "password", {
                 feedback: false,
               })}
-              {this.renderButton('Sign In')}
+              {this.renderButton("Sign In")}
             </form>
           </div>
         </div>

@@ -1,28 +1,42 @@
-import React, { Component } from 'react';
-import { Redirect, Route, Switch } from 'react-router-dom';
-import { ToastContainer } from 'react-toastify';
+/* eslint-disable import/no-extraneous-dependencies */
+/* eslint-disable react/no-did-update-set-state */
+import React, { Component } from "react";
+import { Redirect, Route, Switch } from "react-router-dom";
+import { ToastContainer } from "react-toastify";
 
-import ProtectedRoute from './common/protectedRoute';
-import CreateDrawing from './components/drawingActions/createDrawing';
-import EditDrawing from './components/drawingActions/editDrawing';
-import { MyDrawings, MyFavorites } from './components/galleries';
-import Footer from './components/layout/footer';
-import Navbar from './components/layout/nav-bar';
-import About from './components/pages/about';
-import Home from './components/pages/home';
-import Logout from './components/signAndLog/logout';
-import PainterSignup from './components/signAndLog/painterSignup';
-import Signin from './components/signAndLog/signin';
-import Signup from './components/signAndLog/signup';
-import 'react-toastify/dist/ReactToastify.css';
-import { getCurrentUser } from './services/userService';
+import * as H from "history";
 
+import ProtectedRoute from "./common/protectedRoute";
+import CreateDrawing from "./components/drawingActions/createDrawing";
+import EditDrawing from "./components/drawingActions/editDrawing";
+import { MyDrawings, MyFavorites } from "./components/galleries";
+import Footer from "./components/layout/footer";
+import Navbar from "./components/layout/nav-bar";
+import About from "./components/pages/about";
+import Home from "./components/pages/home";
+import PainterSignup from "./components/signAndLog/painterSignup";
+import Signin from "./components/signAndLog/signin";
+import Signup from "./components/signAndLog/signup";
+import "react-toastify/dist/ReactToastify.css";
+import { getCurrentUser, logout } from "./services/userService";
+
+export interface Location {
+  location: H.Location;
+}
 class App extends Component {
   state = { user: null };
 
   componentDidMount(): void {
     const user = getCurrentUser();
     this.setState({ user });
+  }
+
+  componentDidUpdate(prevProps: Location): void {
+    const { location } = this.props as Location;
+    if (location !== prevProps.location) {
+      const user = getCurrentUser();
+      this.setState({ user });
+    }
   }
 
   render(): React.ReactNode {
@@ -55,7 +69,16 @@ class App extends Component {
             <Route component={Signup} path="/sign-up" />
             <Route component={PainterSignup} path="/painter-sign-up" />
             <Route component={Signin} path="/sign-in" />
-            <Route component={Logout} path="/logout" />
+            <Route
+              path="/logout"
+              render={({ history }) => {
+                logout();
+                this.setState({ user: getCurrentUser() }, () =>
+                  history.push("/")
+                );
+                return null;
+              }}
+            />
             <Route component={About} path="/about" />
             <Route component={Home} exact path="/" />
             <Redirect to="/" /> {/* TODO: add 404 page not found */}
