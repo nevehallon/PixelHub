@@ -1,29 +1,29 @@
 /* eslint-disable @typescript-eslint/no-unused-expressions */
-import { memo, useRef, useState } from 'react';
-import { Link, useHistory } from 'react-router-dom';
+import { memo, useRef, useState } from "react";
+import { Link, useHistory } from "react-router-dom";
 
-import { Backdrop } from '@material-ui/core';
+import { Backdrop } from "@material-ui/core";
 import {
   motion,
   MotionConfig,
   useMotionValue,
   useTransform,
-} from 'framer-motion';
-import { Button } from 'primereact/button';
+} from "framer-motion";
+import { Button } from "primereact/button";
 
-import { DrawingProps } from '../../../interfaces/DrawingProps';
-import useScrollConstraints from '../utils/use-scroll-constraints';
-import useWheelScroll from '../utils/use-wheel-scroll';
+import { DrawingProps } from "../../../interfaces/DrawingProps";
+import useScrollConstraints from "../utils/use-scroll-constraints";
+import useWheelScroll from "../utils/use-wheel-scroll";
 import {
   closeAnimation,
   closeSpring,
   openAnimation,
   openSpring,
-} from './animations';
-import { ContentPlaceholder } from './ContentPlaceholder';
-import { Image } from './Image';
-import SpeedDialTooltipOpen from './quickActions';
-import { Title } from './Title';
+} from "./animations";
+import { ContentPlaceholder } from "./ContentPlaceholder";
+import { Image } from "./Image";
+import SpeedDialTooltipOpen from "./quickActions";
+import { Title } from "./Title";
 
 interface Props extends DrawingProps {
   isSelected: boolean;
@@ -45,6 +45,7 @@ const Card = memo(
     dataUrl,
     drawingNumber,
     painterInfo,
+    shareUrl,
   }: Props) => {
     const [isOpen, setOpen] = useState(false);
 
@@ -58,7 +59,7 @@ const Card = memo(
     const cardRef = useRef(null);
     const constraints = useScrollConstraints(cardRef, isSelected);
 
-    const basePath = onDelete ? 'my-drawings' : 'my-favorites';
+    const basePath = onDelete ? "my-drawings" : "my-favorites";
 
     function checkSwipeToDismiss() {
       const yValue = y.get();
@@ -81,7 +82,7 @@ const Card = memo(
       <li className="d-card" ref={containerRef}>
         <motion.div
           className="overlay"
-          style={{ opacity, pointerEvents: isSelected ? 'auto' : 'none' }}
+          style={{ opacity, pointerEvents: isSelected ? "auto" : "none" }}
           transition={{ duration: 0.2, delay: 0.1 }}
         >
           <Link replace to={`/${basePath}`} />
@@ -90,8 +91,8 @@ const Card = memo(
           <motion.div
             _dragY={y}
             animate={isSelected ? openAnimation : closeAnimation}
-            className={`d-card-content-container ${isSelected && 'open'}`}
-            drag={isSelected ? 'y' : false}
+            className={`d-card-content-container ${isSelected && "open"}`}
+            drag={isSelected ? "y" : false}
             dragConstraints={constraints}
             onDragEnd={checkSwipeToDismiss}
             ref={cardRef}
@@ -104,14 +105,14 @@ const Card = memo(
             >
               <Backdrop
                 open={isOpen}
-                style={{ zIndex: 1, position: 'absolute' }}
+                style={{ zIndex: 1, position: "absolute" }}
               />
 
               <Image isSelected={isSelected} src={dataUrl} />
               <Title isSelected={isSelected} title={drawingName} />
               <ContentPlaceholder
                 description={description}
-                painterInfo={onDelete ? '' : painterInfo}
+                painterInfo={onDelete ? "" : painterInfo}
               />
               {onDelete && (
                 <span className="p-fluid d-flex justify-content-around mx-1 my-3">
@@ -127,7 +128,7 @@ const Card = memo(
                     label="Delete"
                     onClick={() => {
                       onDelete();
-                      history.replace('/my-drawings');
+                      history.replace("/my-drawings");
                     }}
                   />
                 </span>
@@ -149,11 +150,11 @@ const Card = memo(
               initial={{
                 opacity: 0,
                 scale: 0.2,
-                transformOrigin: '95%',
+                transformOrigin: "95%",
               }}
               transition={{
                 delay: isOpen ? 0 : 0.7,
-                type: 'spring',
+                type: "spring",
                 stiffness: 150,
                 damping: 11,
               }}
@@ -167,6 +168,7 @@ const Card = memo(
                 emitOpen={() => setOpen(true)}
                 history={history}
                 id={_id}
+                shareUrl={shareUrl}
               />
             </motion.div>
           )}

@@ -20,20 +20,13 @@ const Transition = forwardRef((
 const AlertDialogSlide = ({
   title,
   emitClose,
-  dataUrl,
+  shareUrl,
 }: {
   emitClose: () => void;
   title: string;
-  dataUrl: string;
+  shareUrl: string;
 }): JSX.Element => {
   const [open, setOpen] = useState(true);
-  // const shareUrl = `https://pixel-hub.vercel.app/publicImages/?data=${encodeURIComponent(
-  //   dataUrl
-  // )}`;
-  const shareUrl = `https://og-image-html.vercel.app/%20?images=${encodeURIComponent(
-    dataUrl
-  )}`;
-  console.log(shareUrl);
 
   const handleClose = () => {
     setOpen(false);

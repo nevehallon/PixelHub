@@ -1,42 +1,42 @@
-import { useContext, useState } from 'react';
-import { toast } from 'react-toastify';
-import useClipboard from 'react-use-clipboard';
+import { useContext, useState } from "react";
+import { toast } from "react-toastify";
+import useClipboard from "react-use-clipboard";
 
-import { createStyles, makeStyles, Theme } from '@material-ui/core/styles';
-import { OpenInNew, ShareOutlined } from '@material-ui/icons';
-import GetAppRoundedIcon from '@material-ui/icons/GetAppRounded';
-import InfoOutlinedIcon from '@material-ui/icons/InfoOutlined';
-import SpeedDial from '@material-ui/lab/SpeedDial';
-import SpeedDialAction from '@material-ui/lab/SpeedDialAction';
-import SpeedDialIcon from '@material-ui/lab/SpeedDialIcon';
+import { createStyles, makeStyles, Theme } from "@material-ui/core/styles";
+import { OpenInNew, ShareOutlined } from "@material-ui/icons";
+import GetAppRoundedIcon from "@material-ui/icons/GetAppRounded";
+import InfoOutlinedIcon from "@material-ui/icons/InfoOutlined";
+import SpeedDial from "@material-ui/lab/SpeedDial";
+import SpeedDialAction from "@material-ui/lab/SpeedDialAction";
+import SpeedDialIcon from "@material-ui/lab/SpeedDialIcon";
 import {
   BookmarkIcon,
   BookmarkSlashFillIcon,
   ClippyIcon,
   GitForkIcon,
   LinkIcon,
-} from '@primer/octicons-react';
+} from "@primer/octicons-react";
 
-import { createDrawing, getDrawing } from '../../../services/drawingsService';
-import FavoritesContext from '../../../services/favoritesContext';
-import { getCurrentUser } from '../../../services/userService';
-import AlertDialogSlide from './share action/shareDialog'; // TODO: SHARE
+import { createDrawing, getDrawing } from "../../../services/drawingsService";
+import FavoritesContext from "../../../services/favoritesContext";
+import { getCurrentUser } from "../../../services/userService";
+import AlertDialogSlide from "./share action/shareDialog"; // TODO: SHARE
 
 const download = (dataurl: string, filename: string) => {
-  const a = document.createElement('a');
+  const a = document.createElement("a");
   a.href = dataurl;
-  a.setAttribute('download', filename);
+  a.setAttribute("download", filename);
   a.click();
 };
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
     speedDial: {
-      position: 'absolute',
+      position: "absolute",
       bottom: theme.spacing(1),
       right: theme.spacing(2),
-      '& .MuiSpeedDial-actions .MuiSpeedDialAction-staticTooltip .MuiSpeedDialAction-staticTooltipLabel': {
-        width: 'max-content !important',
+      "& .MuiSpeedDial-actions .MuiSpeedDialAction-staticTooltip .MuiSpeedDialAction-staticTooltipLabel": {
+        width: "max-content !important",
       },
     },
   })
@@ -49,6 +49,7 @@ export default function SpeedDialTooltipOpen({
   id,
   drawingNumber,
   dataUrl,
+  shareUrl,
   history,
   basePath,
 }: {
@@ -58,6 +59,7 @@ export default function SpeedDialTooltipOpen({
   id: string;
   drawingNumber: string | number;
   dataUrl: string;
+  shareUrl: string;
   history: any;
   basePath: string;
 }): JSX.Element {
@@ -80,14 +82,14 @@ export default function SpeedDialTooltipOpen({
   const actions = [
     {
       icon: <InfoOutlinedIcon />,
-      name: 'Info',
+      name: "Info",
       handleAction: () => {
         history.push(`${basePath}/${id}`);
       },
     },
     {
       icon: <GitForkIcon size={24} />,
-      name: 'Fork',
+      name: "Fork",
       handleAction: async () => {
         try {
           const { painter } = (await getCurrentUser()) as any;
@@ -99,7 +101,7 @@ export default function SpeedDialTooltipOpen({
                 Feel free to create your own and start creating!
               </p>,
               {
-                position: 'top-center',
+                position: "top-center",
                 autoClose: 4000,
               }
             );
@@ -120,8 +122,8 @@ export default function SpeedDialTooltipOpen({
             data: { _id },
           } = await createDrawing(data);
 
-          toast.success('Drawing Forked!', {
-            position: 'top-center',
+          toast.success("Drawing Forked!", {
+            position: "top-center",
             autoClose: 2500,
           });
 
@@ -133,7 +135,7 @@ export default function SpeedDialTooltipOpen({
     },
     {
       icon: <ShareOutlined />,
-      name: 'Share',
+      name: "Share",
       handleAction: () => {
         setOpenDialog(true);
       },
@@ -146,50 +148,50 @@ export default function SpeedDialTooltipOpen({
         <BookmarkSlashFillIcon size={24} />
       ),
       name: !favorites.includes(drawingNumber)
-        ? 'Save to Favorites'
-        : 'Remove from Favorites',
+        ? "Save to Favorites"
+        : "Remove from Favorites",
       handleAction: () => {
         emitFavoriteAction(!favorites.includes(drawingNumber));
         // eslint-disable-next-line @typescript-eslint/no-unused-expressions
         !favorites.includes(drawingNumber)
-          ? toast.success('Saved to Favorites', { position: 'top-center' })
-          : toast.dark('Removed from Favorites', { position: 'top-center' });
+          ? toast.success("Saved to Favorites", { position: "top-center" })
+          : toast.dark("Removed from Favorites", { position: "top-center" });
       },
     },
     {
       icon: <GetAppRoundedIcon />,
-      name: 'Download Image',
+      name: "Download Image",
       handleAction: () => {
         download(dataUrl, `${id}.png`);
       },
     },
     {
       icon: <LinkIcon size={24} />,
-      name: 'Copy Image Link',
+      name: "Copy Image Link",
       handleAction: () => {
         setCopied();
         toast.success(
           <span>
             <ClippyIcon className="mr-5" size={24} /> Copied to Clipboard!
           </span>,
-          { position: 'top-center' }
+          { position: "top-center" }
         );
       },
     },
     {
       icon: <OpenInNew />,
-      name: 'Open in New Window',
+      name: "Open in New Window",
       handleAction: () => {
         const image = new Image();
-        const div = document.createElement('div');
+        const div = document.createElement("div");
         div.setAttribute(
-          'style',
-          'height:100%;display:grid;justify-content:center;align-content:center;'
+          "style",
+          "height:100%;display:grid;justify-content:center;align-content:center;"
         );
         image.src = dataUrl;
         div.appendChild(image);
 
-        const w = window.open('');
+        const w = window.open("");
         w?.document.write(div.outerHTML);
       },
     },
@@ -222,8 +224,8 @@ export default function SpeedDialTooltipOpen({
       </SpeedDial>
       {openDialog && (
         <AlertDialogSlide
-          dataUrl={dataUrl}
           emitClose={() => setOpenDialog(false)}
+          shareUrl={shareUrl}
           title="Choose an Option"
         />
       )}
