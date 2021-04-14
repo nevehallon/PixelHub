@@ -1,16 +1,16 @@
-import { toast } from 'react-toastify';
+import { toast } from "react-toastify";
 
-import axios from 'axios';
+import axios from "axios";
 
-import getJwt from './jwtService';
+import getJwt from "./jwtService";
 
-axios.defaults.headers.common['x-auth-token'] = getJwt && getJwt();
+axios.defaults.headers.common.Authorization = getJwt && getJwt();
 
 axios.interceptors.response.use(undefined, (error) => {
   if (error.response && error.response.status >= 403) {
-    const errorMessage = 'We are sorry, but unexpected error occurred :(';
+    const errorMessage = "We are sorry, but unexpected error occurred :(";
     toast.error(errorMessage, {
-      position: 'top-center',
+      position: "top-center",
       autoClose: 3000,
     });
   }

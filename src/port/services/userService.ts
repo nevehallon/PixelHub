@@ -1,18 +1,18 @@
-import { toast } from 'react-toastify';
+import { toast } from "react-toastify";
 
-import { AxiosResponse } from 'axios';
-import jwtDecode from 'jwt-decode';
+import { AxiosResponse } from "axios";
+import jwtDecode from "jwt-decode";
 
-import { apiUrl } from '../config.json';
-import { LoginArgs } from '../interfaces/loginArgs';
-import { UserDetails } from '../interfaces/UserDetails';
-import httpService from './httpService';
+import { apiUrl } from "../config.json";
+import { LoginArgs } from "../interfaces/loginArgs";
+import { UserDetails } from "../interfaces/UserDetails";
+import httpService from "./httpService";
 
-const tokenKey = 'localData';
+const tokenKey = "localData";
 
 export function getCurrentUser(): { [x: string]: any } | null {
   try {
-    const localData = JSON.parse(localStorage.getItem(tokenKey) || 'null');
+    const localData = JSON.parse(localStorage.getItem(tokenKey) || "null");
     return { ...jwtDecode(localData.token), name: localData.name };
   } catch (error) {
     return null;
@@ -20,13 +20,14 @@ export function getCurrentUser(): { [x: string]: any } | null {
 }
 
 export async function login({ email, password }: LoginArgs): Promise<void> {
-  const { data } = await httpService.post(`${apiUrl}/auth`, {
+  const { data } = await httpService.post(`${apiUrl}/users`, {
+    strategy: "jwt",
     email,
     password,
   });
   if (!data.isPainter) {
     toast.success(`Logging in...`, {
-      position: 'top-center',
+      position: "top-center",
       autoClose: 2000,
     });
   }

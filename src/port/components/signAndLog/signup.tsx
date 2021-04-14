@@ -1,13 +1,13 @@
-import React from 'react';
-import { Redirect } from 'react-router-dom';
-import { toast } from 'react-toastify';
+import React from "react";
+import { Redirect } from "react-router-dom";
+import { toast } from "react-toastify";
 
-import Joi from 'joi';
+import Joi from "joi";
 
-import { Form, PageHeader } from '../../common';
-import { apiUrl } from '../../config.json';
-import httpService from '../../services/httpService';
-import { getCurrentUser } from '../../services/userService';
+import { Form, PageHeader } from "../../common";
+import { apiUrl } from "../../config.json";
+import httpService from "../../services/httpService";
+import { getCurrentUser } from "../../services/userService";
 
 interface SignupState {
   formData: {
@@ -21,9 +21,9 @@ interface SignupState {
 class Signup extends Form {
   state: SignupState = {
     formData: {
-      name: '',
-      password: '',
-      email: '',
+      name: "",
+      password: "",
+      email: "",
     },
     errors: {},
   };
@@ -40,22 +40,22 @@ class Signup extends Form {
   doSubmit = async (): Promise<void> => {
     // eslint-disable-next-line prefer-const
     let { errors, formData } = this.state;
-    const body = { ...formData, painter: false };
+    const body = { ...formData, painter: false, strategy: "local" };
 
     try {
       await httpService.post(`${apiUrl}/users`, body);
-      (this.props as any).history.replace('/sign-in');
-      toast.success('You have successfully signed up!!', {
-        position: 'top-center',
+      (this.props as any).history.replace("/sign-in");
+      toast.success("You have successfully signed up!!", {
+        position: "top-center",
         autoClose: 4000,
       });
     } catch (error) {
       if (error.response && error.response.status === 400) {
         toast.error(error.response.data, {
-          position: 'top-center',
+          position: "top-center",
           autoClose: error.response.data.length * 65,
         });
-        errors = { name: '', password: '', email: '' };
+        errors = { name: "", password: "", email: "" };
         errors[error.response.data.split('"')[1]] = error.response.data;
 
         this.setState({ errors, formData });
@@ -83,12 +83,12 @@ class Signup extends Form {
               noValidate
               onSubmit={this.handleSubmit}
             >
-              {this.renderInput('email', 'Email', 'email')}
-              {this.renderInput('name', 'Name')}
-              {this.renderInput('password', 'Password', 'password', {
+              {this.renderInput("email", "Email", "email")}
+              {this.renderInput("name", "Name")}
+              {this.renderInput("password", "Password", "password", {
                 feedback: true,
               })}
-              {this.renderButton('Sign Up')}
+              {this.renderButton("Sign Up")}
             </form>
           </div>
         </div>
