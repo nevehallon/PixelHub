@@ -46,7 +46,7 @@ export function getDrawingsFromAllUsers(
   drawingNumList: any[]
 ): Promise<AxiosResponse<any>> {
   return httpService.get(
-    `${apiUrl}/users/drawings?numbers=${drawingNumList.toString()}`
+    `${apiUrl}/users?numbers=${drawingNumList.toString()}`
   );
 }
 
