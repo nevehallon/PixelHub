@@ -13,15 +13,18 @@ const tokenKey = "localData";
 export function getCurrentUser(): { [x: string]: any } | null {
   try {
     const localData = JSON.parse(localStorage.getItem(tokenKey) || "null");
-    return { ...jwtDecode(localData.token), name: localData.name };
+
+    const { user } = localData;
+
+    return user;
   } catch (error) {
     return null;
   }
 }
 
 export async function login({ email, password }: LoginArgs): Promise<void> {
-  const { data } = await httpService.post(`${apiUrl}/users`, {
-    strategy: "jwt",
+  const { data } = await httpService.post(`${apiUrl}/authentication`, {
+    strategy: "local",
     email,
     password,
   });
@@ -50,7 +53,7 @@ export function getDrawingsFromAllUsers(
 export function getUserDetailsByUserId(
   userId: string
 ): Promise<AxiosResponse<UserDetails>> {
-  return httpService.get(`${apiUrl}/users/${userId}`);
+  return httpService.get(`${apiUrl}/users?id=${userId}`);
 }
 
 export function getCurrentUserDetails(): Promise<AxiosResponse<UserDetails>> {

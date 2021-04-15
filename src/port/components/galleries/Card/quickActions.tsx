@@ -84,7 +84,7 @@ export default function SpeedDialTooltipOpen({
       icon: <InfoOutlinedIcon />,
       name: "Info",
       handleAction: () => {
-        history.push(`${basePath}/${id}`);
+        history.push(`${basePath}?id=${id}`);
       },
     },
     {
@@ -127,7 +127,7 @@ export default function SpeedDialTooltipOpen({
             autoClose: 2500,
           });
 
-          history.replace(`/edit/${_id}`);
+          history.replace(`/edit?id=${_id}`);
         } catch (error) {
           console.error(error);
         }

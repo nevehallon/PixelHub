@@ -1,15 +1,15 @@
-import { AxiosResponse } from 'axios';
+import { AxiosResponse } from "axios";
 
-import { apiUrl } from '../config.json';
-import { Drawing } from '../interfaces/Drawing';
-import http from './httpService';
+import { apiUrl } from "../config.json";
+import { Drawing } from "../interfaces/Drawing";
+import http from "./httpService";
 
 export const initialGrid = (size = 35): { fill: string; touched: string }[] =>
   Array(size ** 2)
-    .fill('')
+    .fill("")
     .map((_, i) => ({
-      fill: i % 2 === 0 ? 'lightgrey' : 'white',
-      touched: '',
+      fill: i % 2 === 0 ? "lightgrey" : "white",
+      touched: "",
     }));
 
 export function createDrawing(drawing: Drawing): Promise<AxiosResponse<any>> {
@@ -22,7 +22,7 @@ export function getMyDrawings(): Promise<AxiosResponse<any>> {
 
 export function getDrawing(id: string): Promise<AxiosResponse<any>> {
   try {
-    return http.get(`${apiUrl}/drawings/${id}`);
+    return http.get(`${apiUrl}/drawings?id=${id}`);
   } catch (error) {
     // eslint-disable-next-line no-console
     console.error(error);
@@ -32,7 +32,7 @@ export function getDrawing(id: string): Promise<AxiosResponse<any>> {
 
 export function deleteDrawing(id: string): Promise<AxiosResponse<any>> {
   try {
-    return http.delete(`${apiUrl}/drawings/${id}`);
+    return http.delete(`${apiUrl}/drawings?id=${id}`);
   } catch (error) {
     // eslint-disable-next-line no-console
     console.error(error);
@@ -43,7 +43,7 @@ export function deleteDrawing(id: string): Promise<AxiosResponse<any>> {
 export function editDrawing(drawing: Drawing): Promise<AxiosResponse<any>> {
   try {
     const { _id, ...data } = drawing;
-    return http.put(`${apiUrl}/drawings/${_id}`, data);
+    return http.put(`${apiUrl}/drawings?id=${_id}`, data);
   } catch (error) {
     // eslint-disable-next-line no-console
     console.error(error);

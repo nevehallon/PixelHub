@@ -1,18 +1,19 @@
-import React, { Component } from 'react';
-import { Link } from 'react-router-dom';
+import React, { Component } from "react";
+import { Link } from "react-router-dom";
+import { toast } from "react-toastify";
 
 // import DrawingCard from '../../common/drawingCard';
-import PageHeader from '../../common/pageHeader';
-import { deleteDrawing, getMyDrawings } from '../../services/drawingsService';
-import FavoritesContext from '../../services/favoritesContext';
+import PageHeader from "../../common/pageHeader";
+import { deleteDrawing, getMyDrawings } from "../../services/drawingsService";
+import FavoritesContext from "../../services/favoritesContext";
 import {
   addFavorite,
   getCurrentUserDetails,
   removeFavorite,
-} from '../../services/userService';
-import { List } from './CardList';
+} from "../../services/userService";
+import { List } from "./CardList";
 
-import './styles.scss';
+import "./styles.scss";
 
 interface MyDrawingsState {
   drawings: any[];
@@ -51,8 +52,10 @@ class MyDrawings extends Component {
         ? this.setState({ loading: false, drawings: data, favorites })
         : this.setState({ loading: false, drawings: [] });
     } catch (error) {
-      // eslint-disable-next-line no-console
-      console.error(error);
+      this.setState({ loading: false, drawings: [] });
+      toast.error("Sorry, there was an unexpected error", {
+        position: "top-center",
+      });
     }
   }
 
@@ -110,8 +113,8 @@ class MyDrawings extends Component {
                 />
               </FavoritesContext.Provider>
             ) : (
-              <div className={`mx-auto ${loading ? 'text-info' : ''}`}>
-                {loading ? 'LOADING' : 'No drawings yet'}...
+              <div className={`mx-auto ${loading ? "text-info" : ""}`}>
+                {loading ? "LOADING" : "No drawings yet"}...
               </div>
             )}
           </div>
