@@ -57,13 +57,14 @@ export function getUserDetailsByUserId(
 }
 
 export function getCurrentUserDetails(): Promise<AxiosResponse<UserDetails>> {
-  return httpService.get(`${apiUrl}/users/me`);
+  const user = getCurrentUser();
+  return httpService.get(`${apiUrl}/users/${user!._id}`);
 }
 
 export function addFavorite(
   drawingNum: number | string
 ): Promise<AxiosResponse<UserDetails>> {
-  return httpService.patch(`${apiUrl}/users/add-favorite`, {
+  return httpService.patch(`${apiUrl}/users?add-favorite`, {
     favorites: [drawingNum],
   });
 }
@@ -71,7 +72,7 @@ export function addFavorite(
 export function removeFavorite(
   drawingNum: number | string
 ): Promise<AxiosResponse<UserDetails>> {
-  return httpService.patch(`${apiUrl}/users/delete-favorite`, {
+  return httpService.patch(`${apiUrl}/users?delete-favorite`, {
     favorites: [drawingNum],
   });
 }
