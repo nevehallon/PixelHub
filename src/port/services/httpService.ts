@@ -7,7 +7,11 @@ import getJwt from "./jwtService";
 axios.defaults.headers.common.Authorization = getJwt && getJwt();
 
 axios.interceptors.response.use(undefined, (error) => {
-  if (error.response && error.response.status >= 403) {
+  const {
+    response,
+    response: { data },
+  } = error;
+  if (response && data.code >= 500) {
     const errorMessage = "We are sorry, but unexpected error occurred :(";
     toast.error(errorMessage, {
       position: "top-center",

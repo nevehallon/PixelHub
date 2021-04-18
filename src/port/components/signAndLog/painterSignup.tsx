@@ -57,13 +57,18 @@ class PainterSignup extends Form {
         this.props.history.push("/create-drawing");
       }, 2500);
     } catch (error) {
-      if (error.response && error.response.status === 400) {
-        toast.error(error.response.data, {
+      const {
+        response,
+        response: { data },
+      } = error;
+
+      if (response && data.code) {
+        toast.error(data.message, {
           position: "top-center",
-          autoClose: error.response.data.length * 65,
+          autoClose: data.message.length * 120,
         });
         errors = { name: "", password: "", email: "" };
-        errors[error.response.data.split('"')[1]] = error.response.data;
+        errors[data.message.split('"')[1]] = data.message;
 
         this.setState({ errors, formData });
       }

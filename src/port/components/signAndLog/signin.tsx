@@ -47,15 +47,18 @@ class Signin extends Form {
         window.location.href = "/";
       }, 2200);
     } catch (error) {
-      if (error.response && error.response.status === 400) {
-        toast.error(error.response.data, {
+      const {
+        response,
+        response: { data },
+      } = error;
+
+      if (response && data.code) {
+        toast.error(data.message, {
           position: "top-center",
-          autoClose: error.response.data.length * 65,
+          autoClose: data.message.length * 120,
         });
         errors = { name: "", password: "", email: "" };
-
-        (errors as any)[error.response.data.split('"')[1]] =
-          error.response.data;
+        errors[data.message.split('"')[1]] = data.message;
 
         this.setState({ errors, formData });
       }
