@@ -64,7 +64,7 @@ export function getCurrentUserDetails(): Promise<AxiosResponse<UserDetails>> {
 export function addFavorite(
   drawingNum: number | string
 ): Promise<AxiosResponse<UserDetails>> {
-  return httpService.patch(`${apiUrl}/users?add-favorite`, {
+  return httpService.patch(`${apiUrl}/users?add-favorite=1`, {
     favorites: [drawingNum],
   });
 }
@@ -72,7 +72,7 @@ export function addFavorite(
 export function removeFavorite(
   drawingNum: number | string
 ): Promise<AxiosResponse<UserDetails>> {
-  return httpService.patch(`${apiUrl}/users?delete-favorite`, {
+  return httpService.patch(`${apiUrl}/users?delete-favorite=1`, {
     favorites: [drawingNum],
   });
 }

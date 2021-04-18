@@ -120,7 +120,7 @@ const Card = memo(
                     className="mx-1 p-button-rounded p-button-text p-button-lg d-inline-block"
                     icon="pi pi-pencil"
                     label="Edit"
-                    onClick={() => history.replace(`/edit?id=${_id}`)}
+                    onClick={() => history.replace(`/edit/${_id}`)}
                   />
                   <Button
                     className="mx-1 p-button-rounded p-button-text p-button-danger p-button-lg d-inline-block"
@@ -138,7 +138,7 @@ const Card = memo(
         </MotionConfig>
         <div>
           {!isSelected && (
-            <Link className="d-card-open-link" to={`${basePath}?id=${_id}`} />
+            <Link className="d-card-open-link" to={`${basePath}/${_id}`} />
           )}
           {!isSelected && (
             <motion.div

@@ -17,12 +17,12 @@ export function createDrawing(drawing: Drawing): Promise<AxiosResponse<any>> {
 }
 
 export function getMyDrawings(): Promise<AxiosResponse<any>> {
-  return http.get(`${apiUrl}/drawings/my-drawings`);
+  return http.get(`${apiUrl}/drawings?my-drawings=1`);
 }
 
 export function getDrawing(id: string): Promise<AxiosResponse<any>> {
   try {
-    return http.get(`${apiUrl}/drawings?id=${id}`);
+    return http.get(`${apiUrl}/drawings/${id}`);
   } catch (error) {
     // eslint-disable-next-line no-console
     console.error(error);
@@ -32,7 +32,7 @@ export function getDrawing(id: string): Promise<AxiosResponse<any>> {
 
 export function deleteDrawing(id: string): Promise<AxiosResponse<any>> {
   try {
-    return http.delete(`${apiUrl}/drawings?id=${id}`);
+    return http.delete(`${apiUrl}/drawings/${id}`);
   } catch (error) {
     // eslint-disable-next-line no-console
     console.error(error);
@@ -43,7 +43,7 @@ export function deleteDrawing(id: string): Promise<AxiosResponse<any>> {
 export function editDrawing(drawing: Drawing): Promise<AxiosResponse<any>> {
   try {
     const { _id, ...data } = drawing;
-    return http.put(`${apiUrl}/drawings?id=${_id}`, data);
+    return http.put(`${apiUrl}/drawings/${_id}`, data);
   } catch (error) {
     // eslint-disable-next-line no-console
     console.error(error);
