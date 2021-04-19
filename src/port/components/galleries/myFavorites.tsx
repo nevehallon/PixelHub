@@ -46,7 +46,6 @@ class MyFavorites extends Component {
       } = await getCurrentUserDetails();
 
       const { data } = await getDrawingsFromAllUsers(favorites);
-      console.log(data);
 
       // eslint-disable-next-line @typescript-eslint/no-unused-expressions
       data.length

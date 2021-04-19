@@ -1,34 +1,36 @@
 /* eslint-disable @typescript-eslint/naming-convention */
 /* eslint-disable newline-per-chained-call */
 
-import React from 'react';
-import { Link } from 'react-router-dom';
-import { toast } from 'react-toastify';
+import React from "react";
+import { Link } from "react-router-dom";
+import { toast } from "react-toastify";
 
-import Joi from 'joi';
+import Joi from "joi";
 
-import { DrawingForm, PageHeader } from '../../common';
-import { Drawing } from '../../interfaces/Drawing';
-import { GenericObjectProps } from '../../interfaces/genericObjectProps';
-import { editDrawing, getDrawing } from '../../services/drawingsService';
-import InputFeedback from './inputTextFeedback';
+import { DrawingForm, PageHeader } from "../../common";
+import { Drawing } from "../../interfaces/Drawing";
+import { GenericObjectProps } from "../../interfaces/genericObjectProps";
+import { editDrawing, getDrawing } from "../../services/drawingsService";
+import InputFeedback from "./inputTextFeedback";
 
 class EditDrawing extends DrawingForm {
   state = {
-    addedStyle: { border: '1px solid #00000065' },
+    addedStyle: { border: "1px solid #00000065" },
     gateKeep: true,
     canvasStateTimeline: [],
     currentStateIndex: 0,
     formData: {
-      _id: '',
-      drawingName: '',
-      description: '',
+      _id: "",
+      drawingName: "",
+      description: "",
     },
     errors: {},
     grid: [],
-    currentColor: 'rgb(63, 81, 181)',
+    currentColor: "rgb(63, 81, 181)",
     isInitial: false,
-    dataUrl: '',
+    dataUrl: "",
+    painterInfo: null as any,
+    drawingNumber: null as any,
   };
 
   async componentDidMount(): Promise<void> {
@@ -37,7 +39,14 @@ class EditDrawing extends DrawingForm {
       const { data }: any = await getDrawing(
         (this.props as any).match.params.id
       );
-      const { drawingName, description, grid, _id } = this.mapToState(data);
+      const {
+        drawingName,
+        description,
+        grid,
+        _id,
+        painterInfo,
+        drawingNumber,
+      }: Drawing = data;
 
       // ? mapping out _id field from grid
       const savedGrid = grid.map(({ fill, touched }) => ({ fill, touched }));
@@ -47,6 +56,8 @@ class EditDrawing extends DrawingForm {
         grid: savedGrid,
         canvasStateTimeline: [savedGrid],
         isInitial: false,
+        painterInfo,
+        drawingNumber,
       });
     } catch (error) {
       // eslint-disable-next-line no-console
@@ -54,23 +65,36 @@ class EditDrawing extends DrawingForm {
     }
   }
 
-  mapToState = (drawing: Drawing): Drawing => {
-    // TODO: remove, redundant code
-    const { drawingName, description, grid, _id }: Drawing = drawing;
-    return { drawingName, description, grid, _id };
-  };
-
   doSubmit = async (): Promise<void> => {
-    const { formData, grid, dataUrl } = this.state;
-    const data = { ...formData, grid, dataUrl };
+    try {
+      const {
+        formData,
+        grid,
+        dataUrl,
+        painterInfo,
+        drawingNumber,
+      } = this.state;
+      const data = { ...formData, grid, dataUrl, painterInfo, drawingNumber };
 
-    await editDrawing(data);
+      await editDrawing(data);
 
-    toast.success('Drawing was updated', {
-      position: 'top-center',
-      autoClose: 2500,
-    });
-    (this.props as any).history.replace('/my-drawings');
+      toast.success("Drawing was updated", {
+        position: "top-center",
+        autoClose: 2500,
+      });
+      (this.props as any).history.replace("/my-drawings");
+    } catch (error) {
+      const {
+        response: {
+          data: { code, name },
+        },
+      } = error;
+      toast.error(`Error(${code}): ${name}`, {
+        position: "top-center",
+        autoClose: 2500,
+      });
+      throw new Error(error);
+    }
   };
 
   render(): React.ReactNode {
@@ -102,8 +126,8 @@ class EditDrawing extends DrawingForm {
                   onSubmit={(e) => {
                     if (this.state.isInitial) {
                       e.preventDefault();
-                      toast.error('Canvas can not be blank', {
-                        position: 'top-center',
+                      toast.error("Canvas can not be blank", {
+                        position: "top-center",
                         autoClose: 2500,
                       });
                       return;
@@ -118,7 +142,7 @@ class EditDrawing extends DrawingForm {
                       label="Name"
                       maxLength={26}
                       renderInput={(rest: GenericObjectProps) =>
-                        this.renderInput('drawingName', '', undefined, {
+                        this.renderInput("drawingName", "", undefined, {
                           ...rest,
                         })
                       }
@@ -128,7 +152,7 @@ class EditDrawing extends DrawingForm {
                       label="Description"
                       maxLength={225}
                       renderInput={(rest: GenericObjectProps) =>
-                        this.renderInput('description', '', 'textarea', {
+                        this.renderInput("description", "", "textarea", {
                           ...rest,
                         })
                       }
@@ -143,7 +167,7 @@ class EditDrawing extends DrawingForm {
                       </Link>
                     </div>
 
-                    {this.renderButton('Update Drawing')}
+                    {this.renderButton("Update Drawing")}
                   </div>
                 </form>
               </div>

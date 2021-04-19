@@ -36,7 +36,7 @@ export function deleteDrawing(id: string): Promise<AxiosResponse<any>> {
   } catch (error) {
     // eslint-disable-next-line no-console
     console.error(error);
-    return error;
+    throw error;
   }
 }
 
@@ -47,7 +47,7 @@ export function editDrawing(drawing: Drawing): Promise<AxiosResponse<any>> {
   } catch (error) {
     // eslint-disable-next-line no-console
     console.error(error);
-    return error;
+    throw error;
   }
 }
 
