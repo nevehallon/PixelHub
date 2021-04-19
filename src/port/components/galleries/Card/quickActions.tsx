@@ -111,9 +111,16 @@ export default function SpeedDialTooltipOpen({
           const {
             data: { grid, dataUrl: imageSrc, drawingName, description },
           }: any = await getDrawing(id);
-          const data = {
-            drawingName: `${drawingName.substring(0, 15)}...(forked)`,
-            description: `${description.substring(0, 214)}...(forked)`,
+
+          const forked = "...(forked)";
+
+          const data: any = {
+            drawingName: `${
+              drawingName.replaceAll(forked, "").substring(0, 15) + forked
+            }`,
+            description: `${
+              description.replaceAll(forked, "").substring(0, 214) + forked
+            }`,
             grid,
             dataUrl: imageSrc,
           };
@@ -129,7 +136,16 @@ export default function SpeedDialTooltipOpen({
 
           history.replace(`/edit/${_id}`);
         } catch (error) {
-          console.error(error);
+          const {
+            response: {
+              data: { code, name },
+            },
+          } = error;
+          toast.error(`Error(${code}): ${name}`, {
+            position: "top-center",
+            autoClose: 2500,
+          });
+          throw new Error(error);
         }
       },
     },

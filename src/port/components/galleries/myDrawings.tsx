@@ -64,11 +64,19 @@ class MyDrawings extends Component {
     try {
       this.setState({ drawings: [...drawings].filter((_, i) => i !== index) });
       await deleteDrawing(id);
-      this.getData();
+      await this.getData();
     } catch (error) {
       this.setState({ drawings });
       // eslint-disable-next-line no-console
-      console.error(error);
+      const {
+        response: {
+          data: { code, name },
+        },
+      } = error;
+      toast.error(`Error(${code}): ${name}`, {
+        position: "top-center",
+        autoClose: 2500,
+      });
     }
   };
 
