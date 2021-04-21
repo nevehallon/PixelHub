@@ -1,12 +1,12 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useState } from "react";
 
-import { motion, transform, useAnimation } from 'framer-motion';
+import { motion, transform, useAnimation } from "framer-motion";
 
-import { GenericObjectProps } from '../../interfaces/genericObjectProps';
+import { GOP } from "../../interfaces/genericObjectProps";
 
-import './styles.scss';
+import "./styles.scss";
 
-const mapRemainingToColor = transform([2, 6], ['#ff008c', '#ccc']);
+const mapRemainingToColor = transform([2, 6], ["#ff008c", "#ccc"]);
 const mapRemainingToSpringVelocity = transform([0, 15], [15, 0]);
 
 const InputFeedback = ({
@@ -14,8 +14,8 @@ const InputFeedback = ({
   maxLength,
   label,
   currentValue,
-}: GenericObjectProps): JSX.Element => {
-  const [value, setValue] = useState(currentValue || '');
+}: GOP): JSX.Element => {
+  const [value, setValue] = useState(currentValue || "");
   const charactersRemaining = maxLength - value.length;
   const controls = useAnimation();
 
@@ -25,7 +25,7 @@ const InputFeedback = ({
     controls.start({
       scale: 1,
       transition: {
-        type: 'spring',
+        type: "spring",
         velocity: mapRemainingToSpringVelocity(charactersRemaining),
       },
     });
@@ -42,7 +42,7 @@ const InputFeedback = ({
             animate={controls}
             style={{
               color: mapRemainingToColor(charactersRemaining),
-              display: 'inline-block',
+              display: "inline-block",
             }}
           >
             &nbsp;{charactersRemaining}

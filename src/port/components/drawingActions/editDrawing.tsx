@@ -9,7 +9,7 @@ import Joi from "joi";
 
 import { DrawingForm, PageHeader } from "../../common";
 import { Drawing } from "../../interfaces/Drawing";
-import { GenericObjectProps } from "../../interfaces/genericObjectProps";
+import { GOP } from "../../interfaces/genericObjectProps";
 import { editDrawing, getDrawing } from "../../services/drawingsService";
 import InputFeedback from "./inputTextFeedback";
 
@@ -141,7 +141,7 @@ class EditDrawing extends DrawingForm {
                       currentValue={drawingName}
                       label="Name"
                       maxLength={26}
-                      renderInput={(rest: GenericObjectProps) =>
+                      renderInput={(rest: GOP) =>
                         this.renderInput("drawingName", "", undefined, {
                           ...rest,
                         })
@@ -151,7 +151,7 @@ class EditDrawing extends DrawingForm {
                       currentValue={description}
                       label="Description"
                       maxLength={225}
-                      renderInput={(rest: GenericObjectProps) =>
+                      renderInput={(rest: GOP) =>
                         this.renderInput("description", "", "textarea", {
                           ...rest,
                         })

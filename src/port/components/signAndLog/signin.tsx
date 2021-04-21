@@ -4,32 +4,14 @@ import { toast } from "react-toastify";
 import Joi from "joi";
 
 import { Form, PageHeader } from "../../common";
+import { baseSchema } from "../../common/form";
+import { LoginArgs } from "../../interfaces/loginArgs";
 import { getCurrentUser, login } from "../../services/userService";
 
-interface SigninState {
-  formData: {
-    password: string;
-    email: string;
-  };
-  errors: { [key: string]: any };
-}
-
 class Signin extends Form {
-  state: SigninState = {
-    formData: {
-      password: "",
-      email: "",
-    },
-    errors: {},
-  };
-
   schema = {
-    email: Joi.string()
-      .required()
-      .email({ tlds: { allow: false } })
-      .min(5)
-      .label("Email"),
-    password: Joi.string().required().min(6).label("Password"),
+    ...baseSchema,
+    name: Joi.optional(),
   };
 
   componentDidMount(): void {
@@ -42,7 +24,7 @@ class Signin extends Form {
     let { errors, formData } = this.state;
 
     try {
-      await login(formData);
+      await login(formData as LoginArgs);
       setTimeout(() => {
         window.location.href = "/";
       }, 2200);

@@ -1,3 +1,3 @@
-export interface GenericObjectProps {
+export interface GOP {
   [x: string]: any;
 }

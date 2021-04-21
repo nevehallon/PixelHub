@@ -2,40 +2,15 @@ import React from "react";
 import { Redirect } from "react-router-dom";
 import { toast } from "react-toastify";
 
-import Joi from "joi";
-
 import { Form, PageHeader } from "../../common";
-import { apiUrl } from "../../config.json";
+import { baseSchema } from "../../common/form";
 import httpService from "../../services/httpService";
 import { getCurrentUser } from "../../services/userService";
 
-interface SignupState {
-  formData: {
-    name: string;
-    password: string;
-    email: string;
-  };
-  errors: { [key: string]: any };
-}
+const { API_URL } = process.env;
 
 class Signup extends Form {
-  state: SignupState = {
-    formData: {
-      name: "",
-      password: "",
-      email: "",
-    },
-    errors: {},
-  };
-
-  schema = {
-    email: Joi.string()
-      .required()
-      .email({ tlds: { allow: false } })
-      .min(5),
-    password: Joi.string().required().min(6),
-    name: Joi.string().required().min(2),
-  };
+  schema = baseSchema;
 
   doSubmit = async (): Promise<void> => {
     // eslint-disable-next-line prefer-const
@@ -43,7 +18,7 @@ class Signup extends Form {
     const body = { ...formData, painter: false, strategy: "local" };
 
     try {
-      await httpService.post(`${apiUrl}/users`, body);
+      await httpService.post(`${API_URL}/users`, body);
       (this.props as any).history.replace("/sign-in");
       toast.success("You have successfully signed up!!", {
         position: "top-center",

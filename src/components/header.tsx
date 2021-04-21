@@ -1,9 +1,9 @@
 import { Link } from "gatsby";
 import PropTypes from "prop-types";
 
-import { GenericObjectProps } from "../port/interfaces/genericObjectProps";
+import { GOP } from "../port/interfaces/genericObjectProps";
 
-const Header = ({ siteTitle }: GenericObjectProps): JSX.Element => (
+const Header = ({ siteTitle }: GOP): JSX.Element => (
   <header
     style={{
       background: `rebeccapurple`,

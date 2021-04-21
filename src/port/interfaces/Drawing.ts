@@ -1,11 +1,10 @@
-import { GenericObjectProps } from "./genericObjectProps";
+import { GOP } from "./genericObjectProps";
 
-export interface Drawing {
+export interface Drawing extends GOP {
   drawingName: string;
   description: string;
   grid: { fill: string; touched: string }[];
   _id?: string;
-  painterInfo: GenericObjectProps;
-  drawingNumber: string | number;
-  // TODO:
+  painterInfo?: GOP;
+  drawingNumber?: string | number;
 }

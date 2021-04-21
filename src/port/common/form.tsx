@@ -1,15 +1,43 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
-import React, { Component, FormEvent } from 'react';
-import { toast } from 'react-toastify';
+import React, { Component, FormEvent } from "react";
+import { toast } from "react-toastify";
 
-import Joi from 'joi';
-import { Button } from 'primereact/button';
+import Joi from "joi";
+import { Button } from "primereact/button";
 
-import { Input } from '.';
-import { GenericObjectProps } from '../interfaces/genericObjectProps';
+import { Input } from ".";
+import { GOP } from "../interfaces/genericObjectProps";
+
+export interface SignupState extends GOP {
+  formData: {
+    name: string;
+    password: string;
+    email: string;
+  } & GOP;
+  errors: GOP;
+}
+
+export const baseState: SignupState = {
+  formData: {
+    name: "",
+    password: "",
+    email: "",
+  },
+  errors: {},
+};
+export const baseSchema = {
+  email: Joi.string()
+    .required()
+    .email({ tlds: { allow: false } })
+    .min(5),
+  password: Joi.string().required().min(6),
+  name: Joi.string().required().min(2),
+};
 
 class Form extends Component<{ [x: string]: any }, { [x: string]: any }> {
-  schema!: { [key: string]: Joi.StringSchema | Joi.ArraySchema };
+  schema!: {
+    [key: string]: Joi.StringSchema | Joi.ArraySchema | Joi.AnySchema;
+  };
 
   doSubmit!: () => Promise<void>;
 
@@ -18,8 +46,8 @@ class Form extends Component<{ [x: string]: any }, { [x: string]: any }> {
   handleSubmit = async (e: FormEvent<HTMLFormElement>): Promise<void> => {
     e.preventDefault();
     if (this.state.grid) {
-      toast.dark('One moment please', {
-        position: 'top-center',
+      toast.dark("One moment please", {
+        position: "top-center",
         autoClose: 2500,
       });
       const dataUrl = await this.convert2image();
@@ -32,8 +60,8 @@ class Form extends Component<{ [x: string]: any }, { [x: string]: any }> {
     this.setState({ errors: errors || {} });
 
     if (errors !== null && errors?.grid) {
-      toast.error('Canvas can not be blank', {
-        position: 'top-center',
+      toast.error("Canvas can not be blank", {
+        position: "top-center",
         autoClose: 2500,
       });
     }
@@ -94,8 +122,8 @@ class Form extends Component<{ [x: string]: any }, { [x: string]: any }> {
   renderInput = (
     name: string,
     label: string,
-    type = 'text',
-    { ...rest }: GenericObjectProps = { val: undefined }
+    type = "text",
+    { ...rest }: GOP = { val: undefined }
   ): React.ReactNode => {
     const { formData, errors } = this.state;
     return (
@@ -111,7 +139,7 @@ class Form extends Component<{ [x: string]: any }, { [x: string]: any }> {
     );
   };
 
-  renderButton(label = ''): React.ReactNode {
+  renderButton(label = ""): React.ReactNode {
     return (
       <div className="text-center">
         <Button

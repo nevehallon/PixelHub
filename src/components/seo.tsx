@@ -11,14 +11,9 @@ import { Helmet } from "react-helmet";
 import { graphql, useStaticQuery } from "gatsby";
 import PropTypes from "prop-types";
 
-import { GenericObjectProps } from "../port/interfaces/genericObjectProps";
+import { GOP } from "../port/interfaces/genericObjectProps";
 
-function SEO({
-  description,
-  lang,
-  meta,
-  title,
-}: GenericObjectProps): JSX.Element {
+function SEO({ description, lang, meta, title }: GOP): JSX.Element {
   const { site } = useStaticQuery(
     graphql`
       query {

@@ -3,10 +3,11 @@ import { toast } from "react-toastify";
 import { AxiosResponse } from "axios";
 import jwtDecode from "jwt-decode";
 
-import { apiUrl } from "../config.json";
 import { LoginArgs } from "../interfaces/loginArgs";
 import { UserDetails } from "../interfaces/UserDetails";
 import httpService from "./httpService";
+
+const { API_URL } = process.env;
 
 const tokenKey = "localData";
 
@@ -23,7 +24,7 @@ export function getCurrentUser(): { [x: string]: any } | null {
 }
 
 export async function login({ email, password }: LoginArgs): Promise<void> {
-  const { data } = await httpService.post(`${apiUrl}/authentication`, {
+  const { data } = await httpService.post(`${API_URL}/authentication`, {
     strategy: "local",
     email,
     password,
@@ -46,25 +47,21 @@ export function getDrawingsFromAllUsers(
   drawingNumList: any[]
 ): Promise<AxiosResponse<any>> {
   return httpService.get(
-    `${apiUrl}/users?numbers=${drawingNumList.toString()}`
+    `${API_URL}/users?numbers=${drawingNumList.toString()}`
   );
 }
 
-export function getUserDetailsByUserId(
-  userId: string
+export function getCurrentUserDetails(
+  _id?: string
 ): Promise<AxiosResponse<UserDetails>> {
-  return httpService.get(`${apiUrl}/users?id=${userId}`);
-}
-
-export function getCurrentUserDetails(): Promise<AxiosResponse<UserDetails>> {
-  const user = getCurrentUser();
-  return httpService.get(`${apiUrl}/users/${user!._id}`);
+  const user = _id ? { _id } : getCurrentUser();
+  return httpService.get(`${API_URL}/users/${user!._id}`);
 }
 
 export function addFavorite(
   drawingNum: number | string
 ): Promise<AxiosResponse<UserDetails>> {
-  return httpService.patch(`${apiUrl}/users?add-favorite=1`, {
+  return httpService.patch(`${API_URL}/users?add-favorite=1`, {
     favorites: [drawingNum],
   });
 }
@@ -72,7 +69,7 @@ export function addFavorite(
 export function removeFavorite(
   drawingNum: number | string
 ): Promise<AxiosResponse<UserDetails>> {
-  return httpService.patch(`${apiUrl}/users?delete-favorite=1`, {
+  return httpService.patch(`${API_URL}/users?delete-favorite=1`, {
     favorites: [drawingNum],
   });
 }
