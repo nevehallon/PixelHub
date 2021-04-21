@@ -12,12 +12,19 @@ axios.interceptors.response.use(undefined, (error) => {
     response: { data },
   } = error;
   if (response && data.code >= 500) {
-    const errorMessage = "We are sorry, but unexpected error occurred :(";
+    const errorMessage =
+      "We are sorry, but unexpected error occurred, please try again later.";
     toast.error(errorMessage, {
       position: "top-center",
       autoClose: 3000,
     });
   }
+  if (response && data.code === 401) {
+    localStorage.removeItem("localData");
+
+    location.replace("/");
+  }
+
   return Promise.reject(error);
 });
 
