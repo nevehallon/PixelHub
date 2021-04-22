@@ -3,13 +3,15 @@ import { Redirect } from "react-router-dom";
 import { toast } from "react-toastify";
 
 import { Form, PageHeader } from "../../common";
-import { baseSchema } from "../../common/form";
+import { baseSchema, baseState } from "../../common/form";
 import httpService from "../../services/httpService";
 import { getCurrentUser } from "../../services/userService";
 
-const { API_URL } = process.env;
+const url = process.env.GATSBY_API_URL;
 
 class Signup extends Form {
+  state = { ...baseState };
+
   schema = baseSchema;
 
   doSubmit = async (): Promise<void> => {
@@ -18,7 +20,7 @@ class Signup extends Form {
     const body = { ...formData, painter: false, strategy: "local" };
 
     try {
-      await httpService.post(`${API_URL}/users`, body);
+      await httpService.post(`${url}/users`, body);
       (this.props as any).history.replace("/sign-in");
       toast.success("You have successfully signed up!!", {
         position: "top-center",

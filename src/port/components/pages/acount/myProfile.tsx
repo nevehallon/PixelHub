@@ -11,7 +11,7 @@ import AccountProfile from "./accountProfile";
 import AccountProfileDetails from "./accountProfileForm";
 
 const MyProfile = (): any => {
-  const [user, setUser] = useState({} as UserDetails);
+  const [user, setUser] = useState<UserDetails | null>(null);
   const populateUserDetails = async () => {
     const { data } = await getCurrentUserDetails();
     setUser(data);
@@ -39,16 +39,18 @@ const MyProfile = (): any => {
           },
         }}
       >
-        <Container maxWidth="lg">
-          <Grid container spacing={3}>
-            <Grid item lg={4} md={6} xs={12}>
-              <AccountProfile user={user} />
+        {user && (
+          <Container maxWidth="lg">
+            <Grid container spacing={3}>
+              <Grid item lg={4} md={6} xs={12}>
+                <AccountProfile user={user} />
+              </Grid>
+              <Grid item lg={8} md={6} xs={12}>
+                <AccountProfileDetails user={user} />
+              </Grid>
             </Grid>
-            <Grid item lg={8} md={6} xs={12}>
-              <AccountProfileDetails user={user} />
-            </Grid>
-          </Grid>
-        </Container>
+          </Container>
+        )}
       </Box>
     </>
   );

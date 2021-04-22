@@ -5,5 +5,6 @@ export default (): string => {
 
   const localData =
     hasLocalData && JSON.parse(localStorage.getItem(tokenKey) ?? "null");
+
   return hasLocalData && localData.accessToken;
 };

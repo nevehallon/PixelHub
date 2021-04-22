@@ -20,7 +20,7 @@ import httpService from "../../../services/httpService";
 import { getCurrentUserDetails } from "../../../services/userService";
 import InputFeedback from "../../drawingActions/inputTextFeedback";
 
-const { API_URL } = process.env;
+const url = process.env.GATSBY_API_URL;
 
 class AccountProfileDetails extends Form {
   state = {
@@ -42,7 +42,7 @@ class AccountProfileDetails extends Form {
     const body = { ...formData, painter: false, strategy: "local" };
 
     try {
-      await httpService.post(`${API_URL}/users`, body);
+      await httpService.post(`${url}/users`, body);
       (this.props as any).history.replace("/sign-in");
       toast.success("You have successfully signed up!!", {
         position: "top-center",

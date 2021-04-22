@@ -26,15 +26,19 @@ class CreateDrawing extends DrawingForm {
   };
 
   doSubmit = async (): Promise<void> => {
-    const { formData, grid, dataUrl } = this.state;
-    const data = { ...formData, grid, dataUrl };
+    try {
+      const { formData, grid, dataUrl } = this.state;
+      const data = { ...formData, grid, dataUrl };
 
-    await createDrawing(data);
-    toast.success("A new drawing was created", {
-      position: "top-center",
-      autoClose: 2500,
-    });
-    (this.props as any).history.replace("/my-drawings");
+      await createDrawing(data);
+      toast.success("A new drawing was created", {
+        position: "top-center",
+        autoClose: 2500,
+      });
+      (this.props as any).history.replace("/my-drawings");
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   render(): React.ReactNode {

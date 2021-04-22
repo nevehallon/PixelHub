@@ -4,8 +4,14 @@ import axios from "axios";
 
 import getJwt from "./jwtService";
 
-axios.defaults.headers.common.Authorization = getJwt && getJwt();
-
+axios.interceptors.request.use(
+  (config) => {
+    // eslint-disable-next-line no-param-reassign
+    config.headers.Authorization = getJwt && getJwt();
+    return config;
+  },
+  (error) => Promise.reject(error)
+);
 axios.interceptors.response.use(undefined, (error) => {
   const {
     response,

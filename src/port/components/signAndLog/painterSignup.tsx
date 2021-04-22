@@ -3,13 +3,15 @@ import { Redirect } from "react-router-dom";
 import { toast } from "react-toastify";
 
 import { Form, PageHeader } from "../../common";
-import { baseSchema } from "../../common/form";
+import { baseSchema, baseState } from "../../common/form";
 import httpService from "../../services/httpService";
 import { getCurrentUser, login } from "../../services/userService";
 
-const { API_URL } = process.env;
+const url = process.env.GATSBY_API_URL;
 
 class PainterSignup extends Form {
+  state = { ...baseState };
+
   schema = baseSchema;
 
   doSubmit = async (): Promise<void> => {
@@ -18,7 +20,7 @@ class PainterSignup extends Form {
     const body = { ...formData, painter: true };
 
     try {
-      await httpService.post(`${API_URL}/users`, body);
+      await httpService.post(`${url}/users`, body);
 
       const { email, password } = body;
       await login({ email, password });
@@ -32,6 +34,7 @@ class PainterSignup extends Form {
         this.props.history.push("/create-drawing");
       }, 2500);
     } catch (error) {
+      if (!error.response) throw error;
       const {
         response,
         response: { data },

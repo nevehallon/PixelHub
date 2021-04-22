@@ -7,7 +7,7 @@ import { LoginArgs } from "../interfaces/loginArgs";
 import { UserDetails } from "../interfaces/UserDetails";
 import httpService from "./httpService";
 
-const { API_URL } = process.env;
+const url = process.env.GATSBY_API_URL;
 
 const tokenKey = "localData";
 
@@ -24,11 +24,12 @@ export function getCurrentUser(): { [x: string]: any } | null {
 }
 
 export async function login({ email, password }: LoginArgs): Promise<void> {
-  const { data } = await httpService.post(`${API_URL}/authentication`, {
+  const { data } = await httpService.post(`${url}/authentication`, {
     strategy: "local",
     email,
     password,
   });
+
   if (!data.isPainter) {
     toast.success(`Logging in...`, {
       position: "top-center",
@@ -46,22 +47,20 @@ export async function logout(): Promise<void> {
 export function getDrawingsFromAllUsers(
   drawingNumList: any[]
 ): Promise<AxiosResponse<any>> {
-  return httpService.get(
-    `${API_URL}/users?numbers=${drawingNumList.toString()}`
-  );
+  return httpService.get(`${url}/users?numbers=${drawingNumList.toString()}`);
 }
 
 export function getCurrentUserDetails(
   _id?: string
 ): Promise<AxiosResponse<UserDetails>> {
   const user = _id ? { _id } : getCurrentUser();
-  return httpService.get(`${API_URL}/users/${user!._id}`);
+  return httpService.get(`${url}/users/${user!._id}`);
 }
 
 export function addFavorite(
   drawingNum: number | string
 ): Promise<AxiosResponse<UserDetails>> {
-  return httpService.patch(`${API_URL}/users?add-favorite=1`, {
+  return httpService.patch(`${url}/users?add-favorite=1`, {
     favorites: [drawingNum],
   });
 }
@@ -69,7 +68,7 @@ export function addFavorite(
 export function removeFavorite(
   drawingNum: number | string
 ): Promise<AxiosResponse<UserDetails>> {
-  return httpService.patch(`${API_URL}/users?delete-favorite=1`, {
+  return httpService.patch(`${url}/users?delete-favorite=1`, {
     favorites: [drawingNum],
   });
 }

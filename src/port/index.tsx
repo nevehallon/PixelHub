@@ -20,7 +20,6 @@ import "primereact/resources/primereact.min.css";
 import "primeicons/primeicons.css";
 import "./index.scss";
 
-process.env.API_URL = "http://localhost/3030";
 PrimeReact.ripple = true;
 
 const IndexPortPage = (): JSX.Element => (

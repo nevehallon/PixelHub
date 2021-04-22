@@ -4,11 +4,13 @@ import { toast } from "react-toastify";
 import Joi from "joi";
 
 import { Form, PageHeader } from "../../common";
-import { baseSchema } from "../../common/form";
+import { baseSchema, baseState } from "../../common/form";
 import { LoginArgs } from "../../interfaces/loginArgs";
 import { getCurrentUser, login } from "../../services/userService";
 
 class Signin extends Form {
+  state = { ...baseState };
+
   schema = {
     ...baseSchema,
     name: Joi.optional(),
