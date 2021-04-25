@@ -1,7 +1,7 @@
 /* eslint-disable react/jsx-max-props-per-line */
 import { useEffect, useState } from "react";
 import { Helmet } from "react-helmet";
-import { useHistory } from "react-router";
+import { useHistory } from "react-router-dom";
 
 import { Box, Container, Grid } from "@material-ui/core";
 
