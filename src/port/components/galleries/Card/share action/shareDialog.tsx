@@ -8,9 +8,6 @@ import DialogTitle from "@material-ui/core/DialogTitle";
 import Slide from "@material-ui/core/Slide";
 import { TransitionProps } from "@material-ui/core/transitions";
 
-// eslint-disable-next-line import/no-named-as-default
-import Demo from "./Share";
-
 const Transition = forwardRef((
   // eslint-disable-next-line react/require-default-props
   props: TransitionProps & { children?: ReactElement<any, any> },
@@ -20,11 +17,11 @@ const Transition = forwardRef((
 const AlertDialogSlide = ({
   title,
   emitClose,
-  shareUrl,
+  children,
 }: {
   emitClose: () => void;
   title: string;
-  shareUrl: string;
+  children: JSX.Element;
 }): JSX.Element => {
   const [open, setOpen] = useState(true);
 
@@ -47,7 +44,8 @@ const AlertDialogSlide = ({
       >
         <DialogTitle id="alert-dialog-slide-title">{title}</DialogTitle>
         <DialogContent>
-          <Demo shareUrl={shareUrl} />
+          {children}
+
           {/* <DialogContentText id="alert-dialog-slide-description">
             Let Google help apps determine location. This means sending
             anonymous location data to Google, even when no apps are running.

@@ -8,16 +8,13 @@ import {
   Grid,
 } from "@material-ui/core";
 import Joi from "joi";
-import { Button } from "primereact/button";
 import { Card } from "primereact/card";
 import { Divider } from "primereact/divider";
 
 import { Form } from "../../../common";
 import { baseSchema, baseState } from "../../../common/form";
 import { GOP } from "../../../interfaces/genericObjectProps";
-import { UserDetails } from "../../../interfaces/UserDetails";
 import httpService from "../../../services/httpService";
-import { getCurrentUserDetails } from "../../../services/userService";
 import InputFeedback from "../../drawingActions/inputTextFeedback";
 
 const url = process.env.GATSBY_API_URL;
@@ -27,12 +24,6 @@ class AccountProfileDetails extends Form {
     ...baseState,
     formData: {
       ...this.props.user,
-      // name: "",
-      // lastName: "",
-      // email: "",
-      // phone: "",
-      // state: "",
-      // country: "",
     },
   };
 
@@ -52,7 +43,10 @@ class AccountProfileDetails extends Form {
         autoClose: 4000,
       });
     } catch (error) {
-      if (!error.response) return console.log(error);
+      if (!error.response) {
+        console.log(error);
+        return;
+      }
 
       const {
         response,
@@ -79,6 +73,8 @@ class AccountProfileDetails extends Form {
   };
 
   render(): JSX.Element {
+    // phone: "",
+    // country: "",
     const {
       formData: { name, phone, email, country },
     } = this.state;
