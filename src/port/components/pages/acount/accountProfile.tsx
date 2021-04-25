@@ -22,11 +22,11 @@ import { UserDetails } from "../../../interfaces/UserDetails";
 // };
 
 const AccountProfile = ({
-  user: { avatar, name, country, timezone },
+  user: { avatar, name, country },
 }: {
   user: UserDetails & GOP;
 }): JSX.Element => (
-  <Card /* {...props} */>
+  <Card>
     <CardContent>
       <Box
         style={{
@@ -46,9 +46,6 @@ const AccountProfile = ({
           {name}
         </Typography>
         {country && <Typography variant="body1">{country}</Typography>}
-        <Typography variant="body1">
-          {/* {`${moment().format("hh:mm A")} ${timezone}`} */}
-        </Typography>
       </Box>
     </CardContent>
     <Divider />

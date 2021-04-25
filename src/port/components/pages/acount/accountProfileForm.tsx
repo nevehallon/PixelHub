@@ -25,13 +25,15 @@ const url = process.env.GATSBY_API_URL;
 class AccountProfileDetails extends Form {
   state = {
     ...baseState,
-    user: this.props.user,
-    name: "",
-    lastName: "",
-    email: "",
-    phone: "",
-    state: "",
-    country: "",
+    formData: {
+      ...this.props.user,
+      // name: "",
+      // lastName: "",
+      // email: "",
+      // phone: "",
+      // state: "",
+      // country: "",
+    },
   };
 
   schema = { ...baseSchema, password: Joi.allow() };
@@ -42,13 +44,16 @@ class AccountProfileDetails extends Form {
     const body = { ...formData, painter: false, strategy: "local" };
 
     try {
-      await httpService.post(`${url}/users`, body);
-      (this.props as any).history.replace("/sign-in");
-      toast.success("You have successfully signed up!!", {
+      await httpService.patch(`${url}/users/${body._id}`, body);
+      const { history } = this.props;
+      history.replace("/me");
+      toast.success("Account information updated!!", {
         position: "top-center",
         autoClose: 4000,
       });
     } catch (error) {
+      if (!error.response) return console.log(error);
+
       const {
         response,
         response: { data },
@@ -75,7 +80,7 @@ class AccountProfileDetails extends Form {
 
   render(): JSX.Element {
     const {
-      user: { name, phone, email, country },
+      formData: { name, phone, email, country },
     } = this.state;
     return (
       <form
@@ -91,24 +96,24 @@ class AccountProfileDetails extends Form {
             <Grid container spacing={3}>
               <Grid {...(this.gridProps as any)}>
                 <InputFeedback
+                  currentValue={name}
                   label="Name"
                   maxLength={26}
                   renderInput={(rest: GOP) =>
                     this.renderInput("name", "Name", "", {
                       ...rest,
-                      value: name,
                     })
                   }
                 />
               </Grid>
               <Grid {...(this.gridProps as any)}>
                 <InputFeedback
+                  currentValue={email}
                   label="Email"
                   maxLength={26}
                   renderInput={(rest: GOP) =>
                     this.renderInput("email", "Email", "email", {
                       ...rest,
-                      value: email,
                     })
                   }
                 />

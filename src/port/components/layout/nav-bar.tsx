@@ -91,6 +91,12 @@ const Navbar = ({ user }: { [key: string]: any } | any): any => {
           style: { display: user ? "" : "none" },
           command: () => history.push("/logout"),
         },
+        {
+          label: "My Profile",
+          icon: "pi pi-fw pi-user-edit",
+          style: { display: user ? "" : "none" },
+          command: () => history.push("/me"),
+        },
       ],
     },
   ];

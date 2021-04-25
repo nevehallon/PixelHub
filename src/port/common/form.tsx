@@ -74,7 +74,7 @@ class Form extends Component<{ [x: string]: any }, { [x: string]: any }> {
 
     const obj = { [name]: value };
 
-    const { error } = schema.validate(obj, {
+    const { error } = schema.unknown().validate(obj, {
       abortEarly: false,
     });
     return error ? error.details[0].message : null;
@@ -85,7 +85,7 @@ class Form extends Component<{ [x: string]: any }, { [x: string]: any }> {
       state: { formData },
       schema,
     } = this;
-    const { error } = Joi.object(schema)!.validate(formData, {
+    const { error } = Joi.object(schema).unknown()!.validate(formData, {
       abortEarly: false,
     });
     if (!error) return null;
@@ -93,6 +93,7 @@ class Form extends Component<{ [x: string]: any }, { [x: string]: any }> {
     error.details.forEach(({ path, message }: any) => {
       errors[path[0]] = message;
     });
+
     return errors;
   };
 

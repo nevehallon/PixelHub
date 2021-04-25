@@ -142,7 +142,7 @@ class EditDrawing extends DrawingForm {
                       label="Name"
                       maxLength={26}
                       renderInput={(rest: GOP) =>
-                        this.renderInput("drawingName", "", undefined, {
+                        this.renderInput("drawingName", "", "", {
                           ...rest,
                         })
                       }
