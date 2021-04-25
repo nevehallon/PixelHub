@@ -1,5 +1,5 @@
 /* eslint-disable react/jsx-max-props-per-line */
-import { useState } from "react";
+import { SyntheticEvent, useState } from "react";
 
 import {
   Avatar,
@@ -18,9 +18,9 @@ import { UserDetails } from "../../../interfaces/UserDetails";
 import InputFeedback from "../../drawingActions/inputTextFeedback";
 import AlertDialogSlide from "../../galleries/Card/share action/shareDialog";
 
-const handleSaveAvatar = (e) => {
+const handleSaveAvatar = (e: SyntheticEvent) => {
   e.preventDefault();
-  console.log(e.nativeEvent.srcElement[0].value);
+  const { value } = e.nativeEvent.srcElement[0];
 };
 // const user = {
 //   avatar: "",
