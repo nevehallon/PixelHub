@@ -1,7 +1,6 @@
 /* eslint-disable react/jsx-max-props-per-line */
 import { useEffect, useState } from "react";
 import { Helmet } from "react-helmet";
-import { useHistory } from "react-router-dom";
 
 import { Box, Container, Grid } from "@material-ui/core";
 
@@ -13,7 +12,6 @@ import AccountProfileDetails from "./accountProfileForm";
 
 const MyProfile = (): any => {
   const [user, setUser] = useState<UserDetails | null>(null);
-  const history = useHistory();
   const populateUserDetails = async () => {
     const { data } = await getCurrentUserDetails();
     setUser(data);
@@ -48,7 +46,7 @@ const MyProfile = (): any => {
                 <AccountProfile user={user} />
               </Grid>
               <Grid item lg={8} md={6} xs={12}>
-                <AccountProfileDetails history={history} user={user} />
+                <AccountProfileDetails user={user} />
               </Grid>
             </Grid>
           </Container>

@@ -32,12 +32,10 @@ class AccountProfileDetails extends Form {
   doSubmit = async (): Promise<void> => {
     // eslint-disable-next-line prefer-const
     let { errors, formData } = this.state;
-    const body = { ...formData, painter: false, strategy: "local" };
+    const body = { ...formData };
 
     try {
       await httpService.patch(`${url}/users/${body._id}`, body);
-      const { history } = this.props;
-      history.replace("/me");
       toast.success("Account information updated!!", {
         position: "top-center",
         autoClose: 4000,

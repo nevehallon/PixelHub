@@ -1,5 +1,6 @@
 /* eslint-disable react/jsx-max-props-per-line */
-import { SyntheticEvent, useState } from "react";
+import { FormEvent, useState } from "react";
+import { toast } from "react-toastify";
 
 import {
   Avatar,
@@ -15,24 +16,56 @@ import { InputText } from "primereact/inputtext";
 
 import { GOP } from "../../../interfaces/genericObjectProps";
 import { UserDetails } from "../../../interfaces/UserDetails";
+import httpService from "../../../services/httpService";
 import InputFeedback from "../../drawingActions/inputTextFeedback";
 import AlertDialogSlide from "../../galleries/Card/share action/shareDialog";
 
-const handleSaveAvatar = (e: SyntheticEvent) => {
+const url = process.env.GATSBY_API_URL;
+
+const handleSaveAvatar = async (e: FormEvent, user: any) => {
   e.preventDefault();
-  const { value } = e.nativeEvent.srcElement[0];
+
+  const { value } = (e.nativeEvent
+    .target as HTMLFormElement)[0] as HTMLInputElement;
+
+  const body = { ...user, avatarUrl: value };
+
+  try {
+    await httpService.patch(`${url}/users/${user._id}`, body);
+    toast.success("Account Avatar updated!!", {
+      position: "top-center",
+      autoClose: 4000,
+    });
+  } catch (error) {
+    if (!error.response) {
+      console.log(error);
+      return;
+    }
+
+    const {
+      response,
+      response: { data },
+    } = error;
+
+    if (response && data.code) {
+      toast.error(data.message, {
+        position: "top-center",
+        autoClose: data.message.length * 120,
+      });
+    }
+  }
 };
+
 // const user = {
 //   avatar: "",
 //   country: "",
 // };
-
-const AccountProfile = ({
-  user: { avatar, name, country },
-}: {
-  user: UserDetails & GOP;
-}): JSX.Element => {
+const AccountProfile = ({ user }: { user: UserDetails & GOP }): JSX.Element => {
   const [openDialog, setOpenDialog] = useState(false);
+
+  const { avatarUrl, name, country, _id } = user;
+
+  const src = avatarUrl || "";
 
   return (
     <Card>
@@ -45,10 +78,12 @@ const AccountProfile = ({
           }}
         >
           <Avatar
-            //   src={avatar}
+            alt="user profile avatar"
+            imgProps={{ style: { height: "unset" } }}
+            src={src}
             style={{
-              height: 100,
-              width: 100,
+              height: 150,
+              width: 150,
             }}
           />
           <Typography gutterBottom variant="h3">
@@ -71,9 +106,9 @@ const AccountProfile = ({
           emitClose={() => setOpenDialog(false)}
           title="enter valid image url"
         >
-          <form onSubmit={handleSaveAvatar}>
+          <form onSubmit={(e) => handleSaveAvatar(e, user)}>
             <InputFeedback
-              currentValue={avatar}
+              currentValue={src}
               label="Image Link"
               maxLength={2048}
               renderInput={(rest: GOP) => (

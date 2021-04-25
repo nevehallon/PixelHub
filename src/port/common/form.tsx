@@ -46,6 +46,7 @@ class Form extends Component<{ [x: string]: any }, { [x: string]: any }> {
   handleSubmit = async (e: FormEvent<HTMLFormElement>): Promise<void> => {
     e.preventDefault();
     if (this.state.grid) {
+      // ? only for drawings
       toast.dark("One moment please", {
         position: "top-center",
         autoClose: 2500,
@@ -60,6 +61,7 @@ class Form extends Component<{ [x: string]: any }, { [x: string]: any }> {
     this.setState({ errors: errors || {} });
 
     if (errors !== null && errors?.grid) {
+      // ? only for drawings
       toast.error("Canvas can not be blank", {
         position: "top-center",
         autoClose: 2500,
