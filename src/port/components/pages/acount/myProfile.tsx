@@ -5,6 +5,7 @@ import { Helmet } from "react-helmet";
 import { Box, Container, Grid } from "@material-ui/core";
 
 import PageHeader from "../../../common/pageHeader";
+import { GOP } from "../../../interfaces/genericObjectProps";
 import { UserDetails } from "../../../interfaces/UserDetails";
 import { getCurrentUserDetails } from "../../../services/userService";
 import AccountProfile from "./accountProfile";
@@ -43,7 +44,10 @@ const MyProfile = (): any => {
           <Container maxWidth="lg">
             <Grid container spacing={3}>
               <Grid item lg={4} md={6} xs={12}>
-                <AccountProfile user={user} />
+                <AccountProfile
+                  setUserDetails={(rest: GOP) => setUser({ ...user, ...rest })}
+                  user={user}
+                />
               </Grid>
               <Grid item lg={8} md={6} xs={12}>
                 <AccountProfileDetails user={user} />

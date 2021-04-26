@@ -22,7 +22,12 @@ import AlertDialogSlide from "../../galleries/Card/share action/shareDialog";
 
 const url = process.env.GATSBY_API_URL;
 
-const handleSaveAvatar = async (e: FormEvent, user: any) => {
+const handleSaveAvatar = async (
+  e: FormEvent,
+  user: any,
+  cb: (arg: GOP) => void,
+  cb2: VoidFunction
+): Promise<void> => {
   e.preventDefault();
 
   const { value } = (e.nativeEvent
@@ -31,11 +36,16 @@ const handleSaveAvatar = async (e: FormEvent, user: any) => {
   const body = { ...user, avatarUrl: value };
 
   try {
-    await httpService.patch(`${url}/users/${user._id}`, body);
+    const {
+      data: { avatarUrl },
+    } = await httpService.patch(`${url}/users/${user._id}`, body);
     toast.success("Account Avatar updated!!", {
       position: "top-center",
       autoClose: 4000,
     });
+
+    cb({ avatarUrl });
+    cb2();
   } catch (error) {
     if (!error.response) {
       console.log(error);
@@ -60,7 +70,13 @@ const handleSaveAvatar = async (e: FormEvent, user: any) => {
 //   avatar: "",
 //   country: "",
 // };
-const AccountProfile = ({ user }: { user: UserDetails & GOP }): JSX.Element => {
+const AccountProfile = ({
+  user,
+  setUserDetails,
+}: {
+  user: UserDetails & GOP;
+  setUserDetails: (arg: GOP) => void;
+}): JSX.Element => {
   const [openDialog, setOpenDialog] = useState(false);
 
   const { avatarUrl, name, country, _id } = user;
@@ -106,7 +122,13 @@ const AccountProfile = ({ user }: { user: UserDetails & GOP }): JSX.Element => {
           emitClose={() => setOpenDialog(false)}
           title="enter valid image url"
         >
-          <form onSubmit={(e) => handleSaveAvatar(e, user)}>
+          <form
+            onSubmit={(e) =>
+              handleSaveAvatar(e, user, setUserDetails, () =>
+                setOpenDialog(false)
+              )
+            }
+          >
             <InputFeedback
               currentValue={src}
               label="Image Link"
