@@ -4,6 +4,10 @@ module.exports = {
     description: ``,
     author: `Neveh Allon`,
   },
+  flags: {
+    DEV_SSR: true,
+    FAST_DEV: true,
+  },
   plugins: [
     `gatsby-plugin-react-helmet`,
     `gatsby-plugin-image`,
@@ -26,7 +30,7 @@ module.exports = {
         background_color: `#663399`,
         theme_color: `#663399`,
         display: `minimal-ui`,
-        icon: `src/images/gatsby-icon.png`, // This path is relative to the root of the site. TODO: change image
+        icon: `src/images/logo.svg`, // This path is relative to the root of the site. TODO: change image
       },
     },
     `gatsby-plugin-gatsby-cloud`,

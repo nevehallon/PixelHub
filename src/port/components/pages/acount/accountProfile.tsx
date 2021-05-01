@@ -95,7 +95,7 @@ const AccountProfile = ({
         >
           <Avatar
             alt="user profile avatar"
-            imgProps={{ style: { height: "unset" } }}
+            imgProps={{ style: { marginBottom: 0 } }}
             src={src}
             style={{
               height: 150,
