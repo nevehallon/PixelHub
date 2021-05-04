@@ -5,8 +5,7 @@ module.exports = {
     author: `Neveh Allon`,
   },
   flags: {
-    DEV_SSR: true,
-    FAST_DEV: true,
+    PARALLEL_SOURCING: true,
   },
   plugins: [
     `gatsby-plugin-react-helmet`,

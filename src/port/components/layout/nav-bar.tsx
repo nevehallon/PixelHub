@@ -1,6 +1,6 @@
 import { useHistory } from "react-router-dom";
 
-import { InputText } from "primereact/inputtext";
+// import { InputText } from "primereact/inputtext";
 import { Menubar, MenubarProps } from "primereact/menubar";
 
 type MenuItem = Exclude<MenubarProps["model"], undefined>[number];
@@ -99,13 +99,19 @@ const Navbar = ({ user }: { [key: string]: any } | any): any => {
         },
       ],
     },
+    {
+      label: "Explore",
+      icon: "pi pi-fw pi-compass",
+      style: { display: user ? "" : "none" },
+      command: () => history.push("/browse"),
+    },
   ];
 
-  const end = <InputText placeholder="Search" type="text" />;
+  // const end = <InputText placeholder="Search" type="text" />;
 
   return (
     <div>
-      <Menubar end={end} model={items as any} />
+      <Menubar /* end={end} */ model={items as any} />
     </div>
   );
 };

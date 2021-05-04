@@ -10,6 +10,7 @@ import ProtectedRoute from "./common/protectedRoute";
 import CreateDrawing from "./components/drawingActions/createDrawing";
 import EditDrawing from "./components/drawingActions/editDrawing";
 import { MyDrawings, MyFavorites } from "./components/galleries";
+import Browse from "./components/galleries/browseDB";
 import Footer from "./components/layout/footer";
 import Navbar from "./components/layout/nav-bar";
 import About from "./components/pages/about";
@@ -82,6 +83,7 @@ class App extends Component {
             />
             <Route component={About} path="/about" />
             <Route component={MyProfile} path="/me" />
+            <Route component={Browse} path="/browse" />
             <Route component={Home} exact path="/" />
             <Redirect to="/" /> {/* TODO: add 404 page not found */}
           </Switch>
