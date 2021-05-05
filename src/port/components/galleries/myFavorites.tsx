@@ -19,7 +19,6 @@ interface MyDrawingsState {
   drawings: any[];
   favorites: any[];
   loading: boolean;
-  // [x: string]: any;
 }
 
 class MyFavorites extends Component {

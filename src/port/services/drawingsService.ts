@@ -21,10 +21,14 @@ export function getMyDrawings(): Promise<AxiosResponse<any>> {
   return http.get(`${url}/drawings?my-drawings=1`);
 }
 
-export function getDrawing(id?: string): Promise<AxiosResponse<any>> {
+export function getDrawing(
+  id?: string,
+  skip?: number
+): Promise<AxiosResponse<any>> {
   const _id = id ? `/${id}` : "";
+  const _skip = skip ? `?$skip=${skip}` : "";
   try {
-    return http.get(`${url}/drawings${_id}`);
+    return http.get(`${url}/drawings${_id}${_skip}`);
   } catch (error) {
     // eslint-disable-next-line no-console
     console.error(error);

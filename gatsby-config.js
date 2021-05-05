@@ -6,6 +6,7 @@ module.exports = {
   },
   flags: {
     PARALLEL_SOURCING: true,
+    QUERY_ON_DEMAND: true,
   },
   plugins: [
     `gatsby-plugin-react-helmet`,
