@@ -2,8 +2,12 @@ import React, { Component } from "react";
 import { Link } from "react-router-dom";
 import { toast } from "react-toastify";
 
+import { Paginator } from "primereact/paginator";
+
 // import DrawingCard from '../../common/drawingCard';
 import PageHeader from "../../common/pageHeader";
+import { GOP } from "../../interfaces/genericObjectProps";
+import { getDrawing } from "../../services/drawingsService";
 import FavoritesContext from "../../services/favoritesContext";
 import {
   addFavorite,
@@ -11,14 +15,16 @@ import {
   getDrawingsFromAllUsers,
   removeFavorite,
 } from "../../services/userService";
-import { FavoritesList } from "./CardList";
-
+import { List } from "./CardList";
 import "./styles.scss";
 
 interface MyDrawingsState {
   drawings: any[];
   favorites: any[];
   loading: boolean;
+  first: number;
+  rows: number;
+  total: number;
 }
 
 class MyFavorites extends Component {
@@ -26,6 +32,9 @@ class MyFavorites extends Component {
     drawings: [],
     favorites: [],
     loading: true,
+    first: 0,
+    rows: 10,
+    total: 0,
   };
 
   async componentDidMount(): Promise<void> {
@@ -38,17 +47,34 @@ class MyFavorites extends Component {
     // ? making sure there are no data leaks
   }
 
-  async getData(): Promise<void> {
+  onPageChange = async ({ first }: GOP): Promise<void> => {
+    await this.getData(first);
+    this.setState({
+      first,
+    });
+  };
+
+  async getData(_skip?: number): Promise<void> {
     try {
       const {
         data: { favorites },
       } = await getCurrentUserDetails();
 
-      const { data } = await getDrawingsFromAllUsers(favorites);
+      const fav = favorites.map((x) => `&drawingNumber[$in][]=${x}`);
+
+      const {
+        data: { data, total, skip: first },
+      } = await getDrawing("", _skip ?? 0, true, `?${fav.join("")}`);
 
       // eslint-disable-next-line @typescript-eslint/no-unused-expressions
       data.length
-        ? this.setState({ loading: false, drawings: data, favorites })
+        ? this.setState({
+            loading: false,
+            drawings: data,
+            favorites,
+            total,
+            first,
+          })
         : this.setState({ loading: false, drawings: [] });
     } catch (error) {
       this.setState({ loading: false, drawings: [] });
@@ -80,7 +106,18 @@ class MyFavorites extends Component {
   };
 
   render(): React.ReactNode {
-    const { drawings, loading, favorites } = this.state;
+    const { drawings, loading, favorites, first, total, rows } = this.state;
+
+    const display = !!drawings.length;
+
+    const P = (
+      <Paginator
+        first={first}
+        onPageChange={this.onPageChange}
+        rows={rows}
+        totalRecords={total}
+      />
+    );
 
     return (
       <div className="container">
@@ -88,11 +125,14 @@ class MyFavorites extends Component {
         <div className="my-4 col-12 text-center">
           <h6>Your Favorites</h6>
 
+          {display && P}
+
           <div className="row drawingListContainer">
-            {drawings.length ? (
+            {display ? (
               // path={['/:id', '/']}
               <FavoritesContext.Provider value={favorites}>
-                <FavoritesList
+                <List
+                  basePath="my-favorites"
                   drawings={drawings}
                   emitFavoriteAction={(dNum: string | number, isAdd: boolean) =>
                     this.handleFavorite(dNum, isAdd)
@@ -105,6 +145,7 @@ class MyFavorites extends Component {
               </div>
             )}
           </div>
+          {display && P}
           {/* <Link className="btn btn-info mt-2" to="/create-drawing">
             Create a new drawing
           </Link>

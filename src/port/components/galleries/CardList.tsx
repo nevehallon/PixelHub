@@ -1,26 +1,28 @@
-import { useRouteMatch } from 'react-router-dom';
+import { useRouteMatch } from "react-router-dom";
 
-import Card from './Card';
+import Card from "./Card";
 
 export const List = ({
   drawings,
   emitDelete,
   emitFavoriteAction,
+  basePath,
 }: {
+  basePath: string;
   drawings: any;
-  emitDelete: (id: string, i: number) => void;
+  emitDelete?: (id: string, i: number) => Promise<void> | undefined;
   emitFavoriteAction: (dNum: string | number, isAdd: boolean) => void;
 }): any => {
-  const match: any = useRouteMatch('/my-drawings/:id');
+  const match: any = useRouteMatch(`/${basePath}/:id`);
 
   return (
     <ul className="d-card-list">
       {drawings.map((drawing: any, i: number) => (
         <Card
           isSelected={match?.params.id === drawing._id}
-          {...drawing}
+          {...{ ...drawing, basePath }}
           key={drawing._id}
-          onDelete={() => emitDelete(drawing._id, i)}
+          onDelete={emitDelete && (() => emitDelete(drawing._id, i))}
           onFavoriteAction={(isAdd: boolean) =>
             emitFavoriteAction(drawing.drawingNumber, isAdd)
           }
@@ -30,29 +32,8 @@ export const List = ({
   );
 };
 
-export const FavoritesList = ({
-  drawings,
-  emitFavoriteAction,
-}: {
-  drawings: any;
-  emitFavoriteAction: (dNum: string | number, isAdd: boolean) => void;
-}): any => {
-  const match: any = useRouteMatch('/my-favorites/:id');
-
-  return (
-    <ul className="d-card-list">
-      {drawings.map((drawing: any) => (
-        <Card
-          isSelected={match?.params.id === drawing._id}
-          {...drawing}
-          key={drawing._id}
-          onFavoriteAction={(isAdd: boolean) => {
-            emitFavoriteAction(drawing.drawingNumber, isAdd);
-          }}
-        />
-      ))}
-    </ul>
-  );
+List.defaultProps = {
+  emitDelete: undefined,
 };
 
-export default { List, FavoritesList };
+export default { List };

@@ -14,9 +14,8 @@ import {
   getCurrentUserDetails,
   removeFavorite,
 } from "../../services/userService";
-import { FavoritesList } from "./CardList";
-
 import "./styles.scss";
+import { List } from "./CardList";
 
 interface State {
   drawings: any[];
@@ -128,7 +127,8 @@ export default class Browse extends Component {
             {display ? (
               // path={['/:id', '/']}
               <FavoritesContext.Provider value={favorites}>
-                <FavoritesList
+                <List
+                  basePath="browse"
                   drawings={drawings}
                   emitFavoriteAction={(dNum: string | number, isAdd: boolean) =>
                     this.handleFavorite(dNum, isAdd)

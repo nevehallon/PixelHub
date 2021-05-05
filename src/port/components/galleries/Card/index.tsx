@@ -12,6 +12,7 @@ import {
 import { Button } from "primereact/button";
 
 import { DrawingProps } from "../../../interfaces/DrawingProps";
+import { GOP } from "../../../interfaces/genericObjectProps";
 import useScrollConstraints from "../utils/use-scroll-constraints";
 import useWheelScroll from "../utils/use-wheel-scroll";
 import {
@@ -27,7 +28,6 @@ import { Title } from "./Title";
 
 interface Props extends DrawingProps {
   isSelected: boolean;
-  [key: string]: any;
 }
 
 // Distance in pixels a user has to scroll a card down before recognizing
@@ -46,7 +46,8 @@ const Card = memo(
     drawingNumber,
     painterInfo,
     shareUrl,
-  }: Props) => {
+    basePath,
+  }: Props & GOP) => {
     const [isOpen, setOpen] = useState(false);
 
     const history = useHistory();
@@ -58,8 +59,6 @@ const Card = memo(
     // use the opened card element to calculate the scroll constraints
     const cardRef = useRef(null);
     const constraints = useScrollConstraints(cardRef, isSelected);
-
-    const basePath = onDelete ? "my-drawings" : "my-favorites";
 
     function checkSwipeToDismiss() {
       const yValue = y.get();

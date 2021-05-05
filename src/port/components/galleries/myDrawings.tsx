@@ -2,8 +2,11 @@ import React, { Component } from "react";
 import { Link } from "react-router-dom";
 import { toast } from "react-toastify";
 
+import { Paginator } from "primereact/paginator";
+
 // import DrawingCard from '../../common/drawingCard';
 import PageHeader from "../../common/pageHeader";
+import { GOP } from "../../interfaces/genericObjectProps";
 import { deleteDrawing, getMyDrawings } from "../../services/drawingsService";
 import FavoritesContext from "../../services/favoritesContext";
 import {
@@ -19,6 +22,9 @@ interface MyDrawingsState {
   drawings: any[];
   favorites: any[];
   loading: boolean;
+  first: number;
+  rows: number;
+  total: number;
 }
 
 class MyDrawings extends Component {
@@ -26,6 +32,9 @@ class MyDrawings extends Component {
     drawings: [],
     favorites: [],
     loading: true,
+    first: 0,
+    rows: 10,
+    total: 0,
   };
 
   async componentDidMount(): Promise<void> {
@@ -38,9 +47,18 @@ class MyDrawings extends Component {
     // ? making sure there are no data leaks
   }
 
-  async getData(): Promise<void> {
+  onPageChange = async ({ first }: GOP): Promise<void> => {
+    await this.getData(first);
+    this.setState({
+      first,
+    });
+  };
+
+  async getData(_skip?: number): Promise<void> {
     try {
-      const { data } = await getMyDrawings();
+      const {
+        data: { data, total, skip: first },
+      } = await getMyDrawings(_skip ?? 0);
 
       const {
         data: { favorites },
@@ -48,7 +66,13 @@ class MyDrawings extends Component {
 
       // eslint-disable-next-line @typescript-eslint/no-unused-expressions
       data.length
-        ? this.setState({ loading: false, drawings: data, favorites })
+        ? this.setState({
+            loading: false,
+            drawings: data,
+            favorites,
+            total,
+            first,
+          })
         : this.setState({ loading: false, drawings: [] });
     } catch (error) {
       this.setState({ loading: false, drawings: [] });
@@ -97,19 +121,31 @@ class MyDrawings extends Component {
   };
 
   render(): React.ReactNode {
-    const { drawings, loading, favorites } = this.state;
+    const { drawings, loading, favorites, first, total, rows } = this.state;
 
+    const display = !!drawings.length;
+
+    const P = (
+      <Paginator
+        first={first}
+        onPageChange={this.onPageChange}
+        rows={rows}
+        totalRecords={total}
+      />
+    );
     return (
       <div className="container">
         <PageHeader titleText="Drawing Collection" />
         <div className="my-4 col-12 text-center">
           <h6>Your drawing Collection</h6>
 
+          {display && P}
           <div className="row drawingListContainer">
-            {drawings.length ? (
+            {display ? (
               // path={['/:id', '/']}
               <FavoritesContext.Provider value={favorites}>
                 <List
+                  basePath="my-drawings"
                   drawings={drawings}
                   emitDelete={(id: string, i: number) =>
                     this.handleDeleteDrawing(id, i)
@@ -125,6 +161,7 @@ class MyDrawings extends Component {
               </div>
             )}
           </div>
+          {display && P}
           <Link className="btn btn-info mt-2" to="/create-drawing">
             Create a new drawing
           </Link>

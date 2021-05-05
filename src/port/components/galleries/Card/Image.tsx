@@ -1,6 +1,6 @@
-import { motion } from 'framer-motion';
+import { motion } from "framer-motion";
 
-import { closeAnimation, openAnimation } from './animations';
+import { closeAnimation, openAnimation } from "./animations";
 
 export interface ImageProps {
   isSelected: boolean;
@@ -21,7 +21,7 @@ export const Image = ({ isSelected, src }: ImageProps): any => (
       loading="lazy"
       onError={(e) => {
         (e.target as any).src =
-          'https://socialistmodernism.com/wp-content/uploads/2017/07/placeholder-image-300x225.png';
+          "https://socialistmodernism.com/wp-content/uploads/2017/07/placeholder-image-300x225.png";
       }}
       src={src}
     />
