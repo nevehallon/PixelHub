@@ -12,7 +12,6 @@ import FavoritesContext from "../../services/favoritesContext";
 import {
   addFavorite,
   getCurrentUserDetails,
-  getDrawingsFromAllUsers,
   removeFavorite,
 } from "../../services/userService";
 import { List } from "./CardList";

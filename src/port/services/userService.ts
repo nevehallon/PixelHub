@@ -44,12 +44,6 @@ export async function logout(): Promise<void> {
   localStorage.removeItem(tokenKey);
 }
 
-export function getDrawingsFromAllUsers(
-  drawingNumList: any[]
-): Promise<AxiosResponse<any>> {
-  return httpService.get(`${url}/users?numbers=${drawingNumList.toString()}`);
-}
-
 export function getCurrentUserDetails(
   _id?: string
 ): Promise<AxiosResponse<UserDetails>> {

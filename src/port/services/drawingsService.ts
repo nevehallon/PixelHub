@@ -25,7 +25,6 @@ export function createDrawing(drawing: Drawing): Promise<AxiosResponse<any>> {
 export function getMyDrawings(skip?: number): Promise<AxiosResponse<any>> {
   const user = getCurrentUser();
   const _skip = skip ? `&$skip=${skip}` : "";
-  console.log(skip);
 
   return http.get(
     // eslint-disable-next-line max-len
