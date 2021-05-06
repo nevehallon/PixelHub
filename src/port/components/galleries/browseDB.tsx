@@ -1,7 +1,8 @@
+/* eslint-disable jsx-a11y/label-has-associated-control */
 import React, { Component } from "react";
-import { Link } from "react-router-dom";
 import { toast } from "react-toastify";
 
+import { Button } from "primereact/button";
 import { InputText } from "primereact/inputtext";
 import { Paginator } from "primereact/paginator";
 
@@ -24,6 +25,7 @@ interface State {
   first: number;
   rows: number;
   total: number;
+  search: string;
 }
 
 export default class Browse extends Component {
@@ -34,6 +36,7 @@ export default class Browse extends Component {
     first: 0,
     rows: 10,
     total: 0,
+    search: "",
   };
 
   async componentDidMount(): Promise<void> {
@@ -47,13 +50,18 @@ export default class Browse extends Component {
   }
 
   onPageChange = async ({ first }: GOP): Promise<void> => {
-    await this.getData(first);
-    this.setState({
-      first,
-    });
+    const { search: q } = this.state;
+    await this.getData(first, q && `&$search=${q}`);
+    this.setState(
+      {
+        first,
+      },
+      () => console.log(q, this.state)
+    );
   };
 
-  async getData(_skip?: number): Promise<void> {
+  async getData(_skip?: number, ...rest: any): Promise<void> {
+    console.log(rest);
     try {
       const {
         data: { favorites },
@@ -61,7 +69,7 @@ export default class Browse extends Component {
 
       const {
         data: { data, total, skip: first },
-      } = await getDrawing("", _skip ?? 0);
+      } = await getDrawing("", _skip ?? 0, true, rest);
 
       // eslint-disable-next-line @typescript-eslint/no-unused-expressions
       data.length
@@ -98,12 +106,22 @@ export default class Browse extends Component {
     }
   };
 
+  handleSearch = async (val: string): Promise<void> => {
+    await this.getData(0, `&$search=${val}`);
+  };
+
   render(): React.ReactNode {
-    const { drawings, loading, favorites, first, total, rows } = this.state;
+    const {
+      drawings,
+      loading,
+      favorites,
+      first,
+      total,
+      rows,
+      search,
+    } = this.state;
 
-    const display = !!drawings.length;
-
-    const $paginator = drawings.length > rows - 1 && (
+    const $paginator = total > rows - 1 && (
       <Paginator
         first={first}
         onPageChange={this.onPageChange}
@@ -118,14 +136,28 @@ export default class Browse extends Component {
         <PageHeader titleText="Find what you're looking for" />
 
         <div className="my-4 col-12 text-center">
-          <InputText
-            placeholder="Search"
-            style={{ width: "100%" }}
-            type="text"
-          />
+          <div className="p-inputgroup">
+            <span className="p-input-icon-left p-float-label">
+              <i className="pi pi-search" />
+              <InputText
+                id="search"
+                onChange={(e) => this.setState({ search: e.target.value })}
+                onKeyUp={({ key }) =>
+                  key === "Enter" && this.handleSearch(search.trim())
+                }
+                type="search"
+                value={search}
+              />
+              <label htmlFor="search">Search</label>
+            </span>
+            <Button
+              label="Go!"
+              onClick={() => search && this.handleSearch(search.trim())}
+            />
+          </div>
           {$paginator}
           <div className="row drawingListContainer">
-            {display ? (
+            {total ? (
               <FavoritesContext.Provider value={favorites}>
                 <List
                   basePath="browse"

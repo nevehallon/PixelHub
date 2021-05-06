@@ -123,9 +123,7 @@ class MyDrawings extends Component {
   render(): React.ReactNode {
     const { drawings, loading, favorites, first, total, rows } = this.state;
 
-    const display = !!drawings.length;
-
-    const $paginator = drawings.length > rows - 1 && (
+    const $paginator = total > rows - 1 && (
       <Paginator
         first={first}
         onPageChange={this.onPageChange}
@@ -142,7 +140,7 @@ class MyDrawings extends Component {
 
           {$paginator}
           <div className="row drawingListContainer">
-            {display ? (
+            {total ? (
               <FavoritesContext.Provider value={favorites}>
                 <List
                   basePath="my-drawings"
