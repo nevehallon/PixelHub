@@ -125,10 +125,11 @@ class MyDrawings extends Component {
 
     const display = !!drawings.length;
 
-    const P = (
+    const $paginator = drawings.length > rows - 1 && (
       <Paginator
         first={first}
         onPageChange={this.onPageChange}
+        pageLinkSize={3}
         rows={rows}
         totalRecords={total}
       />
@@ -139,10 +140,9 @@ class MyDrawings extends Component {
         <div className="my-4 col-12 text-center">
           <h6>Your drawing Collection</h6>
 
-          {display && P}
+          {$paginator}
           <div className="row drawingListContainer">
             {display ? (
-              // path={['/:id', '/']}
               <FavoritesContext.Provider value={favorites}>
                 <List
                   basePath="my-drawings"
@@ -161,7 +161,7 @@ class MyDrawings extends Component {
               </div>
             )}
           </div>
-          {display && P}
+          {$paginator}
           <Link className="btn btn-info mt-2" to="/create-drawing">
             Create a new drawing
           </Link>

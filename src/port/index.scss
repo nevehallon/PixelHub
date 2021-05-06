@@ -161,3 +161,13 @@ row,
   height: 95vw;
   margin: 0 auto;
 }
+
+
+.p-paginator {
+  padding: 0.5rem 0;
+  background: unset;
+
+  button.p-paginator-element {
+    min-width: 1.186em;
+  }
+}

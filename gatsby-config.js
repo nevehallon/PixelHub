@@ -4,10 +4,10 @@ module.exports = {
     description: ``,
     author: `Neveh Allon`,
   },
-  // flags: {
-  //   PARALLEL_SOURCING: true,
-  //   QUERY_ON_DEMAND: true,
-  // },
+  flags: {
+    PARALLEL_SOURCING: true,
+    QUERY_ON_DEMAND: true,
+  },
   plugins: [
     `gatsby-plugin-react-helmet`,
     `gatsby-plugin-image`,

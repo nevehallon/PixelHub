@@ -109,10 +109,11 @@ class MyFavorites extends Component {
 
     const display = !!drawings.length;
 
-    const P = (
+    const $paginator = display && drawings.length > rows - 1 && (
       <Paginator
         first={first}
         onPageChange={this.onPageChange}
+        pageLinkSize={3}
         rows={rows}
         totalRecords={total}
       />
@@ -124,11 +125,10 @@ class MyFavorites extends Component {
         <div className="my-4 col-12 text-center">
           <h6>Your Favorites</h6>
 
-          {display && P}
+          {$paginator}
 
           <div className="row drawingListContainer">
             {display ? (
-              // path={['/:id', '/']}
               <FavoritesContext.Provider value={favorites}>
                 <List
                   basePath="my-favorites"
@@ -144,12 +144,10 @@ class MyFavorites extends Component {
               </div>
             )}
           </div>
-          {display && P}
-          {/* <Link className="btn btn-info mt-2" to="/create-drawing">
-            Create a new drawing
+          {$paginator}
+          <Link className="btn btn-info mt-2" to="/browse">
+            explore and find more favorites here!
           </Link>
-          // TODO: link to drawing browser
-          */}
         </div>
       </div>
     );

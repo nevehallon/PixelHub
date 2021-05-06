@@ -103,10 +103,11 @@ export default class Browse extends Component {
 
     const display = !!drawings.length;
 
-    const P = (
+    const $paginator = drawings.length > rows - 1 && (
       <Paginator
         first={first}
         onPageChange={this.onPageChange}
+        pageLinkSize={3}
         rows={rows}
         totalRecords={total}
       />
@@ -122,10 +123,9 @@ export default class Browse extends Component {
             style={{ width: "100%" }}
             type="text"
           />
-          {display && P}
+          {$paginator}
           <div className="row drawingListContainer">
             {display ? (
-              // path={['/:id', '/']}
               <FavoritesContext.Provider value={favorites}>
                 <List
                   basePath="browse"
@@ -141,7 +141,7 @@ export default class Browse extends Component {
               </div>
             )}
           </div>
-          {display && P}
+          {$paginator}
         </div>
       </div>
     );
