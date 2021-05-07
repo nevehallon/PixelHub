@@ -28,6 +28,8 @@ interface State {
   search: string;
 }
 
+const resetState = { loading: false, drawings: [], first: 0, total: 0 };
+
 export default class Browse extends Component {
   state: State = {
     drawings: [],
@@ -51,13 +53,10 @@ export default class Browse extends Component {
 
   onPageChange = async ({ first }: GOP): Promise<void> => {
     const { search: q } = this.state;
-    await this.getData(first, q && `&$search=${q}`);
-    this.setState(
-      {
-        first,
-      },
-      () => console.log(q, this.state)
-    );
+    await this.getData(first, q && `&$search=${q.trim()}`);
+    this.setState({
+      first,
+    });
   };
 
   async getData(_skip?: number, ...rest: any): Promise<void> {
@@ -80,9 +79,9 @@ export default class Browse extends Component {
             total,
             first,
           })
-        : this.setState({ loading: false, drawings: [] });
+        : this.setState(resetState);
     } catch (error) {
-      this.setState({ loading: false, drawings: [] });
+      this.setState(resetState);
       toast.error("Sorry, there was an unexpected error", {
         position: "top-center",
       });
@@ -107,7 +106,7 @@ export default class Browse extends Component {
   };
 
   handleSearch = async (val: string): Promise<void> => {
-    await this.getData(0, `&$search=${val}`);
+    await this.getData(0, val ? `&$search=${val}` : "");
   };
 
   render(): React.ReactNode {
@@ -122,13 +121,15 @@ export default class Browse extends Component {
     } = this.state;
 
     const $paginator = total > rows - 1 && (
-      <Paginator
-        first={first}
-        onPageChange={this.onPageChange}
-        pageLinkSize={3}
-        rows={rows}
-        totalRecords={total}
-      />
+      <>
+        <Paginator
+          first={first}
+          onPageChange={this.onPageChange}
+          pageLinkSize={3}
+          rows={rows}
+          totalRecords={total}
+        />
+      </>
     );
 
     return (
@@ -147,6 +148,7 @@ export default class Browse extends Component {
                 }
                 type="search"
                 value={search}
+                // TODO: set search value only when executing search
               />
               <label htmlFor="search">Search</label>
             </span>
@@ -156,6 +158,16 @@ export default class Browse extends Component {
             />
           </div>
           {$paginator}
+
+          <div className="p-card">
+            {total} drawings <br />
+            {!!total && (
+              <span>
+                displaying {first + 1} - {first + drawings.length}
+              </span>
+            )}
+          </div>
+
           <div className="row drawingListContainer">
             {total ? (
               <FavoritesContext.Provider value={favorites}>
