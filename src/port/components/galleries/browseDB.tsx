@@ -1,5 +1,5 @@
 /* eslint-disable jsx-a11y/label-has-associated-control */
-import React, { Component } from "react";
+import React, { Component, FormEvent } from "react";
 import { toast } from "react-toastify";
 
 import { Button } from "primereact/button";
@@ -53,7 +53,7 @@ export default class Browse extends Component {
 
   onPageChange = async ({ first }: GOP): Promise<void> => {
     const { search: q } = this.state;
-    await this.getData(first, q && `&$search=${q.trim()}`);
+    await this.getData(first, q.trim() || "");
     this.setState({
       first,
     });
@@ -105,20 +105,18 @@ export default class Browse extends Component {
     }
   };
 
-  handleSearch = async (val: string): Promise<void> => {
-    await this.getData(0, val ? `&$search=${val}` : "");
+  handleSearch = async (e: FormEvent): Promise<void> => {
+    e.preventDefault();
+    const { value } = (e.nativeEvent
+      .target as HTMLFormElement)[0] as HTMLInputElement;
+    const search = `&$search=${value.trim() || ""}`;
+
+    this.setState({ search });
+    await this.getData(0, search);
   };
 
   render(): React.ReactNode {
-    const {
-      drawings,
-      loading,
-      favorites,
-      first,
-      total,
-      rows,
-      search,
-    } = this.state;
+    const { drawings, loading, favorites, first, total, rows } = this.state;
 
     const $paginator = total > rows - 1 && (
       <>
@@ -137,26 +135,22 @@ export default class Browse extends Component {
         <PageHeader titleText="Find what you're looking for" />
 
         <div className="my-4 col-12 text-center">
-          <div className="p-inputgroup">
-            <span className="p-input-icon-left p-float-label">
-              <i className="pi pi-search" />
-              <InputText
-                id="search"
-                onChange={(e) => this.setState({ search: e.target.value })}
-                onKeyUp={({ key }) =>
-                  key === "Enter" && this.handleSearch(search.trim())
-                }
-                type="search"
-                value={search}
-                // TODO: set search value only when executing search
-              />
-              <label htmlFor="search">Search</label>
-            </span>
-            <Button
-              label="Go!"
-              onClick={() => search && this.handleSearch(search.trim())}
-            />
-          </div>
+          <form onSubmit={(e) => this.handleSearch(e)}>
+            <div className="p-inputgroup">
+              <span className="p-input-icon-left p-float-label">
+                <i className="pi pi-search" />
+                <InputText
+                  id="search"
+                  // onKeyUp={({ key }) =>
+                  //   key === "Enter" && this.handleSearch(search.trim())
+                  // }
+                  type="search"
+                />
+                <label htmlFor="search">Search</label>
+              </span>
+              <Button label="Go!" type="submit" />
+            </div>
+          </form>
           {$paginator}
 
           <div className="p-card">
