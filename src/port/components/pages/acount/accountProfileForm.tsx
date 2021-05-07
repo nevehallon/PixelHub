@@ -85,7 +85,11 @@ class AccountProfileDetails extends Form {
       >
         <Card>
           <CardContent>
-            <CardHeader subheader="Information can be edited" title="Profile" />
+            <CardHeader
+              subheader="Information can be edited"
+              subheaderTypographyProps={{ color: "inherit" }}
+              title="Profile"
+            />
             <Divider />
             <Grid container spacing={3}>
               <Grid {...(this.gridProps as any)}>

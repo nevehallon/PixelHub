@@ -1,12 +1,13 @@
-import { memo } from 'react';
+import { memo } from "react";
 
-import { Button } from 'primereact/button';
+import { Button } from "primereact/button";
 
 export const ContentPlaceholder = memo(
   ({ description, painterInfo }: { description: string; painterInfo: any }) => {
     const { name } = painterInfo;
     return (
       <div className="content-container">
+        <p>{description}</p>
         {painterInfo && (
           <div className="d-flex justify-content-between mx-2">
             <span>By: {name}</span>
@@ -20,7 +21,6 @@ export const ContentPlaceholder = memo(
             />
           </div>
         )}
-        <p>{description}</p>
       </div>
     );
   }

@@ -1,6 +1,7 @@
 /* eslint-disable react/jsx-max-props-per-line */
 import { useEffect, useState } from "react";
 import { Helmet } from "react-helmet";
+import { useParams } from "react-router-dom";
 
 import { Box, Container, Grid } from "@material-ui/core";
 
@@ -11,8 +12,9 @@ import { getCurrentUserDetails } from "../../../services/userService";
 import AccountProfile from "./accountProfile";
 import AccountProfileDetails from "./accountProfileForm";
 
-const MyProfile = (): any => {
+const Profile = ({ owner }: { owner?: boolean }): any => {
   const [user, setUser] = useState<UserDetails | null>(null);
+  const { id } = useParams<GOP>();
   const populateUserDetails = async () => {
     const { data } = await getCurrentUserDetails();
     setUser(data);
@@ -28,7 +30,7 @@ const MyProfile = (): any => {
       <Helmet>
         <title>Account | PixelHub</title>
       </Helmet>
-      <PageHeader titleText="My PixelHub Profile" />
+      <PageHeader titleText={`${owner ? "My" : ""} PixelHub Profile`} />
       {/* ${(<i className="fas fa-paint-brush"></i>)}
      {JSON.stringify(user.data)} */}
       <Box
@@ -44,13 +46,19 @@ const MyProfile = (): any => {
           <Container maxWidth="lg">
             <Grid container spacing={3}>
               <Grid item lg={4} md={6} xs={12}>
-                <AccountProfile
-                  setUserDetails={(rest: GOP) => setUser({ ...user, ...rest })}
-                  user={user}
-                />
+                {owner ? (
+                  <AccountProfile
+                    setUserDetails={(rest: GOP) =>
+                      setUser({ ...user, ...rest })
+                    }
+                    user={user}
+                  />
+                ) : (
+                  id
+                )}
               </Grid>
               <Grid item lg={8} md={6} xs={12}>
-                <AccountProfileDetails user={user} />
+                {owner ? <AccountProfileDetails user={user} /> : id}
               </Grid>
             </Grid>
           </Container>
@@ -60,4 +68,8 @@ const MyProfile = (): any => {
   );
 };
 
-export default MyProfile;
+Profile.defaultProps = {
+  owner: true,
+};
+
+export default Profile;

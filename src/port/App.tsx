@@ -14,7 +14,7 @@ import Browse from "./components/galleries/browseDB";
 import Footer from "./components/layout/footer";
 import Navbar from "./components/layout/nav-bar";
 import About from "./components/pages/about";
-import MyProfile from "./components/pages/acount/myProfile";
+import Profile from "./components/pages/acount/profile";
 import Home from "./components/pages/home";
 import PainterSignup from "./components/signAndLog/painterSignup";
 import Signin from "./components/signAndLog/signin";
@@ -82,7 +82,10 @@ class App extends Component {
               }}
             />
             <Route component={About} path="/about" />
-            <Route component={MyProfile} path="/me" />
+            <Route component={Profile} path="/me" />
+            <Route path="/user/:id">
+              <Profile owner={false} />
+            </Route>
             <Route component={Browse} path="/browse" />
             <Route component={Home} exact path="/" />
             <Redirect to="/" /> {/* TODO: add 404 page not found */}
