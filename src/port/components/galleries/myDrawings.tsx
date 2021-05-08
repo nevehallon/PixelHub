@@ -11,7 +11,7 @@ import { deleteDrawing, getMyDrawings } from "../../services/drawingsService";
 import FavoritesContext from "../../services/favoritesContext";
 import {
   addFavorite,
-  getCurrentUserDetails,
+  getUserDetails,
   removeFavorite,
 } from "../../services/userService";
 import { List } from "./CardList";
@@ -62,7 +62,7 @@ class MyDrawings extends Component {
 
       const {
         data: { favorites },
-      } = await getCurrentUserDetails();
+      } = await getUserDetails();
 
       // eslint-disable-next-line @typescript-eslint/no-unused-expressions
       data.length

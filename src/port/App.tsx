@@ -83,9 +83,7 @@ class App extends Component {
             />
             <Route component={About} path="/about" />
             <Route component={Profile} path="/me" />
-            <Route path="/user/:id">
-              <Profile owner={false} />
-            </Route>
+            <Route component={Profile} path="/user/:id" />
             <Route component={Browse} path="/browse" />
             <Route component={Home} exact path="/" />
             <Redirect to="/" /> {/* TODO: add 404 page not found */}

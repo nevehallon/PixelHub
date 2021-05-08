@@ -1,10 +1,12 @@
 import { memo } from "react";
+import { useHistory } from "react-router-dom";
 
 import { Button } from "primereact/button";
 
 export const ContentPlaceholder = memo(
   ({ description, painterInfo }: { description: string; painterInfo: any }) => {
-    const { name } = painterInfo;
+    const history = useHistory();
+    const { name, _id } = painterInfo;
     return (
       <div className="content-container">
         <p>{description}</p>
@@ -16,7 +18,7 @@ export const ContentPlaceholder = memo(
               icon="pi pi-user"
               label="See profile"
               onClick={() => {
-                // history.replace('/my-drawings');
+                history.push(`/user/${_id}`);
               }}
             />
           </div>

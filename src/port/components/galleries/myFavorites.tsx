@@ -11,7 +11,7 @@ import { getDrawing } from "../../services/drawingsService";
 import FavoritesContext from "../../services/favoritesContext";
 import {
   addFavorite,
-  getCurrentUserDetails,
+  getUserDetails,
   removeFavorite,
 } from "../../services/userService";
 import { List } from "./CardList";
@@ -57,7 +57,7 @@ class MyFavorites extends Component {
     try {
       const {
         data: { favorites },
-      } = await getCurrentUserDetails();
+      } = await getUserDetails();
 
       const fav = favorites.map((x) => `&drawingNumber[$in][]=${x}`);
 

@@ -71,9 +71,11 @@ const handleSaveAvatar = async (
 //   country: "",
 // };
 const AccountProfile = ({
+  isOwner,
   user,
   setUserDetails,
 }: {
+  isOwner: boolean;
   user: UserDetails & GOP;
   setUserDetails: (arg: GOP) => void;
 }): JSX.Element => {
@@ -109,38 +111,42 @@ const AccountProfile = ({
         </Box>
       </CardContent>
       <Divider />
-      <CardActions>
-        <Button
-          className="p-button p-button-rounded p-button-outlined p-button-text p-button-lg d-inline-block"
-          icon="pi pi-pencil"
-          label="Edit Picture"
-          onClick={() => setOpenDialog(true)}
-        />
-      </CardActions>
-      {openDialog && (
-        <AlertDialogSlide
-          emitClose={() => setOpenDialog(false)}
-          title="enter valid image url"
-        >
-          <form
-            onSubmit={(e) =>
-              handleSaveAvatar(e, user, setUserDetails, () =>
-                setOpenDialog(false)
-              )
-            }
-          >
-            <InputFeedback
-              currentValue={src}
-              label="Image Link"
-              maxLength={2048}
-              renderInput={(rest: GOP) => (
-                <InputText id="avatar" name="avatar" type="url" {...rest} />
-              )}
+      {isOwner && (
+        <>
+          <CardActions>
+            <Button
+              className="p-button p-button-rounded p-button-outlined p-button-text p-button-lg d-inline-block"
+              icon="pi pi-pencil"
+              label="Edit Picture"
+              onClick={() => setOpenDialog(true)}
             />
-            <Divider />
-            <Button label="Save" />
-          </form>
-        </AlertDialogSlide>
+          </CardActions>
+          {openDialog && (
+            <AlertDialogSlide
+              emitClose={() => setOpenDialog(false)}
+              title="enter valid image url"
+            >
+              <form
+                onSubmit={(e) =>
+                  handleSaveAvatar(e, user, setUserDetails, () =>
+                    setOpenDialog(false)
+                  )
+                }
+              >
+                <InputFeedback
+                  currentValue={src}
+                  label="Image Link"
+                  maxLength={2048}
+                  renderInput={(rest: GOP) => (
+                    <InputText id="avatar" name="avatar" type="url" {...rest} />
+                  )}
+                />
+                <Divider />
+                <Button label="Save" />
+              </form>
+            </AlertDialogSlide>
+          )}
+        </>
       )}
     </Card>
   );

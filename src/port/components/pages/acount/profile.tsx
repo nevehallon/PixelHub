@@ -8,29 +8,35 @@ import { Box, Container, Grid } from "@material-ui/core";
 import PageHeader from "../../../common/pageHeader";
 import { GOP } from "../../../interfaces/genericObjectProps";
 import { UserDetails } from "../../../interfaces/UserDetails";
-import { getCurrentUserDetails } from "../../../services/userService";
+import { getCurrentUser, getUserDetails } from "../../../services/userService";
 import AccountProfile from "./accountProfile";
 import AccountProfileDetails from "./accountProfileForm";
 
-const Profile = ({ owner }: { owner?: boolean }): any => {
+const Profile = (/* { isOwner }: { isOwner?: boolean } */): any => {
   const [user, setUser] = useState<UserDetails | null>(null);
+  const [isOwner, setIsOwner] = useState<boolean>(false);
   const { id } = useParams<GOP>();
+
   const populateUserDetails = async () => {
-    const { data } = await getCurrentUserDetails();
+    const visiter = getCurrentUser();
+    const { data } = await getUserDetails(id);
     setUser(data);
+    setIsOwner(data._id === (visiter as UserDetails)._id);
+
     console.log(data);
   };
 
   useEffect(() => {
     populateUserDetails();
-  }, []);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [id]);
 
   return (
     <>
       <Helmet>
         <title>Account | PixelHub</title>
       </Helmet>
-      <PageHeader titleText={`${owner ? "My" : ""} PixelHub Profile`} />
+      <PageHeader titleText={`${isOwner ? "My" : ""} PixelHub Profile`} />
       {/* ${(<i className="fas fa-paint-brush"></i>)}
      {JSON.stringify(user.data)} */}
       <Box
@@ -46,19 +52,14 @@ const Profile = ({ owner }: { owner?: boolean }): any => {
           <Container maxWidth="lg">
             <Grid container spacing={3}>
               <Grid item lg={4} md={6} xs={12}>
-                {owner ? (
-                  <AccountProfile
-                    setUserDetails={(rest: GOP) =>
-                      setUser({ ...user, ...rest })
-                    }
-                    user={user}
-                  />
-                ) : (
-                  id
-                )}
+                <AccountProfile
+                  isOwner={!!isOwner}
+                  setUserDetails={(rest: GOP) => setUser({ ...user, ...rest })}
+                  user={user}
+                />
               </Grid>
               <Grid item lg={8} md={6} xs={12}>
-                {owner ? <AccountProfileDetails user={user} /> : id}
+                {isOwner ? <AccountProfileDetails user={user} /> : id}
               </Grid>
             </Grid>
           </Container>
@@ -69,7 +70,7 @@ const Profile = ({ owner }: { owner?: boolean }): any => {
 };
 
 Profile.defaultProps = {
-  owner: true,
+  isOwner: true,
 };
 
 export default Profile;

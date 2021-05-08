@@ -44,7 +44,7 @@ export async function logout(): Promise<void> {
   localStorage.removeItem(tokenKey);
 }
 
-export function getCurrentUserDetails(
+export function getUserDetails(
   _id?: string
 ): Promise<AxiosResponse<UserDetails>> {
   const user = _id ? { _id } : getCurrentUser();
