@@ -59,11 +59,13 @@ class MyFavorites extends Component {
         data: { favorites },
       } = await getUserDetails();
 
-      const fav = favorites.map((x) => `&drawingNumber[$in][]=${x}`);
+      const drawNum = "&drawingNumber[$in][]=";
+
+      const fav = favorites.map((x) => drawNum + x).join("");
 
       const {
         data: { data, total, skip: first },
-      } = await getDrawing("", _skip ?? 0, true, `?${fav.join("")}`);
+      } = await getDrawing("", _skip ?? 0, true, fav || drawNum);
 
       // eslint-disable-next-line @typescript-eslint/no-unused-expressions
       data.length
@@ -107,7 +109,7 @@ class MyFavorites extends Component {
   render(): React.ReactNode {
     const { drawings, loading, favorites, first, total, rows } = this.state;
 
-    const $paginator = display && total > rows - 1 && (
+    const $paginator = !!(total && total > rows - 1) && (
       <Paginator
         first={first}
         onPageChange={this.onPageChange}
@@ -121,7 +123,7 @@ class MyFavorites extends Component {
       <div className="container">
         <PageHeader titleText="Favorite Drawing Collection" />
         <div className="my-4 col-12 text-center">
-          <h6>Your Favorites</h6>
+          <h6>Favorites</h6>
 
           {$paginator}
 

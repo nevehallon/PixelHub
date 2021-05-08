@@ -5,15 +5,17 @@ import { useParams } from "react-router-dom";
 import { toast } from "react-toastify";
 
 import { Box, Container, Grid } from "@material-ui/core";
+import PaletteIcon from "@material-ui/icons/Palette";
 
 import PageHeader from "../../../common/pageHeader";
 import { GOP } from "../../../interfaces/genericObjectProps";
 import { UserDetails } from "../../../interfaces/UserDetails";
 import { getCurrentUser, getUserDetails } from "../../../services/userService";
+import Browse from "../../galleries/browseDB";
 import AccountProfile from "./accountProfile";
 import AccountProfileDetails from "./accountProfileForm";
 
-const Profile = (/* { isOwner }: { isOwner?: boolean } */): any => {
+const Profile = (): any => {
   const [user, setUser] = useState<UserDetails | null>(null);
   const [isOwner, setIsOwner] = useState<boolean>(false);
   const { id } = useParams<GOP>();
@@ -72,18 +74,31 @@ const Profile = (/* { isOwner }: { isOwner?: boolean } */): any => {
                 />
               </Grid>
               <Grid item lg={8} md={6} xs={12}>
-                {isOwner ? <AccountProfileDetails user={user} /> : id}
+                {isOwner ? (
+                  <AccountProfileDetails user={user} />
+                ) : (
+                  <div
+                    style={{
+                      height: "100%",
+                      display: "flex",
+                      alignItems: "center",
+                      justifyItems: "center",
+                    }}
+                  >
+                    <PaletteIcon
+                      className="paletteIcon"
+                      style={{ width: "100%", height: "50px" }}
+                    />
+                  </div>
+                )}
               </Grid>
             </Grid>
+            {!isOwner && <Browse id={id} />}
           </Container>
         )}
       </Box>
     </>
   );
-};
-
-Profile.defaultProps = {
-  isOwner: true,
 };
 
 export default Profile;

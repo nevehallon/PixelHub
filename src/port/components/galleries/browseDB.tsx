@@ -18,6 +18,10 @@ import {
 import "./styles.scss";
 import { List } from "./CardList";
 
+interface favoritesProps {
+  id?: string;
+}
+
 interface State {
   drawings: any[];
   favorites: any[];
@@ -30,7 +34,7 @@ interface State {
 
 const resetState = { loading: false, drawings: [], first: 0, total: 0 };
 
-export default class Browse extends Component {
+export default class Browse extends Component<favoritesProps> {
   state: State = {
     drawings: [],
     favorites: [],
@@ -60,15 +64,17 @@ export default class Browse extends Component {
   };
 
   async getData(_skip?: number, ...rest: any): Promise<void> {
+    const { id } = this.props;
     console.log(rest);
     try {
       const {
         data: { favorites },
       } = await getUserDetails();
 
+      const restArg = id ? `&painterInfo._id=${id}` : rest;
       const {
         data: { data, total, skip: first },
-      } = await getDrawing("", _skip ?? 0, true, rest);
+      } = await getDrawing("", _skip ?? 0, true, restArg);
 
       // eslint-disable-next-line @typescript-eslint/no-unused-expressions
       data.length
@@ -116,6 +122,7 @@ export default class Browse extends Component {
   };
 
   render(): React.ReactNode {
+    const { id } = this.props;
     const { drawings, loading, favorites, first, total, rows } = this.state;
 
     const $paginator = total > rows - 1 && (
@@ -132,25 +139,26 @@ export default class Browse extends Component {
 
     return (
       <div className="container">
-        <PageHeader titleText="Find what you're looking for" />
-
+        {!id && <PageHeader titleText="Find what you're looking for" />}
         <div className="my-4 col-12 text-center">
-          <form onSubmit={(e) => this.handleSearch(e)}>
-            <div className="p-inputgroup">
-              <span className="p-input-icon-left p-float-label">
-                <i className="pi pi-search" />
-                <InputText
-                  id="search"
-                  // onKeyUp={({ key }) =>
-                  //   key === "Enter" && this.handleSearch(search.trim())
-                  // }
-                  type="search"
-                />
-                <label htmlFor="search">Search</label>
-              </span>
-              <Button label="Go!" type="submit" />
-            </div>
-          </form>
+          {!id && (
+            <form onSubmit={(e) => this.handleSearch(e)}>
+              <div className="p-inputgroup">
+                <span className="p-input-icon-left p-float-label">
+                  <i className="pi pi-search" />
+                  <InputText
+                    id="search"
+                    // onKeyUp={({ key }) =>
+                    //   key === "Enter" && this.handleSearch(search.trim())
+                    // }
+                    type="search"
+                  />
+                  <label htmlFor="search">Search</label>
+                </span>
+                <Button label="Go!" type="submit" />
+              </div>
+            </form>
+          )}
           {$paginator}
 
           <div className="p-card">
