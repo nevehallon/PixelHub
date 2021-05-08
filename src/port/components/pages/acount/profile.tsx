@@ -2,6 +2,7 @@
 import { useEffect, useState } from "react";
 import { Helmet } from "react-helmet";
 import { useParams } from "react-router-dom";
+import { toast } from "react-toastify";
 
 import { Box, Container, Grid } from "@material-ui/core";
 
@@ -18,12 +19,24 @@ const Profile = (/* { isOwner }: { isOwner?: boolean } */): any => {
   const { id } = useParams<GOP>();
 
   const populateUserDetails = async () => {
-    const visiter = getCurrentUser();
-    const { data } = await getUserDetails(id);
-    setUser(data);
-    setIsOwner(data._id === (visiter as UserDetails)._id);
+    try {
+      const visiter = getCurrentUser();
+      const { data } = await getUserDetails(id);
+      setUser(data);
+      setIsOwner(data._id === (visiter as UserDetails)?._id);
 
-    console.log(data);
+      console.log(data);
+    } catch (error) {
+      const {
+        response: {
+          data: { code, name },
+        },
+      } = error;
+      toast.error(`Error(${code}): ${name}`, {
+        position: "top-center",
+        autoClose: 2500,
+      });
+    }
   };
 
   useEffect(() => {
