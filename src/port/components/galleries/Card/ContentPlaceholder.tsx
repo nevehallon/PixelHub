@@ -14,7 +14,7 @@ export const ContentPlaceholder = memo(
           <div className="d-flex justify-content-between mx-2">
             <span>By: {name}</span>
             <Button
-              className="mx-1 p-button-rounded p-button-text p-button-lg d-inline-block"
+              className="m-1 p-button-rounded p-button-text p-button-lg d-inline-block"
               icon="pi pi-user"
               label="See profile"
               onClick={() => {

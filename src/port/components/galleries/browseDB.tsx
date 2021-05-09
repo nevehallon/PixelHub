@@ -66,19 +66,15 @@ export default class Browse extends Component<favoritesProps> {
   };
 
   async getData(_skip?: number, ...rest: any): Promise<void> {
-    const {
-      id,
-      userToDisplay: { favorites: fav },
-    } = this.props as GOP;
+    const { id, userToDisplay } = this.props as GOP;
     console.log(rest);
     try {
       const {
         data: { favorites },
       } = await getUserDetails();
 
-      const drawNum = "&drawingNumber=";
+      const restArg = id ? `&painterInfo._id=${id}` : rest;
 
-      const restArg = id ? fav.map((x: string) => drawNum + x).join("") : rest;
       const {
         data: { data, total, skip: first },
       } = await getDrawing("", _skip ?? 0, true, restArg);
