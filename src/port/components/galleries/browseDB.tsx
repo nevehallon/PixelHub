@@ -141,10 +141,10 @@ export default class Browse extends Component<favoritesProps> {
     );
 
     return (
-      <div className="container">
-        {!id && <PageHeader titleText="Find what you're looking for" />}
-        <div className="my-4 col-12 text-center">
-          {!id && (
+      <div className="container text-center">
+        {!id && (
+          <>
+            <PageHeader titleText="Find what you're looking for" />
             <form onSubmit={(e) => this.handleSearch(e)}>
               <div className="p-inputgroup">
                 <span className="p-input-icon-left p-float-label">
@@ -155,37 +155,37 @@ export default class Browse extends Component<favoritesProps> {
                 <Button label="Go!" type="submit" />
               </div>
             </form>
+          </>
+        )}
+        {$paginator}
+
+        <div className="p-card">
+          {total} drawings <br />
+          {!!total && (
+            <span>
+              displaying {first + 1} - {first + drawings.length}
+            </span>
           )}
-          {$paginator}
-
-          <div className="p-card">
-            {total} drawings <br />
-            {!!total && (
-              <span>
-                displaying {first + 1} - {first + drawings.length}
-              </span>
-            )}
-          </div>
-
-          <div className="row drawingListContainer">
-            {total ? (
-              <FavoritesContext.Provider value={favorites}>
-                <List
-                  basePath={id ? `user/${id}` : "browse"}
-                  drawings={drawings}
-                  emitFavoriteAction={(dNum: string | number, isAdd: boolean) =>
-                    this.handleFavorite(dNum, isAdd)
-                  }
-                />
-              </FavoritesContext.Provider>
-            ) : (
-              <div className={`mx-auto ${loading ? "text-info" : ""}`}>
-                {loading ? "LOADING" : "Nothing to show yet"}...
-              </div>
-            )}
-          </div>
-          {$paginator}
         </div>
+
+        <div className="row drawingListContainer">
+          {total ? (
+            <FavoritesContext.Provider value={favorites}>
+              <List
+                basePath={id ? `user/${id}` : "browse"}
+                drawings={drawings}
+                emitFavoriteAction={(dNum: string | number, isAdd: boolean) =>
+                  this.handleFavorite(dNum, isAdd)
+                }
+              />
+            </FavoritesContext.Provider>
+          ) : (
+            <div className={`mx-auto ${loading ? "text-info" : ""}`}>
+              {loading ? "LOADING" : "Nothing to show yet"}...
+            </div>
+          )}
+        </div>
+        {$paginator}
       </div>
     );
   }

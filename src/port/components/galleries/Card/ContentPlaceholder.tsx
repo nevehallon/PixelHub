@@ -11,10 +11,10 @@ export const ContentPlaceholder = memo(
       <div className="content-container">
         <p>{description}</p>
         {painterInfo && (
-          <div className="d-flex justify-content-between mx-2">
+          <div className="d-flex justify-content-between mx-1">
             <span>By: {name}</span>
             <Button
-              className="m-1 p-button-rounded p-button-text p-button-lg d-inline-block"
+              className="my-1 p-button-rounded p-button-text d-inline-block"
               icon="pi pi-user"
               label="See profile"
               onClick={() => {

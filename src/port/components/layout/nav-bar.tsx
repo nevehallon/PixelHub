@@ -80,7 +80,7 @@ const Navbar = ({ user }: { [key: string]: any } | any): any => {
           command: () => history.push("/sign-up"),
         },
         {
-          label: "Sign Up as a Painter",
+          label: `${!user?.painter ? "Upgrade to" : "Sign Up as"} a Painter`,
           icon: "fas fa-paint-brush",
           style: { display: !user?.painter ? "" : "none", fontSize: 14 },
           command: () => history.push("/painter-sign-up"),
