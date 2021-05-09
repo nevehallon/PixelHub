@@ -29,12 +29,7 @@ const Profile = (): any => {
 
       console.log(data);
     } catch (error) {
-      const {
-        response: {
-          data: { code, name },
-        },
-      } = error;
-      toast.error(`Error(${code}): ${name}`, {
+      toast.error(`Error(${error})`, {
         position: "top-center",
         autoClose: 2500,
       });
@@ -93,7 +88,7 @@ const Profile = (): any => {
                 )}
               </Grid>
             </Grid>
-            {!isOwner && <Browse id={id} />}
+            {!isOwner && <Browse id={id} userToDisplay={user} />}
           </Container>
         )}
       </Box>

@@ -59,7 +59,7 @@ class MyFavorites extends Component {
         data: { favorites },
       } = await getUserDetails();
 
-      const drawNum = "&drawingNumber[$in][]=";
+      const drawNum = "&drawingNumber=";
 
       const fav = favorites.map((x) => drawNum + x).join("");
 

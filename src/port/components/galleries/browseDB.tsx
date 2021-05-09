@@ -8,6 +8,7 @@ import { Paginator } from "primereact/paginator";
 
 import PageHeader from "../../common/pageHeader";
 import { GOP } from "../../interfaces/genericObjectProps";
+import { UserDetails } from "../../interfaces/UserDetails";
 import { getDrawing } from "../../services/drawingsService";
 import FavoritesContext from "../../services/favoritesContext";
 import {
@@ -20,6 +21,7 @@ import { List } from "./CardList";
 
 interface favoritesProps {
   id?: string;
+  userToDisplay?: UserDetails;
 }
 
 interface State {
@@ -64,14 +66,19 @@ export default class Browse extends Component<favoritesProps> {
   };
 
   async getData(_skip?: number, ...rest: any): Promise<void> {
-    const { id } = this.props;
+    const {
+      id,
+      userToDisplay: { favorites: fav },
+    } = this.props as GOP;
     console.log(rest);
     try {
       const {
         data: { favorites },
       } = await getUserDetails();
 
-      const restArg = id ? `&painterInfo._id=${id}` : rest;
+      const drawNum = "&drawingNumber=";
+
+      const restArg = id ? fav.map((x: string) => drawNum + x).join("") : rest;
       const {
         data: { data, total, skip: first },
       } = await getDrawing("", _skip ?? 0, true, restArg);
