@@ -146,13 +146,7 @@ export default class Browse extends Component<favoritesProps> {
               <div className="p-inputgroup">
                 <span className="p-input-icon-left p-float-label">
                   <i className="pi pi-search" />
-                  <InputText
-                    id="search"
-                    // onKeyUp={({ key }) =>
-                    //   key === "Enter" && this.handleSearch(search.trim())
-                    // }
-                    type="search"
-                  />
+                  <InputText id="search" type="search" />
                   <label htmlFor="search">Search</label>
                 </span>
                 <Button label="Go!" type="submit" />
@@ -174,7 +168,7 @@ export default class Browse extends Component<favoritesProps> {
             {total ? (
               <FavoritesContext.Provider value={favorites}>
                 <List
-                  basePath="browse"
+                  basePath={id ? `user/${id}` : "browse"}
                   drawings={drawings}
                   emitFavoriteAction={(dNum: string | number, isAdd: boolean) =>
                     this.handleFavorite(dNum, isAdd)

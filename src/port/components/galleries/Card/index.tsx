@@ -137,7 +137,7 @@ const Card = memo(
         </MotionConfig>
         <div>
           {!isSelected && (
-            <Link className="d-card-open-link" to={`${basePath}/${_id}`} />
+            <Link className="d-card-open-link" to={`/${basePath}/${_id}`} />
           )}
           {!isSelected && (
             <motion.div
