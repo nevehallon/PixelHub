@@ -68,7 +68,7 @@ export default function SpeedDialTooltipOpen({
   const [open, setOpen] = useState(false);
   const [openDialog, setOpenDialog] = useState(false);
   const favorites = useContext(FavoritesContext);
-  const [isCopied, setCopied] = useClipboard(dataUrl);
+  const [isCopied, setCopied] = useClipboard(shareUrl);
 
   const handleOpen = () => {
     emitOpen();
@@ -93,7 +93,7 @@ export default function SpeedDialTooltipOpen({
       name: "Fork",
       handleAction: async () => {
         try {
-          const { painter } = (await getCurrentUser()) as any;
+          const { painter } = getCurrentUser() as any;
 
           if (!painter) {
             toast.error(
@@ -137,12 +137,7 @@ export default function SpeedDialTooltipOpen({
 
           history.replace(`/edit/${_id}`);
         } catch (error) {
-          const {
-            response: {
-              data: { code, name },
-            },
-          } = error;
-          toast.error(`Error(${code}): ${name}`, {
+          toast.error(`Error(${error})`, {
             position: "top-center",
             autoClose: 2500,
           });

@@ -41,7 +41,8 @@ export function getDrawing(
   const _id = id ? `/${id}` : "";
   const _skip = skip ? `$skip=${skip}` : "";
   const _select = filter ? select : "";
-  const _q = (_skip || _select || rest.length) && "?";
+  const _q = _skip || _select || rest.length ? "?" : "";
+
   try {
     return http.get(`${url}/drawings${_q}${_id}${_skip}${_select}${rest}`);
   } catch (error) {
