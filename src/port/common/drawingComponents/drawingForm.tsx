@@ -1,23 +1,23 @@
 /* eslint-disable no-param-reassign */
 /* eslint-disable jsx-a11y/label-has-associated-control */
-import { createRef, RefObject } from 'react';
+import { createRef, RefObject } from "react";
 
-import GridOnIcon from '@material-ui/icons/GridOn';
-import { Button } from 'primereact/button';
-import { toPng } from 'html-to-image';
-import Joi from 'joi';
-import { ColorPicker } from 'primereact/colorpicker';
-import { InputNumber, InputNumberProps } from 'primereact/inputnumber';
-import { ScrollPanel } from 'primereact/scrollpanel';
-import { Badge } from 'primereact/badge';
-import { Subject } from 'rxjs/internal/Subject';
-import { debounceTime, take } from 'rxjs/operators';
+import GridOnIcon from "@material-ui/icons/GridOn";
+import { Button } from "primereact/button";
+import { toPng } from "html-to-image";
+import Joi from "joi";
+import { ColorPicker } from "primereact/colorpicker";
+import { InputNumber, InputNumberProps } from "primereact/inputnumber";
+import { ScrollPanel } from "primereact/scrollpanel";
+import { Badge } from "primereact/badge";
+import { Subject } from "rxjs/internal/Subject";
+import { debounceTime, take } from "rxjs/operators";
 
-import { initialGrid } from '../../services/drawingsService';
-import GlobalListener from '../../services/globalListener';
-import PaintCanvas from './paintCanvas';
+import { initialGrid } from "../../services/drawingsService";
+import GlobalListener from "../../services/globalListener";
+import PaintCanvas from "./paintCanvas";
 
-import { Form } from '..';
+import { Form } from "..";
 
 export interface inputNumberEvent {
   originalEvent: Event;
@@ -57,16 +57,16 @@ class DrawingForm extends Form {
 
     Array.from(imgRef.children).forEach((x: any) => {
       // eslint-disable-next-line @typescript-eslint/no-unused-expressions
-      x.dataset.touched ? false : (x.style.backgroundColor = 'transparent');
-      x.style.border = 'none';
+      x.dataset.touched ? false : (x.style.backgroundColor = "transparent");
+      x.style.border = "none";
     });
-    imgRef.style.minWidth = '175px';
-    imgRef.style.minHeight = '175px';
-    imgRef.style.width = '175px';
-    imgRef.style.height = '175px';
+    imgRef.style.minWidth = "175px";
+    imgRef.style.minHeight = "175px";
+    imgRef.style.width = "175px";
+    imgRef.style.height = "175px";
     return toPng(imgRef, {
-      backgroundColor: 'transparent',
-      style: { margin: 'auto', width: '100%', height: '100%' },
+      backgroundColor: "transparent",
+      style: { margin: "auto", width: "100%", height: "100%" },
       width: imgRef.offsetWidth,
       height: imgRef.offsetHeight,
       pixelRatio: 1,
@@ -75,10 +75,10 @@ class DrawingForm extends Form {
   };
 
   schema: { [key: string]: Joi.StringSchema | Joi.ArraySchema } = {
-    drawingName: Joi.string().min(2).max(26).required().label('Drawing Name'),
-    description: Joi.string().min(2).max(225).required().label('Description'),
-    grid: Joi.array().min(225).max(1225).required().label('canvas'),
-    dataUrl: Joi.string().required().label('src'),
+    drawingName: Joi.string().min(2).max(26).required().label("Drawing Name"),
+    description: Joi.string().min(2).max(225).required().label("Description"),
+    grid: Joi.array().min(225).max(1225).required().label("canvas"),
+    dataUrl: Joi.string().required().label("src"),
   };
 
   validate = (isSubmit = false): any => {
@@ -129,17 +129,17 @@ class DrawingForm extends Form {
   };
 
   handleChangeComplete = ({ r, g, b }: { [key: string]: any }): void => {
-    this.setState({ currentColor: `rgb(${[r, g, b].join(', ')})` });
+    this.setState({ currentColor: `rgb(${[r, g, b].join(", ")})` });
   };
 
   handleNumberChange = (e: inputNumberEvent): void => {
     const newNumber = +e.value;
     if (newNumber < 15 || newNumber > 35) return;
     const newGrid = Array(newNumber ** 2)
-      .fill('')
+      .fill("")
       .map((_, i) => ({
-        fill: i % 2 === 0 ? 'lightgrey' : 'white',
-        touched: '',
+        fill: i % 2 === 0 ? "lightgrey" : "white",
+        touched: "",
       }));
 
     const resetTimeline = [newGrid];
@@ -203,10 +203,10 @@ class DrawingForm extends Form {
     const { grid, gateKeep } = this.state;
     if (hideGrid) {
       this.setState({
-        addedStyle: { border: 'none' },
+        addedStyle: { border: "none" },
         grid: grid.map((x: GridItem) => ({
           ...x,
-          fill: x.touched ? x.fill : 'transparent',
+          fill: x.touched ? x.fill : "transparent",
         })),
         gateKeep: false,
       });
@@ -218,7 +218,7 @@ class DrawingForm extends Form {
     const { currentStateIndex, canvasStateTimeline } = this.state;
 
     this.setState({
-      addedStyle: { border: '1px solid #00000065' },
+      addedStyle: { border: "1px solid #00000065" },
       grid: canvasStateTimeline[currentStateIndex],
     });
   };
@@ -248,7 +248,7 @@ class DrawingForm extends Form {
               incrementButtonClassName=" p-button-outlined p-button-info"
               incrementButtonIcon="pi pi-plus"
               name="gridSize"
-              onChange={(e) => this.handleNumberChange(e)}
+              onChange={(e) => this.handleNumberChange(e as any)}
               showButtons
               suffix={`x${root}`}
               {...inputProps}
@@ -286,14 +286,14 @@ class DrawingForm extends Form {
     const [r, g, b] = this?.state?.currentColor?.match(/[0-9]{1,3}/g);
 
     const cpStyles = {
-      color: `rgb(${[r, g, b].join(', ')})`,
+      color: `rgb(${[r, g, b].join(", ")})`,
       filter: `drop-shadow(0 0 2px white) invert(1) grayscale(1) contrast(4)`,
     };
 
     return (
       <ScrollPanel
         className="sp contain mx-auto p-card"
-        style={{ height: '58px' }}
+        style={{ height: "58px" }}
       >
         <div className="tools p-2">
           <div className="leftContents d-flex align-items-center justify-content-start">
@@ -314,23 +314,23 @@ class DrawingForm extends Form {
               <ColorPicker
                 appendTo={this.gridRef.current}
                 format="rgb"
-                onChange={({ value }) =>
+                onChange={({ value }: any) =>
                   // eslint-disable-next-line no-restricted-globals
                   !isNaN(value.r) && handleSearch(value)
                 }
-                value={{ r, g, b }}
+                value={{ r, g, b } as any}
               />
               <Badge
                 style={{
                   backgroundColor: cpStyles.color,
-                  boxShadow: '0 0 1px 1px',
+                  boxShadow: "0 0 1px 1px",
                   filter: `drop-shadow(0 0 2px white)`,
                 }}
               />
               <label
                 className="pi pi-palette"
                 style={{
-                  transform: 'scale(1.8)',
+                  transform: "scale(1.8)",
                   ...cpStyles,
                 }}
               />
@@ -345,7 +345,6 @@ class DrawingForm extends Form {
               label="Clear"
               onClick={this.handleReset}
             >
-              {/* TODO: whileTap={{ scale: 0.9 }} */}
               <GridOnIcon />
             </Button>
             <Button
@@ -356,7 +355,7 @@ class DrawingForm extends Form {
               onPointerDown={() => this.handleGridOff(true)}
             >
               <GlobalListener
-                eventType={['pointerup', 'touchend']}
+                eventType={["pointerup", "touchend"]}
                 handler={[() => this.handleGridOff(false), true]}
               />
             </Button>

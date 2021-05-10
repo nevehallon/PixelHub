@@ -4,14 +4,9 @@ import { HashRouter, Route, Switch } from "react-router-dom";
 import PrimeReact from "primereact/api";
 
 import App from "./App";
-import PublicImages from "./components/pages/publicImages";
-import reportWebVitals from "./reportWebVitals";
 
 import "bootstrap/dist/css/bootstrap.css";
 import "@fortawesome/fontawesome-free/css/all.css";
-// import 'jquery/dist/jquery';
-// import 'popper.js/dist/popper'; //TODO: remove if not needed
-// import 'bootstrap/dist/js/bootstrap';
 
 import "fontsource-roboto";
 
@@ -33,10 +28,5 @@ const IndexPortPage = (): JSX.Element => (
     </HashRouter>
   </StrictMode>
 );
-
-// If you want to start measuring performance in your app, pass a function
-// to log results (for example: reportWebVitals(console.log))
-// or send to an analytics endpoint. Learn more: https://bit.ly/CRA-vitals
-// reportWebVitals();
 
 export default IndexPortPage;

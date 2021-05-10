@@ -1,11 +1,12 @@
 /* eslint-disable import/no-extraneous-dependencies */
 /* eslint-disable react/no-did-update-set-state */
 import React, { Component } from "react";
-import { Redirect, Route, Switch } from "react-router-dom";
+import { Route, Switch } from "react-router-dom";
 import { ToastContainer } from "react-toastify";
 
 import * as H from "history";
 
+import NotFoundPage from "../pages/404";
 import ProtectedRoute from "./common/protectedRoute";
 import CreateDrawing from "./components/drawingActions/createDrawing";
 import EditDrawing from "./components/drawingActions/editDrawing";
@@ -86,7 +87,9 @@ class App extends Component {
             <Route component={Profile} path="/user/:id" />
             <Route component={Browse} path="/browse" />
             <Route component={Home} exact path="/" />
-            <Redirect to="/" /> {/* TODO: add 404 page not found */}
+            <Route path="*">
+              <NotFoundPage />
+            </Route>
           </Switch>
         </main>
         <footer>
