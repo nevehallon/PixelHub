@@ -139,6 +139,14 @@ class MyDrawings extends Component {
           <h6>Your drawing Collection</h6>
 
           {$paginator}
+          <div className="p-card">
+            You have {total} drawings <br />
+            {!!total && (
+              <span>
+                displaying {first + 1} - {first + drawings.length}
+              </span>
+            )}
+          </div>
           <div className="row drawingListContainer">
             {total ? (
               <FavoritesContext.Provider value={favorites}>
