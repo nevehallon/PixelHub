@@ -3,22 +3,14 @@
 import {
   EmailIcon,
   EmailShareButton,
+  FacebookIcon,
   FacebookMessengerIcon,
   FacebookMessengerShareButton,
   FacebookShareButton,
-  LinkedinIcon,
-  LinkedinShareButton,
-  PinterestIcon,
-  PinterestShareButton,
-  RedditIcon,
-  RedditShareButton,
-  TelegramIcon,
-  TelegramShareButton,
   TumblrIcon,
   TumblrShareButton,
+  TwitterIcon,
   TwitterShareButton,
-  VKIcon,
-  VKShareButton,
   WhatsappIcon,
   WhatsappShareButton,
 } from "react-share";
@@ -34,46 +26,37 @@ const Share = ({ shareUrl }: { shareUrl: string }): JSX.Element => {
     <div id="Share__container">
       <div>
         <FacebookShareButton className="w-100" quote={title} url={shareUrl}>
-          <Button className="blue p-p-0 w-100 my-1">
-            <i className="pi pi-facebook p-px-2" />
-            <span className="p-px-3">Facebook</span>
+          <Button className="lightBlue p-0 w-100 my-1">
+            <i>
+              <FacebookIcon className="mx-2" round size="25px" />
+            </i>
+            <span className="px-3">Facebook</span>
           </Button>
         </FacebookShareButton>
       </div>
-
       <div>
         <FacebookMessengerShareButton
           appId="1147993589050014"
           className="w-100"
           url={shareUrl}
         >
-          <Button className="lightBlue p-p-0 w-100 my-1">
+          <Button className="x-lightBlue p-0 w-100 my-1">
             <i>
-              <FacebookMessengerIcon className="mx-2" round size="18px" />
+              <FacebookMessengerIcon className="mx-2" round size="25px" />
             </i>
-            <span className="p-px-3">Facebook</span>
+            <span className="px-3">Messenger</span>
           </Button>
         </FacebookMessengerShareButton>
       </div>
-
       <div>
         <TwitterShareButton className="w-100" title={title} url={shareUrl}>
-          <Button className="twitter p-p-0 w-100 my-1">
-            <i className="pi pi-twitter p-px-2" />
-            <span className="p-px-3">Twitter</span>
+          <Button className="lightBlue p-0 w-100 my-1">
+            <i>
+              <TwitterIcon className="mx-2" round size="25px" />
+            </i>
+            <span className="px-3">Twitter</span> {/* TODO: debug share */}
           </Button>
         </TwitterShareButton>
-      </div>
-
-      <div>
-        <TelegramShareButton className="w-100" title={title} url={shareUrl}>
-          <Button className="telegram p-p-0 w-100 my-1">
-            <i>
-              <TelegramIcon className="mx-2" round size="18px" />
-            </i>
-            <span className="p-px-3">Telegram</span>
-          </Button>
-        </TelegramShareButton>
       </div>
 
       <div>
@@ -83,88 +66,32 @@ const Share = ({ shareUrl }: { shareUrl: string }): JSX.Element => {
           title={title}
           url={shareUrl}
         >
-          <Button className="whatsapp p-p-0 w-100 my-1">
+          <Button className="x-lightBlue p-0 w-100 my-1">
             <i>
-              <WhatsappIcon className="mx-2" round size="18px" />
+              <WhatsappIcon className="mx-2" round size="25px" />
             </i>
-            <span className="p-px-3">Whatsapp</span>
+            <span className="px-3">Whatsapp</span>
           </Button>
         </WhatsappShareButton>
       </div>
 
       <div>
-        <LinkedinShareButton className="w-100" url={shareUrl}>
-          <Button className="linkedin p-p-0 w-100 my-1">
-            <i>
-              <LinkedinIcon className="mx-2" round size="18px" />
-            </i>
-            <span className="p-px-3">Linkedin</span>
-          </Button>
-        </LinkedinShareButton>
-      </div>
-
-      <div>
-        <PinterestShareButton className="w-100" media={shareUrl} url={shareUrl}>
-          <Button className="pinterest p-p-0 w-100 my-1">
-            <i>
-              <PinterestIcon className="mx-2" round size="18px" />
-            </i>
-            <span className="p-px-3">Pinterest</span>
-          </Button>
-        </PinterestShareButton>
-      </div>
-
-      <div>
-        <VKShareButton className="w-100" image={shareUrl} url={shareUrl}>
-          <Button className="vk p-p-0 w-100 my-1">
-            <i>
-              <VKIcon className="mx-2" round size="18px" />
-            </i>
-            <span className="p-px-3">VK</span>
-          </Button>
-        </VKShareButton>
-      </div>
-
-      <div>
-        <RedditShareButton
-          className="w-100"
-          title={title}
-          url={shareUrl}
-          windowHeight={460}
-          windowWidth={660}
-        >
-          <Button className="reddit p-p-0 w-100 my-1">
-            <i>
-              <RedditIcon className="mx-2" round size="18px" />
-            </i>
-            <span className="p-px-3">Reddit</span>
-          </Button>
-        </RedditShareButton>
-      </div>
-
-      <div>
         <TumblrShareButton className="w-100" title={title} url={shareUrl}>
-          <Button className="tumblr p-p-0 w-100 my-1">
+          <Button className="lightBlue p-0 w-100 my-1">
             <i>
-              <TumblrIcon className="mx-2" round size="18px" />
+              <TumblrIcon className="mx-2" round size="25px" />
             </i>
-            <span className="p-px-3">Tumblr</span>
+            <span className="px-3">Tumblr</span>
           </Button>
         </TumblrShareButton>
       </div>
-
       <div>
-        <EmailShareButton
-          body="body"
-          className="w-100"
-          subject={title}
-          url={shareUrl}
-        >
-          <Button className="email p-p-0 w-100 my-1">
+        <EmailShareButton className="w-100" subject={title} url={shareUrl}>
+          <Button className="yellow p-0 w-100 my-1">
             <i>
-              <EmailIcon className="mx-2" round size="18px" />
+              <EmailIcon className="mx-2" round size="25px" />
             </i>
-            <span className="p-px-3">Email</span>
+            <span className="px-3">Email</span>
           </Button>
         </EmailShareButton>
       </div>

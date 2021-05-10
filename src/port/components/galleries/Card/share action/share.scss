@@ -14,6 +14,9 @@
 .p-button {
   i {
     line-height: 2.25rem;
+    display: flex;
+    padding: 0.5rem 0;
+    align-items: center;
   }
 
   @mixin button-bg($defaultColor, $hoverColor) {
@@ -27,7 +30,7 @@
     }
   }
 
-  &.google {
+  &.darkRed {
     @include button-bg(var(--purple-600), var(--purple-700));
     color: #ffffff;
     border-color: var(--purple-700);
@@ -41,7 +44,7 @@
     }
   }
 
-  &.youtube {
+  &.red {
     @include button-bg(var(--pink-600), var(--pink-700));
     color: #ffffff;
     border-color: var(--pink-700);
@@ -55,7 +58,7 @@
     }
   }
 
-  &.vimeo {
+  &.x-lightBlue {
     @include button-bg(var(--green-200), var(--green-300));
     color: #000000;
     border-color: var(--green-300);
@@ -69,7 +72,7 @@
     }
   }
 
-  &.facebook {
+  &.darkBlue {
     @include button-bg(var(--indigo-600), var(--indigo-700));
     color: #ffffff;
     border-color: var(--indigo-700);
@@ -83,7 +86,7 @@
     }
   }
 
-  &.twitter {
+  &.lightBlue {
     @include button-bg(var(--blue-400), var(--blue-500));
     color: #ffffff;
     border-color: var(--blue-500);
@@ -97,7 +100,7 @@
     }
   }
 
-  &.slack {
+  &.orange {
     @include button-bg(var(--orange-400), var(--orange-500));
     color: #ffffff;
     border-color: var(--orange-500);
@@ -111,13 +114,13 @@
     }
   }
 
-  &.amazon {
-    @include button-bg(var(--yellow-400), var(--yellow-500));
+  &.yellow {
+    @include button-bg(var(--yellow-400), var(--yellow-600));
     color: #000000;
-    border-color: var(--yellow-500);
+    border-color: var(--yellow-600);
 
     i {
-      background-color: var(--yellow-500);
+      background-color: var(--yellow-600);
     }
 
     &:focus {
@@ -125,7 +128,7 @@
     }
   }
 
-  &.discord {
+  &.discordDark {
     @include button-bg(var(--bluegray-700), var(--bluegray-800));
     color: #ffffff;
     border-color: var(--bluegray-800);
