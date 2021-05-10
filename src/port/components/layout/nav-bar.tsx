@@ -1,7 +1,10 @@
 import { useHistory } from "react-router-dom";
+import { toast } from "react-toastify";
 
-// import { InputText } from "primereact/inputtext";
 import { Menubar, MenubarProps } from "primereact/menubar";
+
+import httpService from "../../services/httpService";
+import { getUserDetails, logout } from "../../services/userService";
 
 type MenuItem = Exclude<MenubarProps["model"], undefined>[number];
 
@@ -80,10 +83,41 @@ const Navbar = ({ user }: { [key: string]: any } | any): any => {
           command: () => history.push("/sign-up"),
         },
         {
-          label: `${!user?.painter ? "Upgrade to" : "Sign Up as"} a Painter`,
+          label: `${
+            user?.painter === false ? "Upgrade to" : "Sign Up as"
+          } a Painter`,
           icon: "fas fa-paint-brush",
-          style: { display: !user?.painter ? "" : "none", fontSize: 14 },
-          command: () => history.push("/painter-sign-up"),
+          style: {
+            display: !user?.painter ? "" : "none",
+            fontSize: 14,
+          },
+          command: async () => {
+            if (user?.painter === false) {
+              try {
+                const {
+                  data: { email, avatarUrl, name },
+                } = (await getUserDetails(user._id)) as any;
+
+                await httpService.patch(
+                  `${process.env.GATSBY_API_URL}/users/${user._id}`,
+                  { name, avatarUrl, email, painter: true, strategy: "local" }
+                );
+                toast.success(
+                  "You have successfully upgraded to a Painter, please login in to start creating!!",
+                  {
+                    position: "top-center",
+                    autoClose: 4000,
+                  }
+                );
+                history.push("/logout");
+                history.push("/sign-in");
+                return;
+              } catch (error) {
+                throw new Error(error);
+              }
+            }
+            history.push("/painter-sign-up");
+          },
         },
         {
           label: "Logout",

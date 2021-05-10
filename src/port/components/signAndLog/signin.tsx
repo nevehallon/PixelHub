@@ -58,9 +58,7 @@ class Signin extends Form {
       <div className="container sub-main">
         <PageHeader titleText="Sign in with your PixelHub account" />
         <div className="row text-center">
-          <div className="col-12">
-            <p>You can open a new account for free</p>
-          </div>
+          <div className="col-12" />
         </div>
         <div className="mx-2">
           <div className="px-4 m-auto p-card form-container">

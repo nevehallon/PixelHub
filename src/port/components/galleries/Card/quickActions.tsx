@@ -85,7 +85,7 @@ export default function SpeedDialTooltipOpen({
       icon: <InfoOutlinedIcon />,
       name: "Info",
       handleAction: () => {
-        history.push(`${basePath}/${id}`);
+        history.push(`/${basePath}/${id}`);
       },
     },
     {

@@ -25,7 +25,12 @@ axios.interceptors.response.use(undefined, (error) => {
       autoClose: 3000,
     });
   }
-  if (response && data.code === 401) {
+  if (
+    !location.href.includes("sign-in") &&
+    !location.href.includes("sign-up") &&
+    response &&
+    data.code === 401
+  ) {
     localStorage.removeItem("localData");
 
     location.replace("/");
