@@ -146,7 +146,7 @@ export default class Browse extends Component<favoritesProps> {
           <>
             <PageHeader titleText="Find what you're looking for" />
             <form onSubmit={(e) => this.handleSearch(e)}>
-              <div className="p-inputgroup">
+              <div className="p-inputgroup pt-5">
                 <span className="p-input-icon-left p-float-label">
                   <i className="pi pi-search" />
                   <InputText id="search" type="search" />
@@ -160,7 +160,7 @@ export default class Browse extends Component<favoritesProps> {
         {$paginator}
 
         <div className="p-card">
-          {total} drawings <br />
+          {id && "User has"} {total} drawings <br />
           {!!total && (
             <span>
               displaying {first + 1} - {first + drawings.length}
