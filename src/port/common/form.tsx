@@ -108,11 +108,7 @@ class Form extends Component<{ [x: string]: any }, { [x: string]: any }> {
     const errorsCopy = { ...errors } || {};
     const errorMessage = this.validateProperty(name, value);
 
-    // if (errorMessage) {
     errorsCopy[name] = errorMessage;
-    // } else {
-    //   delete errorsCopy[name];
-    // }
 
     // formData
     const updatedFormData = { ...formData };

@@ -4,7 +4,6 @@ import { toast } from "react-toastify";
 
 import { Paginator } from "primereact/paginator";
 
-// import DrawingCard from '../../common/drawingCard';
 import PageHeader from "../../common/pageHeader";
 import { GOP } from "../../interfaces/genericObjectProps";
 import { getDrawing } from "../../services/drawingsService";
@@ -43,7 +42,7 @@ class MyFavorites extends Component {
   componentWillUnmount(): void {
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
     this.setState = (state, callback) => {};
-    // ? making sure there are no data leaks
+    // ? insure there are no data leaks
   }
 
   onPageChange = async ({ first }: GOP): Promise<void> => {
@@ -102,7 +101,7 @@ class MyFavorites extends Component {
         ),
       });
     } catch (error) {
-      // console.error(error);
+      throw new Error(error);
     }
   };
 

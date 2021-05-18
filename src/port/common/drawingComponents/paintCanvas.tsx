@@ -6,9 +6,9 @@ import {
   MutableRefObject,
   useEffect,
   useRef,
-} from 'react';
+} from "react";
 
-import Detector from '../../services/paintHelperService';
+import Detector from "../../services/paintHelperService";
 
 function getCoords(index: number, length: number): string {
   return `${Math.floor(index / Math.sqrt(length))},${Math.floor(
@@ -50,13 +50,13 @@ const PaintCanvas = forwardRef(
     };
 
     const emitState = (
-      newGrid: CanvasProps['grid'],
-      e: any | Event = { type: '', keycode: 0 }
+      newGrid: CanvasProps["grid"],
+      e: any | Event = { type: "", keycode: 0 }
     ): any => {
       Helper.current.drawStart = false;
       Helper.current.canCallBack = false;
 
-      if (e.type === 'keyup' && e.keyCode !== 13) {
+      if (e.type === "keyup" && e.keyCode !== 13) {
         return;
       }
       if (!Helper.current?.isMouseDown) {
@@ -78,18 +78,17 @@ const PaintCanvas = forwardRef(
           emitState(helper.newGrid);
         }
       };
-      (ref as any).current.addEventListener('touchmove', handleTouchMove);
+      (ref as any).current.addEventListener("touchmove", handleTouchMove);
 
       return () => {
         helper.callback = () => {};
         helper.cleanup();
-        // (ref as any).current.removeEventListener('touchmove', handleTouchMove);
       };
       // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
     const handleFill = (i: number, e: any | Event): any => {
-      if (e.type === 'pointerdown') {
+      if (e.type === "pointerdown") {
         e.target.releasePointerCapture(e.pointerId);
         // stop right click
         if (e.which === 3 || e.button === 2) return;
@@ -97,7 +96,7 @@ const PaintCanvas = forwardRef(
         Helper.current.drawStart = true;
       }
       const squares = squareRefs.current;
-      if (e.type === 'keydown') {
+      if (e.type === "keydown") {
         // allow user to navigate the grid with arrow keys
         if (e.keyCode > 36 && e.keyCode < 41) {
           e.keyCode === 37
@@ -115,9 +114,9 @@ const PaintCanvas = forwardRef(
 
       if (
         squares[i].style.backgroundColor === currentColor ||
-        (e.type === 'pointerenter' &&
+        (e.type === "pointerenter" &&
           (!Helper.current?.isMouseDown || !Helper.current?.drawStart)) ||
-        (e.type === 'keydown' && e.keyCode !== 13)
+        (e.type === "keydown" && e.keyCode !== 13)
       ) {
         return;
       }
@@ -125,11 +124,11 @@ const PaintCanvas = forwardRef(
       // ? setting square color
       squares[i].style.backgroundColor = currentColor;
       if (!squares[i].dataset.touched) {
-        squares[i].dataset.touched = 'true';
+        squares[i].dataset.touched = "true";
       }
 
       Helper.current.canCallBack = true;
-      if (e.type === 'keydown') {
+      if (e.type === "keydown") {
         emitState(
           squares.map((x: any) => ({
             fill: x.style.backgroundColor,
@@ -138,9 +137,6 @@ const PaintCanvas = forwardRef(
         );
       }
     };
-
-    // console.log('rendered');
-    // console.count(); TODO: fix multiple renders
 
     return (
       <div

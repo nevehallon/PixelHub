@@ -5,7 +5,6 @@ import PageHeader from "../../common/pageHeader";
 const About = (): any => (
   <div className="container">
     <PageHeader titleText="About PixelHub" />
-    {/*           ${(<i className="fas fa-paint-brush"></i>)}  */}
     <div className="row pt-5">
       <div className="col-12">
         <h4>CREATE AND SHARE PIXEL ART</h4>

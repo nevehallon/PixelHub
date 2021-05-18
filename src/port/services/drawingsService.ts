@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/explicit-module-boundary-types */
 import { AxiosResponse } from "axios";
 
 import { Drawing } from "../interfaces/Drawing";
@@ -29,7 +30,7 @@ export function getMyDrawings(skip?: number): Promise<AxiosResponse<any>> {
   return http.get(
     // eslint-disable-next-line max-len
     `${url}/drawings?user_id=${user?._id}${select}${_skip}`
-  ); // TODO: limit to 10
+  );
 }
 
 export function getDrawing(

@@ -1,9 +1,9 @@
-import { RefObject } from 'react';
+import { RefObject } from "react";
 
-import { mix } from '@popmotion/popcorn';
-import { MotionValue, useDomEvent } from 'framer-motion';
-import { debounce } from 'lodash-es';
-import { animate } from 'popmotion';
+import { mix } from "@popmotion/popcorn";
+import { MotionValue, useDomEvent } from "framer-motion";
+import { debounce } from "lodash-es";
+import { animate } from "popmotion";
 
 interface Constraints {
   top: number;
@@ -82,7 +82,6 @@ function useWheelScroll(
     }
 
     if (!startedAnimation) {
-      // y.stop();
       y.set(newY);
     } else {
       debouncedSpringTo.cancel();
@@ -91,7 +90,7 @@ function useWheelScroll(
     onWheelCallback();
   };
 
-  useDomEvent(ref, 'wheel', (isActive as any) && onWheel, { passive: false });
+  useDomEvent(ref, "wheel", (isActive as any) && onWheel, { passive: false });
 }
 
 export default useWheelScroll;

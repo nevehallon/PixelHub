@@ -26,8 +26,6 @@ const Profile = (): any => {
       const { data } = await getUserDetails(id);
       setUser(data);
       setIsOwner(data._id === (visiter as UserDetails)?._id);
-
-      console.log(data);
     } catch (error) {
       toast.error(`Error(${error})`, {
         position: "top-center",
@@ -47,8 +45,6 @@ const Profile = (): any => {
         <title>Account | PixelHub</title>
       </Helmet>
       <PageHeader titleText={`${isOwner ? "My" : ""} PixelHub Profile`} />
-      {/* ${(<i className="fas fa-paint-brush"></i>)}
-     {JSON.stringify(user.data)} */}
       <Box
         {...{
           sx: {

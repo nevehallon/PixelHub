@@ -11,6 +11,7 @@ import { InputNumber, InputNumberProps } from "primereact/inputnumber";
 import { ScrollPanel } from "primereact/scrollpanel";
 import { Badge } from "primereact/badge";
 import { Subject } from "rxjs/internal/Subject";
+// eslint-disable-next-line import/no-extraneous-dependencies
 import { debounceTime, take } from "rxjs/operators";
 
 import { initialGrid } from "../../services/drawingsService";
@@ -309,7 +310,6 @@ class DrawingForm extends Form {
               icon="pi pi-refresh"
               onClick={this.handleRedo}
             />
-            {/* <Divider layout="vertical" style={{ padding: 0 }} /> */}
             <div className="p-float-label p-overlay-badge">
               <ColorPicker
                 appendTo={this.gridRef.current}
@@ -335,13 +335,11 @@ class DrawingForm extends Form {
                 }}
               />
             </div>
-            {/* <Divider layout="vertical" style={{ padding: 0 }} /> */}
           </div>
           <div className="rightContents d-flex align-content-center justify-content-around">
             <Button
               aria-label="reset"
               className="p-button-rounded p-button-text p-button-danger"
-              // endIcon={<GridOnIcon />}
               label="Clear"
               onClick={this.handleReset}
             >

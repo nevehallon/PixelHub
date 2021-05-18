@@ -54,7 +54,7 @@ const Share = ({ shareUrl }: { shareUrl: string }): JSX.Element => {
             <i>
               <TwitterIcon className="mx-2" round size="25px" />
             </i>
-            <span className="px-3">Twitter</span> {/* TODO: debug share */}
+            <span className="px-3">Twitter</span>
           </Button>
         </TwitterShareButton>
       </div>

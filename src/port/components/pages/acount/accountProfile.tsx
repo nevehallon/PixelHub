@@ -30,8 +30,9 @@ const handleSaveAvatar = async (
 ): Promise<void> => {
   e.preventDefault();
 
-  const { value } = (e.nativeEvent
-    .target as HTMLFormElement)[0] as HTMLInputElement;
+  const { value } = (
+    e.nativeEvent.target as HTMLFormElement
+  )[0] as HTMLInputElement;
 
   const body = { ...user, avatarUrl: value };
 
@@ -48,7 +49,7 @@ const handleSaveAvatar = async (
     cb2();
   } catch (error) {
     if (!error.response) {
-      console.log(error);
+      throw new Error(error);
       return;
     }
 
@@ -66,10 +67,6 @@ const handleSaveAvatar = async (
   }
 };
 
-// const user = {
-//   avatar: "",
-//   country: "",
-// };
 const AccountProfile = ({
   isOwner,
   user,
@@ -81,7 +78,7 @@ const AccountProfile = ({
 }): JSX.Element => {
   const [openDialog, setOpenDialog] = useState(false);
 
-  const { avatarUrl, name, country, _id } = user;
+  const { avatarUrl, name, country } = user;
 
   const src = avatarUrl || "";
 

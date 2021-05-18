@@ -1,7 +1,6 @@
 import { toast } from "react-toastify";
 
 import { AxiosResponse } from "axios";
-import jwtDecode from "jwt-decode";
 
 import { LoginArgs } from "../interfaces/loginArgs";
 import { UserDetails } from "../interfaces/UserDetails";

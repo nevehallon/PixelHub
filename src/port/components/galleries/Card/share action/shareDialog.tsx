@@ -3,16 +3,17 @@ import { forwardRef, ReactElement, Ref, useState } from "react";
 import Dialog from "@material-ui/core/Dialog";
 import DialogActions from "@material-ui/core/DialogActions";
 import DialogContent from "@material-ui/core/DialogContent";
-import DialogContentText from "@material-ui/core/DialogContentText";
 import DialogTitle from "@material-ui/core/DialogTitle";
 import Slide from "@material-ui/core/Slide";
 import { TransitionProps } from "@material-ui/core/transitions";
 
-const Transition = forwardRef((
-  // eslint-disable-next-line react/require-default-props
-  props: TransitionProps & { children?: ReactElement<any, any> },
-  ref: Ref<unknown>
-) => <Slide direction="up" ref={ref} {...props} />);
+const Transition = forwardRef(
+  (
+    // eslint-disable-next-line react/require-default-props
+    props: TransitionProps & { children?: ReactElement<any, any> },
+    ref: Ref<unknown>
+  ) => <Slide direction="up" ref={ref} {...props} />
+);
 
 const AlertDialogSlide = ({
   title,
@@ -43,14 +44,7 @@ const AlertDialogSlide = ({
         TransitionComponent={Transition}
       >
         <DialogTitle id="alert-dialog-slide-title">{title}</DialogTitle>
-        <DialogContent>
-          {children}
-
-          {/* <DialogContentText id="alert-dialog-slide-description">
-            Let Google help apps determine location. This means sending
-            anonymous location data to Google, even when no apps are running.
-          </DialogContentText> */}
-        </DialogContent>
+        <DialogContent>{children}</DialogContent>
         <DialogActions />
       </Dialog>
     </div>

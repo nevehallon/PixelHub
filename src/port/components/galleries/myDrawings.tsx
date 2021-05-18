@@ -4,7 +4,6 @@ import { toast } from "react-toastify";
 
 import { Paginator } from "primereact/paginator";
 
-// import DrawingCard from '../../common/drawingCard';
 import PageHeader from "../../common/pageHeader";
 import { GOP } from "../../interfaces/genericObjectProps";
 import { deleteDrawing, getMyDrawings } from "../../services/drawingsService";
@@ -116,7 +115,7 @@ class MyDrawings extends Component {
         favorites: data.favorites,
       });
     } catch (error) {
-      // console.error(error);
+      throw new Error(error);
     }
   };
 

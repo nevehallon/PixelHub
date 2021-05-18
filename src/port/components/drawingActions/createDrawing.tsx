@@ -37,7 +37,7 @@ class CreateDrawing extends DrawingForm {
       });
       (this.props as any).history.replace("/my-drawings");
     } catch (error) {
-      console.log(error);
+      throw new Error(error);
     }
   };
 

@@ -3,3 +3,5 @@ webpack.config.js
 gatsby-config.js
 gatsby-ssr.js
 gatsby-node.js
+src/images
+.svg

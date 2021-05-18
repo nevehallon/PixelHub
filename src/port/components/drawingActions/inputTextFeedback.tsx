@@ -37,7 +37,6 @@ const InputFeedback = ({
       <div>{label}</div>
       {!!value.length && (
         <div>
-          {/* Characters Remaining: TODO: fit text here */}
           <motion.div
             animate={controls}
             style={{

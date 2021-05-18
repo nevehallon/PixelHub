@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/explicit-module-boundary-types */
 /* eslint-disable jsx-a11y/label-has-associated-control */
 import React, { Component, FormEvent } from "react";
 import { toast } from "react-toastify";
@@ -54,7 +55,7 @@ export default class Browse extends Component<favoritesProps> {
   componentWillUnmount(): void {
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
     this.setState = (state, callback) => {};
-    // ? making sure there are no data leaks
+    // ? insure there are no data leaks
   }
 
   onPageChange = async ({ first }: GOP): Promise<void> => {
@@ -66,8 +67,8 @@ export default class Browse extends Component<favoritesProps> {
   };
 
   async getData(_skip?: number, ...rest: any): Promise<void> {
-    const { id, userToDisplay } = this.props as GOP;
-    console.log(rest);
+    const { id } = this.props as GOP;
+
     try {
       const {
         data: { favorites },
@@ -110,14 +111,15 @@ export default class Browse extends Component<favoritesProps> {
         favorites: data.favorites,
       });
     } catch (error) {
-      // console.error(error);
+      throw new Error(error);
     }
   };
 
   handleSearch = async (e: FormEvent): Promise<void> => {
     e.preventDefault();
-    const { value } = (e.nativeEvent
-      .target as HTMLFormElement)[0] as HTMLInputElement;
+    const { value } = (
+      e.nativeEvent.target as HTMLFormElement
+    )[0] as HTMLInputElement;
     const search = `&$search=${value.trim() || ""}`;
 
     this.setState({ search });

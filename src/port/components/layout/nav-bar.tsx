@@ -4,7 +4,7 @@ import { toast } from "react-toastify";
 import { Menubar, MenubarProps } from "primereact/menubar";
 
 import httpService from "../../services/httpService";
-import { getUserDetails, logout } from "../../services/userService";
+import { getUserDetails } from "../../services/userService";
 
 type MenuItem = Exclude<MenubarProps["model"], undefined>[number];
 
@@ -141,11 +141,9 @@ const Navbar = ({ user }: { [key: string]: any } | any): any => {
     },
   ];
 
-  // const end = <InputText placeholder="Search" type="text" />;
-
   return (
     <div>
-      <Menubar /* end={end} */ model={items as any} />
+      <Menubar model={items as any} />
     </div>
   );
 };

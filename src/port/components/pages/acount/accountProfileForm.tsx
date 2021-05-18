@@ -42,7 +42,7 @@ class AccountProfileDetails extends Form {
       });
     } catch (error) {
       if (!error.response) {
-        console.log(error);
+        throw new Error(error);
         return;
       }
 
@@ -71,10 +71,8 @@ class AccountProfileDetails extends Form {
   };
 
   render(): JSX.Element {
-    // phone: "",
-    // country: "",
     const {
-      formData: { name, phone, email, country },
+      formData: { name, email },
     } = this.state;
     return (
       <form
@@ -116,9 +114,6 @@ class AccountProfileDetails extends Form {
                   }
                 />
               </Grid>
-              {/* {this.renderInput("password", "Password", "password", {
-              feedback: true,
-          })} */}
               <Divider />
               <Box
                 style={{

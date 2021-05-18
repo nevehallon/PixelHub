@@ -21,7 +21,7 @@ import { createDrawing, getDrawing } from "../../../services/drawingsService";
 import FavoritesContext from "../../../services/favoritesContext";
 import { getCurrentUser } from "../../../services/userService";
 import Share from "./share action/Share";
-import AlertDialogSlide from "./share action/shareDialog"; // TODO: SHARE
+import AlertDialogSlide from "./share action/shareDialog";
 
 const download = (dataurl: string, filename: string) => {
   const a = document.createElement("a");
@@ -36,9 +36,10 @@ const useStyles = makeStyles((theme: Theme) =>
       position: "absolute",
       bottom: theme.spacing(1),
       right: theme.spacing(2),
-      "& .MuiSpeedDial-actions .MuiSpeedDialAction-staticTooltip .MuiSpeedDialAction-staticTooltipLabel": {
-        width: "max-content !important",
-      },
+      "& .MuiSpeedDial-actions .MuiSpeedDialAction-staticTooltip .MuiSpeedDialAction-staticTooltipLabel":
+        {
+          width: "max-content !important",
+        },
     },
   })
 );
@@ -68,6 +69,7 @@ export default function SpeedDialTooltipOpen({
   const [open, setOpen] = useState(false);
   const [openDialog, setOpenDialog] = useState(false);
   const favorites = useContext(FavoritesContext);
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [isCopied, setCopied] = useClipboard(shareUrl);
 
   const handleOpen = () => {
@@ -152,7 +154,6 @@ export default function SpeedDialTooltipOpen({
         setOpenDialog(true);
       },
     },
-    // TODO: SHARE
     {
       icon: !favorites.includes(drawingNumber) ? (
         <BookmarkIcon size={24} />
@@ -242,8 +243,6 @@ export default function SpeedDialTooltipOpen({
           <Share shareUrl={shareUrl} />
         </AlertDialogSlide>
       )}
-
-      {/* // TODO: SHARE */}
     </div>
   );
 }
