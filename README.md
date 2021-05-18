@@ -1,3 +1,7 @@
+feel free to test application by using the following credentials:
+user: example@test.com
+password: 123456
+
 <!-- AUTO-GENERATED-CONTENT:START (STARTER) -->
 <p align="center">
   <a href="https://www.gatsbyjs.com">
