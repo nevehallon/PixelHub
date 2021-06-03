@@ -44,31 +44,37 @@ class Form extends Component<{ [x: string]: any }, { [x: string]: any }> {
   convert2image!: () => Promise<string>;
 
   handleSubmit = async (e: FormEvent<HTMLFormElement>): Promise<void> => {
+    toast.dark("One moment please", {
+      position: "top-center",
+      autoClose: 2500,
+    });
+    setTimeout(async () => {
+      try {
+        if (this.state.grid) {
+          // ? only for drawings
+          const dataUrl = await this.convert2image();
+          // eslint-disable-next-line react/no-unused-state
+          this.setState({ dataUrl });
+        }
+
+        const errors = this.validate();
+
+        this.setState({ errors: errors || {} });
+
+        if (errors !== null && errors?.grid) {
+          // ? only for drawings
+          toast.error("Canvas can not be blank", {
+            position: "top-center",
+            autoClose: 2500,
+          });
+        }
+
+        if (!errors) this.doSubmit();
+      } catch (error) {
+        throw new Error(error);
+      }
+    }, 2500);
     e.preventDefault();
-    if (this.state.grid) {
-      // ? only for drawings
-      toast.dark("One moment please", {
-        position: "top-center",
-        autoClose: 2500,
-      });
-      const dataUrl = await this.convert2image();
-      // eslint-disable-next-line react/no-unused-state
-      this.setState({ dataUrl });
-    }
-
-    const errors = this.validate();
-
-    this.setState({ errors: errors || {} });
-
-    if (errors !== null && errors?.grid) {
-      // ? only for drawings
-      toast.error("Canvas can not be blank", {
-        position: "top-center",
-        autoClose: 2500,
-      });
-    }
-
-    if (!errors) this.doSubmit();
   };
 
   validateProperty = (name: string, value: string): string | null => {

@@ -67,13 +67,8 @@ class EditDrawing extends DrawingForm {
 
   doSubmit = async (): Promise<void> => {
     try {
-      const {
-        formData,
-        grid,
-        dataUrl,
-        painterInfo,
-        drawingNumber,
-      } = this.state;
+      const { formData, grid, dataUrl, painterInfo, drawingNumber } =
+        this.state;
       const data = { ...formData, grid, dataUrl, painterInfo, drawingNumber };
 
       await editDrawing(data);
@@ -132,6 +127,7 @@ class EditDrawing extends DrawingForm {
                       });
                       return;
                     }
+
                     this.handleSubmit(e);
                   }}
                 >

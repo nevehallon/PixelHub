@@ -4,6 +4,7 @@ import { createRef, RefObject } from "react";
 
 import GridOnIcon from "@material-ui/icons/GridOn";
 import { Button } from "primereact/button";
+// import { toPng } from "html-to-image";
 import { toPng } from "html-to-image";
 import Joi from "joi";
 import { ColorPicker } from "primereact/colorpicker";
@@ -54,25 +55,30 @@ class DrawingForm extends Form {
   }
 
   convert2image = async (): Promise<string> => {
-    const imgRef: HTMLElement = this.gridRef.current;
+    try {
+      const imgRef: HTMLElement = this.gridRef.current;
 
-    Array.from(imgRef.children).forEach((x: any) => {
-      // eslint-disable-next-line @typescript-eslint/no-unused-expressions
-      x.dataset.touched ? false : (x.style.backgroundColor = "transparent");
-      x.style.border = "none";
-    });
-    imgRef.style.minWidth = "175px";
-    imgRef.style.minHeight = "175px";
-    imgRef.style.width = "175px";
-    imgRef.style.height = "175px";
-    return toPng(imgRef, {
-      backgroundColor: "transparent",
-      style: { margin: "auto", width: "100%", height: "100%" },
-      width: imgRef.offsetWidth,
-      height: imgRef.offsetHeight,
-      pixelRatio: 1,
-      skipFonts: true,
-    });
+      Array.from(imgRef.children).forEach((x: any) => {
+        // eslint-disable-next-line @typescript-eslint/no-unused-expressions
+        x.dataset.touched ? false : (x.style.backgroundColor = "transparent");
+        x.style.border = "none";
+      });
+      imgRef.style.minWidth = "175px";
+      imgRef.style.minHeight = "175px";
+      imgRef.style.width = "175px";
+      imgRef.style.height = "175px";
+
+      return await toPng(imgRef, {
+        backgroundColor: "transparent",
+        style: { margin: "auto", width: "100%", height: "100%" },
+        width: imgRef.offsetWidth,
+        height: imgRef.offsetHeight,
+        pixelRatio: 1,
+        skipFonts: true,
+      });
+    } catch (error) {
+      throw new Error(error);
+    }
   };
 
   schema: { [key: string]: Joi.StringSchema | Joi.ArraySchema } = {

@@ -31,6 +31,7 @@ class Signin extends Form {
         window.location.href = "/";
       }, 2200);
     } catch (error) {
+      if (error.response === undefined) throw new Error(error);
       const {
         response,
         response: { data },

@@ -27,6 +27,7 @@ class Signup extends Form {
         autoClose: 4000,
       });
     } catch (error) {
+      if (error.response === undefined) throw new Error(error);
       const {
         response,
         response: { data },
