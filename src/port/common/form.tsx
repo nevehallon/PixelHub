@@ -27,11 +27,12 @@ export const baseState: SignupState = {
 };
 export const baseSchema = {
   email: Joi.string()
+    .trim()
     .required()
     .email({ tlds: { allow: false } })
     .min(5),
-  password: Joi.string().required().min(6),
-  name: Joi.string().required().min(2),
+  password: Joi.string().trim().required().min(6),
+  name: Joi.string().trim().required().min(2),
 };
 
 class Form extends Component<{ [x: string]: any }, { [x: string]: any }> {

@@ -81,10 +81,20 @@ class DrawingForm extends Form {
   };
 
   schema: { [key: string]: Joi.StringSchema | Joi.ArraySchema } = {
-    drawingName: Joi.string().min(2).max(26).required().label("Drawing Name"),
-    description: Joi.string().min(2).max(225).required().label("Description"),
+    drawingName: Joi.string()
+      .trim()
+      .min(2)
+      .max(26)
+      .required()
+      .label("Drawing Name"),
+    description: Joi.string()
+      .trim()
+      .min(2)
+      .max(225)
+      .required()
+      .label("Description"),
     grid: Joi.array().min(225).max(1225).required().label("canvas"),
-    dataUrl: Joi.string().required().label("src"),
+    dataUrl: Joi.string().trim().required().label("src"),
   };
 
   validate = (isSubmit = false): any => {

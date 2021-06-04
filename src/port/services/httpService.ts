@@ -1,11 +1,20 @@
+/* eslint-disable no-param-reassign */
 import { toast } from "react-toastify";
 
 import axios from "axios";
+import { mapValues } from "lodash-es";
 
 import getJwt from "./jwtService";
 
 axios.interceptors.request.use(
   (config) => {
+    if (typeof config.data === "object") {
+      // ? trim strings to prevent long empty inputs
+      // prettier-ignore
+      config.data = mapValues(config.data, (val: any) =>
+      (typeof val === "string" ? val.trim() : val)
+      );
+    }
     // eslint-disable-next-line no-param-reassign
     config.headers.Authorization = getJwt && getJwt();
     return config;
