@@ -47,7 +47,7 @@ class Form extends Component<{ [x: string]: any }, { [x: string]: any }> {
   handleSubmit = async (e: FormEvent<HTMLFormElement>): Promise<void> => {
     toast.dark("One moment please", {
       position: "top-center",
-      autoClose: 2500,
+      autoClose: 3500,
     });
     setTimeout(async () => {
       try {
