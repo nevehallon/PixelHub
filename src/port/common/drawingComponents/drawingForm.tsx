@@ -4,7 +4,6 @@ import { createRef, RefObject } from "react";
 
 import GridOnIcon from "@material-ui/icons/GridOn";
 import { Button } from "primereact/button";
-// import { toPng } from "html-to-image";
 import { toPng } from "html-to-image";
 import Joi from "joi";
 import { ColorPicker } from "primereact/colorpicker";
@@ -282,6 +281,9 @@ class DrawingForm extends Form {
   }
 
   renderTools(): JSX.Element {
+    const { canvasStateTimeline, currentStateIndex, isInitial } = this.state;
+    const doable = !(currentStateIndex < 1);
+    const unDoable = !(currentStateIndex === canvasStateTimeline.length - 1);
     const onChange$ = new Subject();
     const handleSearch = (rgb: { [key: string]: any }) => {
       onChange$.next(rgb);
@@ -307,12 +309,14 @@ class DrawingForm extends Form {
             <Button
               aria-label="undo"
               className="p-button-rounded p-button p-button-text"
+              disabled={unDoable}
               icon="pi pi-replay"
               onClick={this.handleUndo}
             />
             <Button
               aria-label="redo"
               className="p-button-rounded p-button p-button-text"
+              disabled={doable}
               icon="pi pi-refresh"
               onClick={this.handleRedo}
             />
@@ -346,6 +350,7 @@ class DrawingForm extends Form {
             <Button
               aria-label="reset"
               className="p-button-rounded p-button-text p-button-danger"
+              disabled={isInitial}
               label="Clear"
               onClick={this.handleReset}
             >
