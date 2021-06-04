@@ -292,8 +292,11 @@ class DrawingForm extends Form {
 
   renderTools(): JSX.Element {
     const { canvasStateTimeline, currentStateIndex, isInitial } = this.state;
-    const doable = !(currentStateIndex < 1);
-    const unDoable = !(currentStateIndex === canvasStateTimeline.length - 1);
+    const unDoable = currentStateIndex < 1;
+    const reDoable = currentStateIndex === canvasStateTimeline.length - 1;
+    console.log({ currentStateIndex, reDoable });
+    console.log({ cavasState: canvasStateTimeline.length - 1, unDoable });
+    console.log("......");
     const onChange$ = new Subject();
     const handleSearch = (rgb: { [key: string]: any }) => {
       onChange$.next(rgb);
@@ -326,7 +329,7 @@ class DrawingForm extends Form {
             <Button
               aria-label="redo"
               className="p-button-rounded p-button p-button-text"
-              disabled={doable}
+              disabled={reDoable}
               icon="pi pi-refresh"
               onClick={this.handleRedo}
             />
