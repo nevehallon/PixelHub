@@ -34,6 +34,7 @@ class EditDrawing extends DrawingForm {
   };
 
   async componentDidMount(): Promise<void> {
+    window.scrollTo(0, 0);
     this.schema._id = Joi.string();
     try {
       const { data }: any = await getDrawing(

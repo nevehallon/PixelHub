@@ -7,7 +7,8 @@
 
   &* {
     box-sizing: border-box;
-    font-family: ".SFNSText", "SFProText-Regular", "SFUIText-Regular", ".SFUIText", Helvetica, Arial, sans-serif;
+    font-family: ".SFNSText", "SFProText-Regular", "SFUIText-Regular",
+      ".SFUIText", Helvetica, Arial, sans-serif;
     -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
   }
 
@@ -113,7 +114,13 @@
     padding-top: 6rem;
 
     background: transparent;
-    background: linear-gradient(90deg, #0000 0%, white 7%, white 93%, #0000 100%);
+    background: linear-gradient(
+      90deg,
+      #0000 0%,
+      white 7%,
+      white 93%,
+      #0000 100%
+    );
 
     .d-card-image {
       margin: 1rem auto;
@@ -124,7 +131,13 @@
   }
 
   .open .d-card-image-container {
-    background: linear-gradient(90deg, #0000 0%, white 4%, white 96%, #0000 100%);
+    background: linear-gradient(
+      90deg,
+      #0000 0%,
+      white 4%,
+      white 96%,
+      #0000 100%
+    );
   }
 
   .title-container {

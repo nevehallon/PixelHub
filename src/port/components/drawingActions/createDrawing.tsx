@@ -25,6 +25,10 @@ class CreateDrawing extends DrawingForm {
     dataUrl: "",
   };
 
+  componentDidMount(): void {
+    window.scrollTo(0, 0);
+  }
+
   doSubmit = async (): Promise<void> => {
     try {
       const { formData, grid, dataUrl } = this.state;

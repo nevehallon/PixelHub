@@ -37,6 +37,7 @@ class MyDrawings extends Component {
   };
 
   async componentDidMount(): Promise<void> {
+    window.scrollTo(0, 0);
     await this.getData();
   }
 

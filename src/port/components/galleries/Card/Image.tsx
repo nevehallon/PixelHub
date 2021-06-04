@@ -1,4 +1,5 @@
 import { motion } from "framer-motion";
+import "./styles.scss";
 
 import { closeAnimation, openAnimation } from "./animations";
 
@@ -16,7 +17,7 @@ export const Image = ({ isSelected, src }: ImageProps): any => (
     <motion.img
       alt="drawing thumbnail"
       animate={isSelected ? openAnimation : closeAnimation}
-      className="d-card-image"
+      className="d-card-image shadowed"
       layout
       loading="lazy"
       onError={(e) => {

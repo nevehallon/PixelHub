@@ -49,6 +49,7 @@ export default class Browse extends Component<favoritesProps> {
   };
 
   async componentDidMount(): Promise<void> {
+    window.scrollTo(0, 0);
     await this.getData();
   }
 
