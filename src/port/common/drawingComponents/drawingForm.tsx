@@ -294,9 +294,6 @@ class DrawingForm extends Form {
     const { canvasStateTimeline, currentStateIndex, isInitial } = this.state;
     const unDoable = currentStateIndex < 1;
     const reDoable = currentStateIndex === canvasStateTimeline.length - 1;
-    console.log({ currentStateIndex, reDoable });
-    console.log({ cavasState: canvasStateTimeline.length - 1, unDoable });
-    console.log("......");
     const onChange$ = new Subject();
     const handleSearch = (rgb: { [key: string]: any }) => {
       onChange$.next(rgb);
