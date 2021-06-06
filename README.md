@@ -1,6 +1,3 @@
-feel free to test application by using the following credentials:
-user: example@test.com
-password: 123456
 <p align="center">
   <a href="https://pixel-hub.vercel.app/">
     <img alt="PixelHub" src="./src/images/logo.svg" width="60" />
