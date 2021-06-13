@@ -1,4 +1,5 @@
 *works on chrome, pc and android*
+
 **TODO: fix bugs on iphone and android(firefox)**
 
 <p align="center">
