@@ -1,6 +1,6 @@
-<h2 align="center">
+<h1 align="center">
 🔬 tested and working on chrome, pc and android 🔬
-</h2>
+</h1>
 
 <p align="center">
   <a href="https://pixel-hub.vercel.app/">
