@@ -1,6 +1,4 @@
-*works on chrome, pc and android*
-
-**TODO: fix bugs on iphone and android(firefox)**
+**tested and working on chrome, pc and android**
 
 <p align="center">
   <a href="https://pixel-hub.vercel.app/">
