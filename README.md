@@ -1,5 +1,5 @@
 <h2 align="center">
-**tested and working on chrome, pc and android**
+🔬 tested and working on chrome, pc and android 🔬
 </h2>
 
 <p align="center">
